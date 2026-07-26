@@ -1,0 +1,407 @@
+{
+  "_megjegyzes": "Karbantartható alapadatok a Wildom -> PizzaMe/Cola rendeles-generalashoz. Ha a Coca-Cola cikkszamot/arat valtoztat, vagy uzlet nyilik/zar/atnevezodik, ezt a fajlt kell szerkeszteni, nem a kodot. Ugyanezt a fajlt hasznalja majd a 2. modul (visszaigazolas/szamla) is.",
+  "termek_parositas": [
+    {
+      "wildom_nev": "Coca-Cola",
+      "csomagolas": "24db / Karton",
+      "cikkszam": 1188084,
+      "cola_nev": "330 CAN X24 COCA COLA SLEEK HU",
+      "megjegyzes": "Feltételezés: jelöletlen méret = 0,33l dobozos (Karton csomagolás)"
+    },
+    {
+      "wildom_nev": "Coca-Cola Zero",
+      "csomagolas": "24db / Karton",
+      "cikkszam": 609280,
+      "cola_nev": "330 CAN X24 COKE ZERO SLEEK HU",
+      "megjegyzes": "Feltételezés: jelöletlen méret = 0,33l dobozos"
+    },
+    {
+      "wildom_nev": "Naturaqua Savas 0,5l",
+      "csomagolas": "12db / Zsugor",
+      "cikkszam": 1148406,
+      "cola_nev": "500 PET X12 NATURAQUA CARB TWIST HU",
+      "megjegyzes": "Savas = szénsavas (CARB)"
+    },
+    {
+      "wildom_nev": "Naturaqua Mentes 0,5l",
+      "csomagolas": "24db / Karton",
+      "cikkszam": 295006,
+      "cola_nev": "500 PET X24 NATURAQUA STILL TWIST HU",
+      "megjegyzes": "Mentes = szénsavmentes (STILL)"
+    },
+    {
+      "wildom_nev": "Fuzetea Barack 0,5l",
+      "csomagolas": "12db / Zsugor",
+      "cikkszam": 1888013,
+      "cola_nev": "500 PET X12 FUZE TEA BT PEACH ROSE NEW HU",
+      "megjegyzes": null
+    },
+    {
+      "wildom_nev": "Fuzetea Citrom 0,5l",
+      "csomagolas": "12db / Zsugor",
+      "cikkszam": 1676459,
+      "cola_nev": "500 PET X12 FUZETEA BT LEM LGR NEW HU",
+      "megjegyzes": null
+    },
+    {
+      "wildom_nev": "Cappy Narancs",
+      "csomagolas": "12db / Zsugor",
+      "cikkszam": 1523602,
+      "cola_nev": "330 PET X12 CAPPY OR PULP JC 100 NEW HU",
+      "megjegyzes": "OR = Orange/Narancs"
+    },
+    {
+      "wildom_nev": "Cappy Alma",
+      "csomagolas": "12db / Zsugor",
+      "cikkszam": 983327,
+      "cola_nev": "330 PET X12 CAPPY APPLE NEW BAHRHU",
+      "megjegyzes": null
+    },
+    {
+      "wildom_nev": "Kinley Gyömbér 0,5 L",
+      "csomagolas": "12db / Zsugor",
+      "cikkszam": 686007,
+      "cola_nev": "Kinley Gyömbér 0,5l",
+      "megjegyzes": "Közvetlen névegyezés"
+    },
+    {
+      "wildom_nev": "Coca-Cola 1L",
+      "csomagolas": "12db / Zsugor",
+      "cikkszam": 2456204,
+      "cola_nev": "1.0 PET X12 COCA COLA HU",
+      "megjegyzes": null
+    },
+    {
+      "wildom_nev": "Coca-Cola Zero 1L",
+      "csomagolas": "12db / Zsugor",
+      "cikkszam": 401274,
+      "cola_nev": "1.0 PET X12 COKE ZERO HU",
+      "megjegyzes": null
+    },
+    {
+      "wildom_nev": "Coca-Cola 0,5L",
+      "csomagolas": "24db / Karton",
+      "cikkszam": 256553,
+      "cola_nev": "500 PET X24 COCA COLA",
+      "megjegyzes": null
+    },
+    {
+      "wildom_nev": "Coca-Cola Zero 0,5L ",
+      "csomagolas": "12db / Zsugor",
+      "cikkszam": 1307304,
+      "cola_nev": "500 PET X12 COLA ZERO",
+      "megjegyzes": null
+    },
+    {
+      "wildom_nev": "Coca-Cola Koffeinmentes Zero 0,33l",
+      "csomagolas": "24db / Zsugor",
+      "cikkszam": 1180102,
+      "cola_nev": "330 CAN X24 COKE ZERO CAFF FREE HU",
+      "megjegyzes": null
+    },
+    {
+      "wildom_nev": "Jack&Coke",
+      "csomagolas": "12db / Zsugor",
+      "cikkszam": 2462660,
+      "cola_nev": "330 PET X12 Jack & Coke",
+      "megjegyzes": "Közvetlen névegyezés"
+    },
+    {
+      "wildom_nev": "Naturaqua Mentes 1,5l",
+      "csomagolas": "6db / Karton",
+      "cikkszam": 295217,
+      "cola_nev": "1.5 PET X6 NAP STILL TWIST HU",
+      "megjegyzes": "sablon Kiszerelés oszlopban 'MENTES' jelölve"
+    },
+    {
+      "wildom_nev": "Naturaqua Savas 1,5l",
+      "csomagolas": "6db / Zsugor",
+      "cikkszam": 295118,
+      "cola_nev": "1.5 PET X6 NAP CARB TWIST HU",
+      "megjegyzes": "sablon Kiszerelés oszlopban 'SAVAS' jelölve"
+    },
+    {
+      "wildom_nev": "Cappy Ice Fruit Multivitamin 0,5L",
+      "csomagolas": "12db / Zsugor",
+      "cikkszam": 279045,
+      "cola_nev": "500 PET X12 Cappy Ice Fruit Multivitamin 0,5l",
+      "megjegyzes": "Közvetlen névegyezés. FONTOS: ez a cikkszám Cola-oldalon korábban változott már (pl. 279045 <-> 279044) - ellenőrizd friss sablonnál."
+    },
+    {
+      "wildom_nev": "Kinley Pink 0,5l",
+      "csomagolas": "12db / Zsugor",
+      "cikkszam": 2474103,
+      "cola_nev": "Kinley Pink Aromatic Berry 0,5l",
+      "megjegyzes": "Közvetlen névegyezés"
+    }
+  ],
+  "uzlet_parositas": [
+    {
+      "sablon_oszlop_index": 3,
+      "wildom_nev": "Király",
+      "pm_azonosito": "PM1",
+      "sablon_felirat": "Pizza Me 1- Király utca",
+      "megjegyzes": null
+    },
+    {
+      "sablon_oszlop_index": 4,
+      "wildom_nev": "Erzsébet krt. 51(2)",
+      "pm_azonosito": "PM2",
+      "sablon_felirat": "Pizza Me 2- Erzsébet krt. 51.",
+      "megjegyzes": null
+    },
+    {
+      "sablon_oszlop_index": 5,
+      "wildom_nev": "Fashion",
+      "pm_azonosito": "PM3",
+      "sablon_felirat": "Pizza Me 3- Fashion Street",
+      "megjegyzes": null
+    },
+    {
+      "sablon_oszlop_index": 6,
+      "wildom_nev": "Bazilika",
+      "pm_azonosito": "PM4",
+      "sablon_felirat": "Pizza Me 4- Sas utca",
+      "megjegyzes": "PM4 korábbi neve 'Sas utca' volt, jelenleg Bazilika néven fut a Wildomban"
+    },
+    {
+      "sablon_oszlop_index": 7,
+      "wildom_nev": "Széll Kálmán Tér",
+      "pm_azonosito": "PM5",
+      "sablon_felirat": "Pizza Me 5- Széll Kálmán tér",
+      "megjegyzes": null
+    },
+    {
+      "sablon_oszlop_index": 8,
+      "wildom_nev": "Corvin",
+      "pm_azonosito": "PM6",
+      "sablon_felirat": "Pizza Me 6- Corvin",
+      "megjegyzes": null
+    },
+    {
+      "sablon_oszlop_index": 9,
+      "wildom_nev": "Károly krt.",
+      "pm_azonosito": "PM7",
+      "sablon_felirat": "Pizza Me 7- Károly krt.25",
+      "megjegyzes": null
+    },
+    {
+      "sablon_oszlop_index": 10,
+      "wildom_nev": "Dob",
+      "pm_azonosito": "PM8",
+      "sablon_felirat": "Pizza Me  8- Dob utca",
+      "megjegyzes": null
+    },
+    {
+      "sablon_oszlop_index": 11,
+      "wildom_nev": "Blaha",
+      "pm_azonosito": "PM9",
+      "sablon_felirat": "Pizza Me 9- Blaha Lujza tér.",
+      "megjegyzes": null
+    },
+    {
+      "sablon_oszlop_index": 12,
+      "wildom_nev": "Oktogon",
+      "pm_azonosito": "PM10",
+      "sablon_felirat": "Pizza Me 10- Oktogon",
+      "megjegyzes": null
+    },
+    {
+      "sablon_oszlop_index": 13,
+      "wildom_nev": "Wesselényi",
+      "pm_azonosito": "PM11",
+      "sablon_felirat": "Pizza Me 11- Wesselényi utca",
+      "megjegyzes": "Nem tévesztendő össze a 'Lángosom Wesselényi' oszloppal (más cég)"
+    },
+    {
+      "sablon_oszlop_index": 15,
+      "wildom_nev": "Astoria",
+      "pm_azonosito": "PM12",
+      "sablon_felirat": "Pizza Me 12- Astoria",
+      "megjegyzes": null
+    },
+    {
+      "sablon_oszlop_index": 16,
+      "wildom_nev": "Erzsébet krt. 14. (13)",
+      "pm_azonosito": "PM13",
+      "sablon_felirat": "Pizza Me 13- Erzsébet krt 14.",
+      "megjegyzes": null
+    },
+    {
+      "sablon_oszlop_index": 17,
+      "wildom_nev": "Gomba",
+      "pm_azonosito": "PM15G",
+      "sablon_felirat": "Pizza Me GOMBA",
+      "megjegyzes": null
+    },
+    {
+      "sablon_oszlop_index": 19,
+      "wildom_nev": "Keleti",
+      "pm_azonosito": "PM16",
+      "sablon_felirat": "Pizza Me 16- Keleti",
+      "megjegyzes": null
+    },
+    {
+      "sablon_oszlop_index": 20,
+      "wildom_nev": "Fővám Tér",
+      "pm_azonosito": "PM17",
+      "sablon_felirat": "Pizza Me 17- Váci utca",
+      "megjegyzes": "PM17 korábbi neve 'Váci utca' volt, jelenleg Fővám tér néven fut"
+    },
+    {
+      "sablon_oszlop_index": 21,
+      "wildom_nev": "Ferenciek tere",
+      "pm_azonosito": "PM18",
+      "sablon_felirat": "Pizza Me 18- Ferenciek tere",
+      "megjegyzes": null
+    },
+    {
+      "sablon_oszlop_index": 22,
+      "wildom_nev": "Jászai Mari Tér",
+      "pm_azonosito": "PM19",
+      "sablon_felirat": "Pizza Me 19- Jászai",
+      "megjegyzes": null
+    },
+    {
+      "sablon_oszlop_index": 23,
+      "wildom_nev": "Etele Plaza",
+      "pm_azonosito": "PM20",
+      "sablon_felirat": "Pizza Me 20- Etele Plaza",
+      "megjegyzes": null
+    },
+    {
+      "sablon_oszlop_index": 24,
+      "wildom_nev": "Óbuda",
+      "pm_azonosito": "PM21",
+      "sablon_felirat": "Pizza Me 21- Óbuda",
+      "megjegyzes": null
+    },
+    {
+      "sablon_oszlop_index": 25,
+      "wildom_nev": "Kispest",
+      "pm_azonosito": "PM22",
+      "sablon_felirat": "Pizza Me 22-Kispest",
+      "megjegyzes": null
+    },
+    {
+      "sablon_oszlop_index": 26,
+      "wildom_nev": "Bosnyák tér",
+      "pm_azonosito": "PM23",
+      "sablon_felirat": "Pizza Me 23 Zugló",
+      "megjegyzes": "PM23 korábbi neve 'Zugló' volt, jelenleg Bosnyák tér néven fut (a tér a Zuglóban van)"
+    },
+    {
+      "sablon_oszlop_index": 27,
+      "wildom_nev": "Árkád",
+      "pm_azonosito": "PM24",
+      "sablon_felirat": "Pizza Me 24 Árkád",
+      "megjegyzes": null
+    },
+    {
+      "sablon_oszlop_index": 28,
+      "wildom_nev": "Kazinczy",
+      "pm_azonosito": "PM25",
+      "sablon_felirat": "Pizza Me 25 Kazinczy",
+      "megjegyzes": null
+    },
+    {
+      "sablon_oszlop_index": 29,
+      "wildom_nev": "Eleven Center",
+      "pm_azonosito": "PM26",
+      "sablon_felirat": "Pizza Me 26 Eleven",
+      "megjegyzes": null
+    },
+    {
+      "sablon_oszlop_index": 30,
+      "wildom_nev": "Törökvész",
+      "pm_azonosito": "PM27",
+      "sablon_felirat": "Pizza Me 27",
+      "megjegyzes": "Felhasználó megerősítette: PM27 = Törökvész"
+    },
+    {
+      "sablon_oszlop_index": 31,
+      "wildom_nev": "GoBuda",
+      "pm_azonosito": "PM28",
+      "sablon_felirat": "Pizza Me 28",
+      "megjegyzes": "Sorban követi Törökvészt (PM27), nincs külön megerősítve"
+    },
+    {
+      "sablon_oszlop_index": 34,
+      "wildom_nev": "D1 Buda",
+      "pm_azonosito": null,
+      "sablon_felirat": "Pizza Me -D1",
+      "megjegyzes": null
+    },
+    {
+      "sablon_oszlop_index": 35,
+      "wildom_nev": "D2 Baross",
+      "pm_azonosito": null,
+      "sablon_felirat": "Pizza Me -D2",
+      "megjegyzes": null
+    },
+    {
+      "sablon_oszlop_index": 36,
+      "wildom_nev": "Siófok",
+      "pm_azonosito": "F1",
+      "sablon_felirat": "Pizza Me Siófok",
+      "megjegyzes": null
+    },
+    {
+      "sablon_oszlop_index": 37,
+      "wildom_nev": "Szeged",
+      "pm_azonosito": "F2",
+      "sablon_felirat": "Pizza Me Szeged",
+      "megjegyzes": null
+    },
+    {
+      "sablon_oszlop_index": 39,
+      "wildom_nev": "Pécs",
+      "pm_azonosito": "F4",
+      "sablon_felirat": "Pizza Me Pécs",
+      "megjegyzes": null
+    },
+    {
+      "sablon_oszlop_index": 40,
+      "wildom_nev": "Miskolc",
+      "pm_azonosito": "F5",
+      "sablon_felirat": "Pizza Me Miskolc",
+      "megjegyzes": null
+    }
+  ],
+  "uj_oszlopok": [
+    {
+      "sablon_felirat": "Pizza Me Újpest",
+      "wildom_nev": "Újpest",
+      "pm_azonosito": "V",
+      "megjegyzes": "Felhasználó megerősítette: aktív telephely, kell. Új oszlopként hozzáadva."
+    },
+    {
+      "sablon_felirat": "Pizza Me K1 Westend",
+      "wildom_nev": "K1 Westend",
+      "pm_azonosito": null,
+      "megjegyzes": "Felhasználó megerősítette: aktív telephely, kell. Új oszlopként hozzáadva."
+    }
+  ],
+  "kihagyott_wildom_oszlopok": [
+    {
+      "wildom_nev": "Truck 1 Kamion",
+      "megjegyzes": "Üzleti döntés alapján kihagyva, nem kell a Cola-fájlba."
+    },
+    {
+      "wildom_nev": "Budapest Park",
+      "megjegyzes": "Üzleti döntés alapján kihagyva, nem kell a Cola-fájlba."
+    },
+    {
+      "wildom_nev": "PM Plázs",
+      "megjegyzes": "Üzleti döntés alapján kihagyva, nem kell a Cola-fájlba."
+    },
+    {
+      "wildom_nev": "Closed Móricz",
+      "megjegyzes": "Bezárt telephely (más exportban 'Bezárt Móricz' néven is szerepelhet), mindig 0, nincs rá sablon oszlop."
+    },
+    {
+      "wildom_nev": "Bezárt Móricz",
+      "megjegyzes": "Ugyanaz a bezárt telephely, mint a 'Closed Móricz' - a Wildom export néha ezt a feliratot használja."
+    }
+  ]
+}

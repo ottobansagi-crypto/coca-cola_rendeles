@@ -14,58 +14,32 @@ A script megkeresi a legfrissebb lapot a sablonban (a legnagyobb, csak
 szambol allo lapnevet), lemasolja azt uj lapkent, es a Wildom exportbol
 kitolti a mennyisegeket a rogzitett termek- es uzlet-parositas alapjan.
 
-A termek- es uzletlista karbantartasa: lasd a PRODUCT_MAP es COL_MAP
-szotarakat lent, illetve a Wildom_Cola_parositas.xlsx fajlt a
-dokumentaciohoz.
+A termek- es uzletlista karbantartasa NEM ebben a fajlban tortenik: lasd a
+../config/parositas.json fajlt. Ha a Coca-Cola cikkszamot/arat valtoztat,
+vagy uzlet nyilik/zar/atnevezodik, azt a JSON-t kell szerkeszteni, nem ezt
+a kodot.
 """
 import sys
 import re
+import json
 import copy
 import datetime
+from pathlib import Path
 import openpyxl
 
-# --- Wildom termeknev -> PizzaMe sablon cikkszam ---
-PRODUCT_MAP = {
-    "Coca-Cola": 1188084,
-    "Coca-Cola Zero": 609280,
-    "Naturaqua Savas 0,5l": 1148406,
-    "Naturaqua Mentes 0,5l": 295006,
-    "Fuzetea Barack 0,5l": 1888013,
-    "Fuzetea Citrom 0,5l": 1676459,
-    "Cappy Narancs": 1523602,
-    "Cappy Alma": 983327,
-    "Kinley Gyömbér 0,5 L": 686007,
-    "Coca-Cola 1L": 2456204,
-    "Coca-Cola Zero 1L": 401274,
-    "Coca-Cola 0,5L": 256553,
-    "Coca-Cola Zero 0,5L ": 1307304,
-    "Coca-Cola Koffeinmentes Zero 0,33l": 1180102,
-    "Jack&Coke": 2462660,
-    "Naturaqua Mentes 1,5l": 295217,
-    "Naturaqua Savas 1,5l": 295118,
-    "Cappy Ice Fruit Multivitamin 0,5L": 279045,
-    "Kinley Pink 0,5l": 2474103,
-}
+CONFIG_PATH = Path(__file__).resolve().parent.parent / "config" / "parositas.json"
 
-# --- Sablon oszlop index (0-based, a fejlista sorrendje szerint) -> Wildom oszlop nev ---
-COL_MAP_BY_NAME = {
-    3: "Király", 4: "Erzsébet krt. 51(2)", 5: "Fashion", 6: "Bazilika",
-    7: "Széll Kálmán Tér", 8: "Corvin", 9: "Károly krt.", 10: "Dob",
-    11: "Blaha", 12: "Oktogon", 13: "Wesselényi", 15: "Astoria",
-    16: "Erzsébet krt. 14. (13)", 17: "Gomba", 19: "Keleti",
-    20: "Fővám Tér", 21: "Ferenciek tere", 22: "Jászai Mari Tér",
-    23: "Etele Plaza", 24: "Óbuda", 25: "Kispest", 26: "Bosnyák tér",
-    27: "Árkád", 28: "Kazinczy", 29: "Eleven Center", 30: "Törökvész",
-    31: "GoBuda", 34: "D1 Buda", 35: "D2 Baross", 36: "Siófok",
-    37: "Szeged", 39: "Pécs", 40: "Miskolc",
-}
-# Uj oszlopok (nincsenek meg a regi sablonban) - hozzuk lettre, ha hianyoznak
-NEW_COLUMNS = {
-    "Pizza Me Újpest": "Újpest",
-    "Pizza Me K1 Westend": "K1 Westend",
-}
-# Ezeket a Wildom oszlopokat tudottan KIHAGYJUK (felhasznaloi donces alapjan)
-EXCLUDED_WILDOM_COLS = {"Truck 1 Kamion", "Budapest Park", "PM Plázs", "Closed Móricz"}
+
+def load_config(path=CONFIG_PATH):
+    with open(path, encoding="utf-8") as f:
+        raw = json.load(f)
+
+    product_map = {p["wildom_nev"]: p["cikkszam"] for p in raw["termek_parositas"]}
+    col_map_by_name = {u["sablon_oszlop_index"]: u["wildom_nev"] for u in raw["uzlet_parositas"]}
+    new_columns = {c["sablon_felirat"]: c["wildom_nev"] for c in raw["uj_oszlopok"]}
+    excluded_wildom_cols = {e["wildom_nev"] for e in raw["kihagyott_wildom_oszlopok"]}
+
+    return product_map, col_map_by_name, new_columns, excluded_wildom_cols
 
 
 def find_latest_sheet(wb):
@@ -81,6 +55,8 @@ def main():
         sys.exit(1)
     wildom_path, sablon_path = sys.argv[1], sys.argv[2]
     new_sheet_name = sys.argv[3] if len(sys.argv) > 3 else datetime.date.today().strftime("%Y%m%d")
+
+    product_map, col_map_by_name, new_columns, excluded_wildom_cols = load_config()
 
     wb_w = openpyxl.load_workbook(wildom_path, data_only=True)
     ws_w = wb_w[wb_w.sheetnames[0]]
@@ -105,12 +81,12 @@ def main():
     header_row = [ws.cell(row=5, column=c).value for c in range(1, max_col + 1)]
 
     col_map = {}
-    for sablon_idx, wildom_name in COL_MAP_BY_NAME.items():
+    for sablon_idx, wildom_name in col_map_by_name.items():
         if wildom_name in w_idx:
             col_map[sablon_idx + 1] = w_idx[wildom_name]  # 1-based excel col -> wildom idx
 
     # uj oszlopok hozzaadasa, ha meg nincsenek
-    for header_text, wildom_name in NEW_COLUMNS.items():
+    for header_text, wildom_name in new_columns.items():
         if wildom_name not in w_idx:
             continue
         if header_text in header_row:
@@ -126,8 +102,8 @@ def main():
             ws.column_dimensions[hc.column_letter].width = ws.column_dimensions['D'].width
         col_map[col] = w_idx[wildom_name]
 
-    unmapped = [h for h in w_headers[2:-1] if h and h not in COL_MAP_BY_NAME.values()
-                and h not in NEW_COLUMNS.values() and h not in EXCLUDED_WILDOM_COLS]
+    unmapped = [h for h in w_headers[2:-1] if h and h not in col_map_by_name.values()
+                and h not in new_columns.values() and h not in excluded_wildom_cols]
     if unmapped:
         print("FIGYELEM - ismeretlen uj Wildom oszlop(ok), nincs sablon oszlop hozzajuk, "
               "ezeket NEM toltottuk ki:", unmapped)
@@ -137,7 +113,7 @@ def main():
         cikk = ws.cell(row=r, column=2).value
         if cikk is None:
             continue
-        wildom_product = next((p for p, code in PRODUCT_MAP.items() if code == cikk), None)
+        wildom_product = next((p for p, code in product_map.items() if code == cikk), None)
         if wildom_product is None or wildom_product not in w_data:
             continue
         wrow = w_data[wildom_product]

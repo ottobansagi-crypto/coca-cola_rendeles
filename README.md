@@ -51,22 +51,24 @@ Feltárt, valóban új telephelyek (nincs rájuk sablon-oszlop, hozzá kellett a
 
 ### 2.4 Működő implementáció
 
-Elkészült és éles adaton tesztelve egy Python script (`wildom_to_cola.py`), ami:
+Elkészült és éles adaton tesztelve egy Python script (`rendeles-generalas/wildom_to_cola.py`), ami:
 1. Beolvassa a Wildom exportot és a PizzaMe sablon legfrissebb lapját
-2. A fenti két párosítási szótár (`PRODUCT_MAP`, `COL_MAP_BY_NAME`) alapján lemásolja a sablon szerkezetét egy új, dátummal jelölt lapként
+2. A `config/parositas.json`-ban tárolt termék- és üzlet-párosítás alapján lemásolja a sablon szerkezetét egy új, dátummal jelölt lapként
 3. Kitölti a mennyiségeket a helyes cellákba
-4. Hozzáadja az új (korábban nem létező) telephely-oszlopokat (`NEW_COLUMNS`), ha még nincsenek meg
-5. Kihagyja az `EXCLUDED_WILDOM_COLS` listában szereplő telephelyeket
-6. Ha ismeretlen/új Wildom-oszlopot talál, amit egyik szótár sem ismer, ezt figyelmeztetésként jelzi (nem hagyja csendben veszni az adatot)
+4. Hozzáadja az új (korábban nem létező) telephely-oszlopokat, ha még nincsenek meg
+5. Kihagyja a kihagyandó listában szereplő telephelyeket
+6. Ha ismeretlen/új Wildom-oszlopot talál, amit a config egyik listája sem ismer, ezt figyelmeztetésként jelzi (nem hagyja csendben veszni az adatot)
 
-Teszt eredmény: 19 termék, 238 kitöltött mennyiség-cella, minden termék összesített mennyisége pontosan egyezik a Wildom "Összesen" oszlopával (levonva a szándékosan kihagyott telephelyeket).
+Teszt eredmény: 19 termék, 238 kitöltött mennyiség-cella, minden termék összesített mennyisége pontosan egyezik a Wildom "Összesen" oszlopával (levonva a szándékosan kihagyott telephelyeket). Ez az eredmény a `config/parositas.json`-ra való átállás után szintetikus teszt-adatpárral újra ellenőrizve is stabil (ld. `rendeles-generalas/README.md`).
 
-### 2.5 Kulcskövetelmény a továbbfejlesztéshez: karbantartható alapadatok
+### 2.5 Kulcskövetelmény a továbbfejlesztéshez: karbantartható alapadatok ✅ (megvalósítva)
 
-A jelenlegi implementációban a három szótár (`PRODUCT_MAP`, `COL_MAP_BY_NAME`, `NEW_COLUMNS`/`EXCLUDED_WILDOM_COLS`) a Python kódban van hardkódolva. **Ezt ki kell emelni egy külön, könnyen szerkeszthető konfigurációba** (pl. egy JSON/YAML fájl, vagy egy erre dedikált Excel/Google Sheet tábla — ez utóbbi azért is előnyös, mert a felhasználó Excel-ben, kódolás nélkül tudja frissíteni), hogy:
-- ha a Coca-Cola megváltoztat egy cikkszámot vagy árat, ne kelljen a programkódhoz nyúlni
+A korábbi implementációban a három szótár (`PRODUCT_MAP`, `COL_MAP_BY_NAME`, `NEW_COLUMNS`/`EXCLUDED_WILDOM_COLS`) a Python kódban volt hardkódolva. Ez ki lett emelve a `config/parositas.json` fájlba, hogy:
+- ha a Coca-Cola megváltoztat egy cikkszámot vagy árat, ne kelljen a programkódhoz nyúlni — elég a JSON-t szerkeszteni
 - ha nyit/zár egy telephely, vagy megváltozik a neve, ugyanez legyen igaz
 - a két modul (rendelés-generálás és a holnap részletezendő visszaigazolás/számla modul) **közös** adatforrásból dolgozzon — ne legyen két külön helyen karbantartott termék/ár/üzlet lista.
+
+A `config/parositas.json` szerkezete: `termek_parositas` (Wildom termék → cikkszám + Cola SKU-név), `uzlet_parositas` (Wildom telephelynév → sablon oszlopindex + PM-azonosító + jelenlegi felirat), `uj_oszlopok` (még hozzáadandó telephelyek), `kihagyott_wildom_oszlopok` (üzleti döntéssel kizárt telephelyek). Részletek: `config/README.md`.
 
 ---
 
@@ -89,4 +91,4 @@ Ez a modul jelenleg önállóan, kliensoldali JavaScript-ként fut (böngészőb
 - A COLA_MASTER_v2.html új verziójának részletei (pontos mezők, jelenlegi adattárolási mód — böngésző localStorage? fájlba mentés?)
 - Hol lakjon a közös alapadat-forrás (JSON a repóban? Google Sheet, amit mindkét modul beolvas? Excel fájl?)
 - Végleges hosztolás/futtatási mód mindkét modulra (helyi gép, GitHub Actions, kis webes hosting stb.)
-- GitHub repó struktúra: egy repóban a két modul almappákban, közös `config/` mappával az alapadatoknak
+- ~~GitHub repó struktúra: egy repóban a két modul almappákban, közös `config/` mappával az alapadatoknak~~ — **megvalósítva**: `rendeles-generalas/` (Modul 1), `config/` (közös alapadatok), `visszaigazolas-szamla/` (Modul 2, előkészítve)

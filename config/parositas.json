@@ -1,138 +1,197 @@
 {
-  "_megjegyzes": "Karbantartható alapadatok a Wildom -> PizzaMe/Cola rendeles-generalashoz. Ha a Coca-Cola cikkszamot/arat valtoztat, vagy uzlet nyilik/zar/atnevezodik, ezt a fajlt kell szerkeszteni, nem a kodot. Ugyanezt a fajlt hasznalja majd a 2. modul (visszaigazolas/szamla) is.",
+  "_megjegyzes": "Karbantartható alapadatok a Wildom -> PizzaMe/Cola rendeles-generalashoz ES a visszaigazolas/szamla-ellenorzeshez (kozos adatforras mindket modulnak). Ha a Coca-Cola cikkszamot/arat valtoztat, vagy uzlet nyilik/zar/atnevezodik, ezt a fajlt kell szerkeszteni, nem a kodot. Az ar_ft mezo Ft/csomagolasi egyseg (zsugor vagy karton), a Modul 2 hasznalja a nettó osszeg szamitasahoz. A wildom_nev=null tetelek nincsenek a Wildom rendelesi listan, csak a Cola visszaigazolason/szamlan jelennek meg.",
   "termek_parositas": [
     {
       "wildom_nev": "Coca-Cola",
       "csomagolas": "24db / Karton",
       "cikkszam": 1188084,
       "cola_nev": "330 CAN X24 COCA COLA SLEEK HU",
-      "megjegyzes": "Feltételezés: jelöletlen méret = 0,33l dobozos (Karton csomagolás)"
+      "megjegyzes": "Feltételezés: jelöletlen méret = 0,33l dobozos (Karton csomagolás)",
+      "ar_ft": 5110.2
     },
     {
       "wildom_nev": "Coca-Cola Zero",
       "csomagolas": "24db / Karton",
       "cikkszam": 609280,
       "cola_nev": "330 CAN X24 COKE ZERO SLEEK HU",
-      "megjegyzes": "Feltételezés: jelöletlen méret = 0,33l dobozos"
+      "megjegyzes": "Feltételezés: jelöletlen méret = 0,33l dobozos",
+      "ar_ft": 5098.32
     },
     {
       "wildom_nev": "Naturaqua Savas 0,5l",
       "csomagolas": "12db / Zsugor",
       "cikkszam": 1148406,
       "cola_nev": "500 PET X12 NATURAQUA CARB TWIST HU",
-      "megjegyzes": "Savas = szénsavas (CARB)"
+      "megjegyzes": "Savas = szénsavas (CARB)",
+      "ar_ft": 1482.52
     },
     {
       "wildom_nev": "Naturaqua Mentes 0,5l",
       "csomagolas": "24db / Karton",
       "cikkszam": 295006,
       "cola_nev": "500 PET X24 NATURAQUA STILL TWIST HU",
-      "megjegyzes": "Mentes = szénsavmentes (STILL)"
+      "megjegyzes": "Mentes = szénsavmentes (STILL)",
+      "ar_ft": 2965.03
     },
     {
       "wildom_nev": "Fuzetea Barack 0,5l",
       "csomagolas": "12db / Zsugor",
       "cikkszam": 1888013,
       "cola_nev": "500 PET X12 FUZE TEA BT PEACH ROSE NEW HU",
-      "megjegyzes": null
+      "megjegyzes": null,
+      "ar_ft": 3053.75
     },
     {
       "wildom_nev": "Fuzetea Citrom 0,5l",
       "csomagolas": "12db / Zsugor",
       "cikkszam": 1676459,
       "cola_nev": "500 PET X12 FUZETEA BT LEM LGR NEW HU",
-      "megjegyzes": null
+      "megjegyzes": null,
+      "ar_ft": 3053.75
     },
     {
       "wildom_nev": "Cappy Narancs",
       "csomagolas": "12db / Zsugor",
       "cikkszam": 1523602,
       "cola_nev": "330 PET X12 CAPPY OR PULP JC 100 NEW HU",
-      "megjegyzes": "OR = Orange/Narancs"
+      "megjegyzes": "OR = Orange/Narancs",
+      "ar_ft": 4451.04
     },
     {
       "wildom_nev": "Cappy Alma",
       "csomagolas": "12db / Zsugor",
       "cikkszam": 983327,
       "cola_nev": "330 PET X12 CAPPY APPLE NEW BAHRHU",
-      "megjegyzes": null
+      "megjegyzes": null,
+      "ar_ft": 4079.5
     },
     {
       "wildom_nev": "Kinley Gyömbér 0,5 L",
       "csomagolas": "12db / Zsugor",
       "cikkszam": 686007,
       "cola_nev": "Kinley Gyömbér 0,5l",
-      "megjegyzes": "Közvetlen névegyezés"
+      "megjegyzes": "Közvetlen névegyezés",
+      "ar_ft": 3188.26
     },
     {
       "wildom_nev": "Coca-Cola 1L",
       "csomagolas": "12db / Zsugor",
       "cikkszam": 2456204,
       "cola_nev": "1.0 PET X12 COCA COLA HU",
-      "megjegyzes": null
+      "megjegyzes": null,
+      "ar_ft": 3779.79
     },
     {
       "wildom_nev": "Coca-Cola Zero 1L",
       "csomagolas": "12db / Zsugor",
       "cikkszam": 401274,
       "cola_nev": "1.0 PET X12 COKE ZERO HU",
-      "megjegyzes": null
+      "megjegyzes": null,
+      "ar_ft": 3761.79
     },
     {
       "wildom_nev": "Coca-Cola 0,5L",
       "csomagolas": "24db / Karton",
       "cikkszam": 256553,
       "cola_nev": "500 PET X24 COCA COLA",
-      "megjegyzes": null
+      "megjegyzes": null,
+      "ar_ft": 6394.52
     },
     {
       "wildom_nev": "Coca-Cola Zero 0,5L ",
       "csomagolas": "12db / Zsugor",
       "cikkszam": 1307304,
       "cola_nev": "500 PET X12 COLA ZERO",
-      "megjegyzes": null
+      "megjegyzes": null,
+      "ar_ft": 3188.26
     },
     {
       "wildom_nev": "Coca-Cola Koffeinmentes Zero 0,33l",
       "csomagolas": "24db / Zsugor",
       "cikkszam": 1180102,
       "cola_nev": "330 CAN X24 COKE ZERO CAFF FREE HU",
-      "megjegyzes": null
+      "megjegyzes": null,
+      "ar_ft": 5098.32
     },
     {
       "wildom_nev": "Jack&Coke",
       "csomagolas": "12db / Zsugor",
       "cikkszam": 2462660,
       "cola_nev": "330 PET X12 Jack & Coke",
-      "megjegyzes": "Közvetlen névegyezés"
+      "megjegyzes": "Közvetlen névegyezés",
+      "ar_ft": 9678.13
     },
     {
       "wildom_nev": "Naturaqua Mentes 1,5l",
       "csomagolas": "6db / Karton",
       "cikkszam": 295217,
       "cola_nev": "1.5 PET X6 NAP STILL TWIST HU",
-      "megjegyzes": "sablon Kiszerelés oszlopban 'MENTES' jelölve"
+      "megjegyzes": "sablon Kiszerelés oszlopban 'MENTES' jelölve",
+      "ar_ft": 774.31
     },
     {
       "wildom_nev": "Naturaqua Savas 1,5l",
       "csomagolas": "6db / Zsugor",
       "cikkszam": 295118,
       "cola_nev": "1.5 PET X6 NAP CARB TWIST HU",
-      "megjegyzes": "sablon Kiszerelés oszlopban 'SAVAS' jelölve"
+      "megjegyzes": "sablon Kiszerelés oszlopban 'SAVAS' jelölve",
+      "ar_ft": 774.31
     },
     {
       "wildom_nev": "Cappy Ice Fruit Multivitamin 0,5L",
       "csomagolas": "12db / Zsugor",
       "cikkszam": 279045,
       "cola_nev": "500 PET X12 Cappy Ice Fruit Multivitamin 0,5l",
-      "megjegyzes": "Közvetlen névegyezés. FONTOS: ez a cikkszám Cola-oldalon korábban változott már (pl. 279045 <-> 279044) - ellenőrizd friss sablonnál."
+      "megjegyzes": "Közvetlen névegyezés. FONTOS: ez a cikkszám Cola-oldalon korábban változott már (pl. 279045 <-> 279044) - ellenőrizd friss sablonnál.",
+      "ar_ft": 3320.87
     },
     {
       "wildom_nev": "Kinley Pink 0,5l",
       "csomagolas": "12db / Zsugor",
       "cikkszam": 2474103,
       "cola_nev": "Kinley Pink Aromatic Berry 0,5l",
-      "megjegyzes": "Közvetlen névegyezés"
+      "megjegyzes": "Közvetlen névegyezés",
+      "ar_ft": 3188.26
+    },
+    {
+      "wildom_nev": null,
+      "csomagolas": null,
+      "cikkszam": 2428702,
+      "cola_nev": "Fuzetea Eper 0,5l",
+      "ar_ft": 3062.75,
+      "megjegyzes": "Nincs a Wildom rendelési listán (Modul 1), csak a Cola visszaigazolás/számla tartalmazza. Ha a Wildomban is megjelenik, vedd fel ide a wildom_nev-et is."
+    },
+    {
+      "wildom_nev": null,
+      "csomagolas": null,
+      "cikkszam": 989010,
+      "cola_nev": "Cappy Barack 0,33l",
+      "ar_ft": 4079.5,
+      "megjegyzes": "Nincs a Wildom rendelési listán (Modul 1), csak a Cola visszaigazolás/számla tartalmazza. Ha a Wildomban is megjelenik, vedd fel ide a wildom_nev-et is."
+    },
+    {
+      "wildom_nev": null,
+      "csomagolas": null,
+      "cikkszam": 1847431,
+      "cola_nev": "Sprite 0,5l",
+      "ar_ft": 3188.26,
+      "megjegyzes": "Nincs a Wildom rendelési listán (Modul 1), csak a Cola visszaigazolás/számla tartalmazza. Ha a Wildomban is megjelenik, vedd fel ide a wildom_nev-et is."
+    },
+    {
+      "wildom_nev": null,
+      "csomagolas": null,
+      "cikkszam": 2507204,
+      "cola_nev": "Fanta Narancs 0,5l",
+      "ar_ft": 3188.26,
+      "megjegyzes": "Nincs a Wildom rendelési listán (Modul 1), csak a Cola visszaigazolás/számla tartalmazza. Ha a Wildomban is megjelenik, vedd fel ide a wildom_nev-et is."
+    },
+    {
+      "wildom_nev": null,
+      "csomagolas": null,
+      "cikkszam": 32501595,
+      "cola_nev": "Logisztikai díj",
+      "ar_ft": 800.0,
+      "megjegyzes": "Nem termék, hanem logisztikai díjtétel a Cola-számlán; nincs Wildom megfelelője, csomagolása."
     }
   ],
   "uzlet_parositas": [

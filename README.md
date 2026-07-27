@@ -1,6 +1,6 @@
 # Coca-Cola Rendelés-kezelő Program – Specifikáció
 
-Státusz: **1. rész (Rendelés-generálás) kész és tesztelve. 2. rész (Visszaigazolás/Számla/History/OCR) vázlat, pontosítás holnap egy frissebb HTML verzió alapján.**
+Státusz: **1. rész (Rendelés-generálás) kész és tesztelve, karbantartható configgal. 2. rész (Visszaigazolás/Számla/History) átadva és a repóba mentve, a közös config-gal való tényleges összekötés (termékárak beolvasása, boltkód ↔ PM-szám megfeleltetés) még hátravan.**
 
 ## 1. Háttér és cél
 
@@ -72,23 +72,29 @@ A `config/parositas.json` szerkezete: `termek_parositas` (Wildom termék → cik
 
 ---
 
-## 3. Modul 2: Visszaigazolás / Számla-ellenőrzés / History / OCR (vázlat — pontosítás holnap)
+## 3. Modul 2: Visszaigazolás / Számla-ellenőrzés / History
 
-A felhasználó már használ egy működő, böngészőben futó HTML eszközt (`COLA_MASTER_v2.html`), aminek felépítése (fülek szerint):
-- **① Visszaigazolás** — a leadott rendelés Excel és a Cola által visszaigazolt Excel összevetése, eltérések jelzése
-- **② Számla Ellenőrzés** — a beérkező számla (PDF) összevetése a visszaigazolással
-- **③ History** — a korábbi egyeztetések naplója
-- **④ OCR Ellenőrzés** — feltehetően a PDF számlák OCR-alapú adatkinyerése/ellenőrzése
+A felhasználó már használ egy működő, böngészőben futó HTML eszközt
+(`visszaigazolas-szamla/Cola_ellenorzes.html`, korábban `COLA_MASTER_v2.html`
+néven), aminek felépítése (fülek szerint):
+- **① Visszaigazolás** — a PM megrendelő excel (üzlet × cikkszám mátrix) és a Cola visszaigazolás excel (Sold-to Party / Material / Order Size / Confirmed Qty) összevetése, eltérések jelzése boltonként, várható nettó összeg számítása
+- **② Számla Ellenőrzés** — a beérkező gyűjtőszámla PDF szöveg-alapú feldolgozása (`pdf.js`), összevetés az ① fülön kiszámolt várható nettóval
+- **③ History** — a korábbi egyeztetések naplója (böngésző `localStorage`)
 
-Ez a modul jelenleg önállóan, kliensoldali JavaScript-ként fut (böngészőben, `xlsx.js` könyvtárral), fájl drag-and-drop-pal. A pontos logika (hogyan párosít terméket/üzletet, hogyan tárolja a historyt, hogyan működik az OCR) a holnap átadott, frissebb verzió alapján kerül ide részletezésre.
+A korábban tervezett önálló "④ OCR Ellenőrzés" fül **szándékosan kimaradt** — a ② fül szöveg-alapú PDF-feldolgozása kiváltja.
 
-**Integrációs cél:** ez a modul ugyanazt a termék/üzlet/ár alapadat-forrást használja, mint a Modul 1 (ld. 2.5), így egyetlen helyen kell karbantartani a Cola-féle SKU-kat, árakat és a telephelylistát mindkét modul számára.
+Ez a modul önállóan, kliensoldali JavaScript-ként fut (böngészőben, `xlsx.js` + `pdf.js`, CDN-ről betöltve), fájl drag-and-drop-pal, backend nélkül.
+
+**Integrációs cél és jelenlegi állapot:** ez a modul ugyanazt a termék/üzlet/ár alapadat-forrást kellene használja, mint a Modul 1 (ld. 2.5). A termékadatok (cikkszám, név, egységár) már átkerültek a közös `config/parositas.json`-ba, de a HTML **még nem olvassa be onnan** — ez még hardkódolva van a fájlban (`TERMEK_MAP`), külön munkaként hátravan a bekötés. Az üzletazonosítás is más elven működik itt (SAP "boltkód" a PM-excel és a Cola-visszaigazolás közös oszlopaiból), mint a Modul 1-ben (Wildom név / "PM-szám") — ehhez egy boltkód ↔ PM-szám megfeleltető tábla szükséges, amit a felhasználó ad majd át. Részletek: `config/README.md` és `visszaigazolas-szamla/README.md`.
 
 ---
 
-## 4. Nyitott kérdések (holnapra)
+## 4. Nyitott kérdések
 
-- A COLA_MASTER_v2.html új verziójának részletei (pontos mezők, jelenlegi adattárolási mód — böngésző localStorage? fájlba mentés?)
-- Hol lakjon a közös alapadat-forrás (JSON a repóban? Google Sheet, amit mindkét modul beolvas? Excel fájl?)
+- ~~A COLA_MASTER_v2.html új verziójának részletei~~ — **megvalósítva**: átadva, elmentve `visszaigazolas-szamla/Cola_ellenorzes.html` néven, adattárolás böngésző `localStorage`-ban (3 fül, OCR fül szándékosan kimaradt)
+- ~~Hol lakjon a közös alapadat-forrás~~ — **megvalósítva**: `config/parositas.json` a repóban
+- A Modul 2 tényleges bekötése a közös `config/parositas.json`-ba (jelenleg még nem olvassa be — ld. 3. szakasz)
+- **Boltkód ↔ PM-szám megfeleltető tábla** — a Modul 2 SAP "boltkód" alapon azonosítja az üzleteket, a Modul 1 Wildom név/"PM-szám" alapon; ehhez a felhasználó át fogja adni a PM megrendelő excelben szereplő boltkód-listát
+- A 4 extra termék (Fuzetea Eper, Cappy Barack, Sprite, Fanta Narancs) és a Logisztikai díj — jóváhagyva, felvéve a közös configba (`wildom_nev: null`, mivel nincsenek a Wildom rendelési listán)
 - Végleges hosztolás/futtatási mód mindkét modulra (helyi gép, GitHub Actions, kis webes hosting stb.)
-- ~~GitHub repó struktúra: egy repóban a két modul almappákban, közös `config/` mappával az alapadatoknak~~ — **megvalósítva**: `rendeles-generalas/` (Modul 1), `config/` (közös alapadatok), `visszaigazolas-szamla/` (Modul 2, előkészítve)
+- ~~GitHub repó struktúra: egy repóban a két modul almappákban, közös `config/` mappával az alapadatoknak~~ — **megvalósítva**: `rendeles-generalas/` (Modul 1), `config/` (közös alapadatok), `visszaigazolas-szamla/` (Modul 2)

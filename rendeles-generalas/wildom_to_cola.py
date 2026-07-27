@@ -34,7 +34,7 @@ def load_config(path=CONFIG_PATH):
     with open(path, encoding="utf-8") as f:
         raw = json.load(f)
 
-    product_map = {p["wildom_nev"]: p["cikkszam"] for p in raw["termek_parositas"]}
+    product_map = {p["wildom_nev"]: p["cikkszam"] for p in raw["termek_parositas"] if p["wildom_nev"]}
     col_map_by_name = {u["sablon_oszlop_index"]: u["wildom_nev"] for u in raw["uzlet_parositas"]}
     new_columns = {c["sablon_felirat"]: c["wildom_nev"] for c in raw["uj_oszlopok"]}
     excluded_wildom_cols = {e["wildom_nev"] for e in raw["kihagyott_wildom_oszlopok"]}

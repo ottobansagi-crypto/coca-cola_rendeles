@@ -13,11 +13,14 @@ JSON-t kezelő eszközzel módosítható.
 Mezők:
 
 - **`termek_parositas`** — lista, minden elem egy termék:
-  - `wildom_nev` — a termék neve a Wildom exportban (ez alapján történik a párosítás)
-  - `csomagolas` — dokumentációs infó (Wildom csomagolás-jelölés)
+  - `wildom_nev` — a termék neve a Wildom exportban (ez alapján történik a párosítás a Modul 1-ben); **`null`, ha a termék nincs a Wildom rendelési listán** (csak a Modul 2 visszaigazolás/számla tartalmazza — ld. lent)
+  - `csomagolas` — dokumentációs infó (Wildom csomagolás-jelölés); `null` a Wildom-ban nem rendelt tételeknél
   - `cikkszam` — a Coca-Cola cikkszáma; **ha ez változik, itt kell frissíteni**
   - `cola_nev` — a hivatalos Cola SKU-név (a sablon "Anyag megnevezése" oszlopában szerepel, dokumentációs célra)
+  - `ar_ft` — nettó egységár Ft/csomagolási egység (zsugor vagy karton); **ezt használja a Modul 2 (visszaigazolás/számla-ellenőrzés) a várható végösszeg kiszámításához** — ha a Coca-Cola árat változtat, itt kell frissíteni
   - `megjegyzes` — szabad szöveges megjegyzés
+
+  5 tétel (`Fuzetea Eper 0,5l`, `Cappy Barack 0,33l`, `Sprite 0,5l`, `Fanta Narancs 0,5l`, valamint a `Logisztikai díj`) csak a Cola visszaigazoláson/számlán jelenik meg, a Wildom rendelési listában nincs benne — ezeknél `wildom_nev: null`. Ha egyszer megjelennek a Wildom exportban is, itt kell pótolni a `wildom_nev`-et és a `csomagolas`-t.
 
 - **`uzlet_parositas`** — lista, minden elem egy már a sablonban létező telephely-oszlop:
   - `sablon_oszlop_index` — a PizzaMe sablon oszlopának 0-alapú indexe (a fejléc-sor sorrendje szerint); **ne módosítsd, ha nem tudod pontosan, melyik sablon-oszlopnak felel meg**
@@ -45,6 +48,18 @@ Mezők:
 Ha a script egy Wildom-oszlopot egyik listában sem talál, figyelmeztetést ír
 ki futáskor ("FIGYELEM - ismeretlen uj Wildom oszlop(ok)...") — ez jelzi, ha
 egy új/átnevezett telephely lemaradt a konfigurációból.
+
+## Nyitott kérdés: üzletazonosítás a Modul 2-ben
+
+A `uzlet_parositas` jelenleg a Wildom telephelynevet és a "PM-számot"
+(pl. `PM4`) használja azonosítóként — ezt a Modul 1 (`rendeles-generalas/`)
+használja. A Modul 2 (`visszaigazolas-szamla/Cola_ellenorzes.html`) viszont
+egy harmadik, SAP-eredetű **"boltkód"** alapján párosít üzleteket (10+
+jegyű szám a PM megrendelő excel egy rejtett sorából és a Cola
+visszaigazolás "Sold-to Party" oszlopából). Ez a boltkód-lista még nincs
+összekötve a `pm_azonosito`/`sablon_oszlop_index` mezőkkel — ehhez egy
+boltkód ↔ PM-szám megfeleltető táblára van szükség, amit a felhasználó
+küld át.
 
 ## `Wildom_Cola_parositas.xlsx`
 

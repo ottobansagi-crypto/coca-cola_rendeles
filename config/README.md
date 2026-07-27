@@ -27,7 +27,10 @@ Mezők:
   - `wildom_nev` — a telephely neve a Wildom exportban
   - `pm_azonosito` — a Wildom "PM száma" (dokumentációs célra)
   - `sablon_felirat` — a sablon jelenlegi oszlopfejléce (dokumentációs célra)
+  - `boltkod` — a Coca-Cola/SAP "Sold-to Party" azonosítója; **ezt használja a Modul 2 (`Cola_ellenorzes.html`) az üzletek párosításához** a PM megrendelő excel és a Cola visszaigazolás/számla között. `null`, ha egyelőre nincs hozzá boltkód (ld. lent).
   - `megjegyzes` — pl. korábbi átnevezés ténye
+
+  3 üzlethez (`Pizza Me 2- Erzsébet krt. 51.`, `Pizza Me 21- Óbuda`, `Pizza Me 26 Eleven`) a 2026-07-27-én kapott boltkód-listában nem szerepelt boltkód — ezeknél `boltkod: null` maradt, tisztázni kell a felhasználóval.
 
 - **`uj_oszlopok`** — olyan telephelyek, amiknek még nincs oszlopa a sablonban;
   a script automatikusan létrehozza az oszlopot, ha hiányzik. Ha egy ilyen
@@ -49,17 +52,21 @@ Ha a script egy Wildom-oszlopot egyik listában sem talál, figyelmeztetést ír
 ki futáskor ("FIGYELEM - ismeretlen uj Wildom oszlop(ok)...") — ez jelzi, ha
 egy új/átnevezett telephely lemaradt a konfigurációból.
 
-## Nyitott kérdés: üzletazonosítás a Modul 2-ben
+## Üzletazonosítás a Modul 2-ben — `boltkod` mező
 
-A `uzlet_parositas` jelenleg a Wildom telephelynevet és a "PM-számot"
-(pl. `PM4`) használja azonosítóként — ezt a Modul 1 (`rendeles-generalas/`)
-használja. A Modul 2 (`visszaigazolas-szamla/Cola_ellenorzes.html`) viszont
-egy harmadik, SAP-eredetű **"boltkód"** alapján párosít üzleteket (10+
-jegyű szám a PM megrendelő excel egy rejtett sorából és a Cola
-visszaigazolás "Sold-to Party" oszlopából). Ez a boltkód-lista még nincs
-összekötve a `pm_azonosito`/`sablon_oszlop_index` mezőkkel — ehhez egy
-boltkód ↔ PM-szám megfeleltető táblára van szükség, amit a felhasználó
-küld át.
+A Modul 1 (`rendeles-generalas/`) a Wildom telephelynevet és a "PM-számot"
+(pl. `PM4`) használja azonosítóként. A Modul 2 (`visszaigazolas-szamla/Cola_ellenorzes.html`)
+viszont egy harmadik, SAP-eredetű **"boltkód"** alapján párosít üzleteket
+(10+ jegyű szám a PM megrendelő excel egy rejtett sorából és a Cola
+visszaigazolás "Sold-to Party" oszlopából). Ez most már be van kötve:
+minden `uzlet_parositas` bejegyzésnek van `boltkod` mezője.
+
+**`uzlet_parositas_nem_cola_oszlopok`** — a boltkód-listával együtt kapott,
+de a Cola-párosításhoz **nem tartozó** oszlopok (más cég: "Lángosom",
+"HTM", vagy tisztázatlan PizzaMe-telephely: "Váci út 31." variánsok).
+Ezeket **nem** vettük fel a `uzlet_parositas`/`uj_oszlopok` közé, csak
+dokumentáljuk itt — ha valamelyik mégis Cola-rendelést kapna, ide nézve
+könnyen felvehető a megfelelő listába.
 
 ## `Wildom_Cola_parositas.xlsx`
 

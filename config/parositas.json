@@ -200,6 +200,7 @@
       "wildom_nev": "Király",
       "pm_azonosito": "PM1",
       "sablon_felirat": "Pizza Me 1- Király utca",
+      "boltkod": "1605129692",
       "megjegyzes": null
     },
     {
@@ -207,6 +208,7 @@
       "wildom_nev": "Erzsébet krt. 51(2)",
       "pm_azonosito": "PM2",
       "sablon_felirat": "Pizza Me 2- Erzsébet krt. 51.",
+      "boltkod": null,
       "megjegyzes": null
     },
     {
@@ -214,6 +216,7 @@
       "wildom_nev": "Fashion",
       "pm_azonosito": "PM3",
       "sablon_felirat": "Pizza Me 3- Fashion Street",
+      "boltkod": "1605123304",
       "megjegyzes": null
     },
     {
@@ -221,6 +224,7 @@
       "wildom_nev": "Bazilika",
       "pm_azonosito": "PM4",
       "sablon_felirat": "Pizza Me 4- Sas utca",
+      "boltkod": "1605123303",
       "megjegyzes": "PM4 korábbi neve 'Sas utca' volt, jelenleg Bazilika néven fut a Wildomban"
     },
     {
@@ -228,6 +232,7 @@
       "wildom_nev": "Széll Kálmán Tér",
       "pm_azonosito": "PM5",
       "sablon_felirat": "Pizza Me 5- Széll Kálmán tér",
+      "boltkod": "1605129695",
       "megjegyzes": null
     },
     {
@@ -235,6 +240,7 @@
       "wildom_nev": "Corvin",
       "pm_azonosito": "PM6",
       "sablon_felirat": "Pizza Me 6- Corvin",
+      "boltkod": "1605122699",
       "megjegyzes": null
     },
     {
@@ -242,6 +248,7 @@
       "wildom_nev": "Károly krt.",
       "pm_azonosito": "PM7",
       "sablon_felirat": "Pizza Me 7- Károly krt.25",
+      "boltkod": "1605125898",
       "megjegyzes": null
     },
     {
@@ -249,6 +256,7 @@
       "wildom_nev": "Dob",
       "pm_azonosito": "PM8",
       "sablon_felirat": "Pizza Me  8- Dob utca",
+      "boltkod": "1605122711",
       "megjegyzes": null
     },
     {
@@ -256,6 +264,7 @@
       "wildom_nev": "Blaha",
       "pm_azonosito": "PM9",
       "sablon_felirat": "Pizza Me 9- Blaha Lujza tér.",
+      "boltkod": "1605125312",
       "megjegyzes": null
     },
     {
@@ -263,6 +272,7 @@
       "wildom_nev": "Oktogon",
       "pm_azonosito": "PM10",
       "sablon_felirat": "Pizza Me 10- Oktogon",
+      "boltkod": "1605125320",
       "megjegyzes": null
     },
     {
@@ -270,6 +280,7 @@
       "wildom_nev": "Wesselényi",
       "pm_azonosito": "PM11",
       "sablon_felirat": "Pizza Me 11- Wesselényi utca",
+      "boltkod": "1605129727",
       "megjegyzes": "Nem tévesztendő össze a 'Lángosom Wesselényi' oszloppal (más cég)"
     },
     {
@@ -277,6 +288,7 @@
       "wildom_nev": "Astoria",
       "pm_azonosito": "PM12",
       "sablon_felirat": "Pizza Me 12- Astoria",
+      "boltkod": "1605122702",
       "megjegyzes": null
     },
     {
@@ -284,6 +296,7 @@
       "wildom_nev": "Erzsébet krt. 14. (13)",
       "pm_azonosito": "PM13",
       "sablon_felirat": "Pizza Me 13- Erzsébet krt 14.",
+      "boltkod": "1605129728",
       "megjegyzes": null
     },
     {
@@ -291,6 +304,7 @@
       "wildom_nev": "Gomba",
       "pm_azonosito": "PM15G",
       "sablon_felirat": "Pizza Me GOMBA",
+      "boltkod": "1605141826",
       "megjegyzes": null
     },
     {
@@ -298,6 +312,7 @@
       "wildom_nev": "Keleti",
       "pm_azonosito": "PM16",
       "sablon_felirat": "Pizza Me 16- Keleti",
+      "boltkod": "1605125313",
       "megjegyzes": null
     },
     {
@@ -305,6 +320,7 @@
       "wildom_nev": "Fővám Tér",
       "pm_azonosito": "PM17",
       "sablon_felirat": "Pizza Me 17- Váci utca",
+      "boltkod": "1605122703",
       "megjegyzes": "PM17 korábbi neve 'Váci utca' volt, jelenleg Fővám tér néven fut"
     },
     {
@@ -312,6 +328,7 @@
       "wildom_nev": "Ferenciek tere",
       "pm_azonosito": "PM18",
       "sablon_felirat": "Pizza Me 18- Ferenciek tere",
+      "boltkod": "1605129721",
       "megjegyzes": null
     },
     {
@@ -319,6 +336,7 @@
       "wildom_nev": "Jászai Mari Tér",
       "pm_azonosito": "PM19",
       "sablon_felirat": "Pizza Me 19- Jászai",
+      "boltkod": "1605125314",
       "megjegyzes": null
     },
     {
@@ -326,6 +344,7 @@
       "wildom_nev": "Etele Plaza",
       "pm_azonosito": "PM20",
       "sablon_felirat": "Pizza Me 20- Etele Plaza",
+      "boltkod": "1605129691",
       "megjegyzes": null
     },
     {
@@ -333,6 +352,7 @@
       "wildom_nev": "Óbuda",
       "pm_azonosito": "PM21",
       "sablon_felirat": "Pizza Me 21- Óbuda",
+      "boltkod": null,
       "megjegyzes": null
     },
     {
@@ -340,6 +360,7 @@
       "wildom_nev": "Kispest",
       "pm_azonosito": "PM22",
       "sablon_felirat": "Pizza Me 22-Kispest",
+      "boltkod": "1605127504",
       "megjegyzes": null
     },
     {
@@ -347,6 +368,7 @@
       "wildom_nev": "Bosnyák tér",
       "pm_azonosito": "PM23",
       "sablon_felirat": "Pizza Me 23 Zugló",
+      "boltkod": "1605115121",
       "megjegyzes": "PM23 korábbi neve 'Zugló' volt, jelenleg Bosnyák tér néven fut (a tér a Zuglóban van)"
     },
     {
@@ -354,6 +376,7 @@
       "wildom_nev": "Árkád",
       "pm_azonosito": "PM24",
       "sablon_felirat": "Pizza Me 24 Árkád",
+      "boltkod": "1605124146",
       "megjegyzes": null
     },
     {
@@ -361,6 +384,7 @@
       "wildom_nev": "Kazinczy",
       "pm_azonosito": "PM25",
       "sablon_felirat": "Pizza Me 25 Kazinczy",
+      "boltkod": "1605124163",
       "megjegyzes": null
     },
     {
@@ -368,6 +392,7 @@
       "wildom_nev": "Eleven Center",
       "pm_azonosito": "PM26",
       "sablon_felirat": "Pizza Me 26 Eleven",
+      "boltkod": null,
       "megjegyzes": null
     },
     {
@@ -375,6 +400,7 @@
       "wildom_nev": "Törökvész",
       "pm_azonosito": "PM27",
       "sablon_felirat": "Pizza Me 27",
+      "boltkod": "1605133936",
       "megjegyzes": "Felhasználó megerősítette: PM27 = Törökvész"
     },
     {
@@ -382,6 +408,7 @@
       "wildom_nev": "GoBuda",
       "pm_azonosito": "PM28",
       "sablon_felirat": "Pizza Me 28",
+      "boltkod": "1605135524",
       "megjegyzes": "Sorban követi Törökvészt (PM27), nincs külön megerősítve"
     },
     {
@@ -389,6 +416,7 @@
       "wildom_nev": "D1 Buda",
       "pm_azonosito": null,
       "sablon_felirat": "Pizza Me -D1",
+      "boltkod": "1605123696",
       "megjegyzes": null
     },
     {
@@ -396,6 +424,7 @@
       "wildom_nev": "D2 Baross",
       "pm_azonosito": null,
       "sablon_felirat": "Pizza Me -D2",
+      "boltkod": "1605139855",
       "megjegyzes": null
     },
     {
@@ -403,6 +432,7 @@
       "wildom_nev": "Siófok",
       "pm_azonosito": "F1",
       "sablon_felirat": "Pizza Me Siófok",
+      "boltkod": "1605115829",
       "megjegyzes": null
     },
     {
@@ -410,6 +440,7 @@
       "wildom_nev": "Szeged",
       "pm_azonosito": "F2",
       "sablon_felirat": "Pizza Me Szeged",
+      "boltkod": "1605122704",
       "megjegyzes": null
     },
     {
@@ -417,6 +448,7 @@
       "wildom_nev": "Pécs",
       "pm_azonosito": "F4",
       "sablon_felirat": "Pizza Me Pécs",
+      "boltkod": "1605115502",
       "megjegyzes": null
     },
     {
@@ -424,6 +456,7 @@
       "wildom_nev": "Miskolc",
       "pm_azonosito": "F5",
       "sablon_felirat": "Pizza Me Miskolc",
+      "boltkod": "1605131176",
       "megjegyzes": null
     }
   ],
@@ -461,6 +494,44 @@
     {
       "wildom_nev": "Bezárt Móricz",
       "megjegyzes": "Ugyanaz a bezárt telephely, mint a 'Closed Móricz' - a Wildom export néha ezt a feliratot használja."
+    }
+  ],
+  "_boltkod_megjegyzes": "A boltkod mezo a Cola/SAP 'Sold-to Party' azonositoja (Modul 2 -visszaigazolas-szamla/Cola_ellenorzes.html - ezt hasznalja bolt-parositasra). A felhasznalo altal 2026-07-27-en atadott PM megrendelo excel fejlec-sorabol szarmazik. 3 meglevo Cola-uzlethez (Erzsebet krt. 51., Obuda, Eleven Center) nem volt boltkod ebben a listaban - ellenorizni kell. A kapott lista tovabbi 7 oszlopot is tartalmazott, amik NEM PizzaMe/Cola-uzletek (mas ceg / meg nem tisztazott PizzaMe telephely) - ld. uzlet_parositas_nem_cola_oszlopok.",
+  "uzlet_parositas_nem_cola_oszlopok": [
+    {
+      "boltkod": "1605115446",
+      "sablon_felirat": "Lángosom Wesselényi",
+      "megjegyzes": "Más cég (Lángosom), nem PizzaMe/Cola - a README is figyelmeztet rá, hogy nem tévesztendő össze a 'Pizza Me 11- Wesselényi utca' oszloppal."
+    },
+    {
+      "boltkod": "1605137995",
+      "sablon_felirat": "Lángosom SÜTŐ",
+      "megjegyzes": "Más cég (Lángosom), nem PizzaMe/Cola."
+    },
+    {
+      "boltkod": "1605125978",
+      "sablon_felirat": "Pizza Me Váci út 31. - Házhozszállítás",
+      "megjegyzes": "PizzaMe-s felirat, de nincs a jelenlegi Cola-párosításban - tisztázandó, hogy önálló Cola-rendelő telephely-e, vagy a 'Pizza Me 17- Váci utca' variánsa."
+    },
+    {
+      "boltkod": "1605133927",
+      "sablon_felirat": "HTM Pozsonyi",
+      "megjegyzes": "Más cég/márka (HTM), nem PizzaMe/Cola."
+    },
+    {
+      "boltkod": "1605134957",
+      "sablon_felirat": "HTM Oktogon",
+      "megjegyzes": "Más cég/márka (HTM), nem PizzaMe/Cola - nem tévesztendő össze a 'Pizza Me 10- Oktogon' oszloppal."
+    },
+    {
+      "boltkod": "1605135517",
+      "sablon_felirat": "HTM Margit",
+      "megjegyzes": "Más cég/márka (HTM), nem PizzaMe/Cola."
+    },
+    {
+      "boltkod": "1605122689",
+      "sablon_felirat": "Pizza Me Váci út 31.",
+      "megjegyzes": "PizzaMe-s felirat, de nincs a jelenlegi Cola-párosításban - tisztázandó, hogy önálló Cola-rendelő telephely-e, vagy a 'Pizza Me 17- Váci utca' variánsa."
     }
   ]
 }

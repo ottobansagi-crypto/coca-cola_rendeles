@@ -1,20 +1,22 @@
 # Coca-Cola Rendelés-kezelő Program – Specifikáció
 
-Státusz: **1. rész (Rendelés-generálás) kész és tesztelve. 2. rész (Visszaigazolás/Számla/History/OCR) vázlat, pontosítás holnap egy frissebb HTML verzió alapján.**
+Státusz: **Egyesített, élő, böngészőben futó oldal (`index.html`) készült, ami mindkét modult (Rendelés-generálás + Visszaigazolás/Számla/History) egy helyen kezeli. GitHub Pages-en publikálva fut majd — ehhez két manuális, egyszeri GitHub-beállítást a felhasználónak kell elvégeznie (ld. 5. szakasz). A boltkód ↔ PM-szám megfeleltetés 3 üzletnél még hiányos.**
 
 ## 1. Háttér és cél
 
 A PizzaMe több telephelyes pizzéria-hálózat, ami a Coca-Cola termékeket (üdítők, vizek) a Wildom nevű belső rendelőrendszeren (admin.manage.pizzame.hu) keresztül rendeli meg telephelyenként. A Wildomból exportált Excel más szerkezetű, mint amit a Coca-Cola beszállítónak le kell adni (a "PizzaMe_megrendelő" nevű, évek óta használt sablon szerkezetében). Eddig ezt valaki kézzel másolta át hétről hétre. A cél egy program, ami ezt automatizálja, és emellett a rendelés utáni folyamatot (visszaigazolás, számla-egyeztetés, naplózás) is egy helyen kezeli.
 
-A programnak két fő modulja van:
-1. **Rendelés-generálás** — Wildom export → PizzaMe/Cola formátum (kész, ezt írja le részletesen ez a dokumentum)
-2. **Visszaigazolás / Számla-ellenőrzés / History / OCR** — már létezik egy működő HTML eszköz (`COLA_MASTER_v2.html`), amit a felhasználó jelenleg is használ; egy újabb verziót holnap ad át, azzal pontosítjuk ezt a részt.
+A programnak két fő funkciója van, **egyetlen élő, böngészőben futó oldalon** (`index.html`), fülekre bontva:
+1. **① Rendelés-generálás** — Wildom export → PizzaMe/Cola formátum
+2. **② Visszaigazolás / ③ Számla-ellenőrzés / ④ History** — a Cola visszaigazolás és a beérkező számla ellenőrzése, korábbi egyeztetések naplója
 
-Fontos, átfogó tervezési elv mindkét modulra: **minden változtatható alapadat (termékek, cikkszámok, árak, üzletlista/párosítás) egy könnyen szerkeszthető, a kódtól elkülönített adatforrásban legyen**, nem a programkódba égetve. Ha a Coca-Cola módosít egy cikkszámot, árat, vagy megnyílik/bezár egy telephely, ezt a business-felhasználónak kódmódosítás nélkül kell tudnia frissíteni.
+Fontos, átfogó tervezési elv: **minden változtatható alapadat (termékek, cikkszámok, árak, üzletlista/párosítás) egy könnyen szerkeszthető, a kódtól elkülönített adatforrásban legyen** (`config/parositas.json`), nem a programkódba égetve. Ha a Coca-Cola módosít egy cikkszámot, árat, vagy megnyílik/bezár egy telephely, ezt a business-felhasználónak kódmódosítás nélkül kell tudnia frissíteni. Mindkét fül **ugyanabból** a config-fájlból olvas.
+
+Az oldal teljesen kliensoldali (böngészőben futó JavaScript, `ExcelJS`/`xlsx.js`/`pdf.js` könyvtárakkal, CDN-ről betöltve) — nincs backend, nincs build lépés, a fájlfeltöltés/feldolgozás/letöltés mind a böngészőben történik.
 
 ---
 
-## 2. Modul 1: Rendelés-generálás (Wildom → PizzaMe formátum)
+## 2. Rendelés-generálás (Wildom → PizzaMe formátum)
 
 ### 2.1 Bemenet: Wildom export
 
@@ -51,42 +53,69 @@ Feltárt, valóban új telephelyek (nincs rájuk sablon-oszlop, hozzá kellett a
 
 ### 2.4 Működő implementáció
 
-Elkészült és éles adaton tesztelve egy Python script (`wildom_to_cola.py`), ami:
-1. Beolvassa a Wildom exportot és a PizzaMe sablon legfrissebb lapját
-2. A fenti két párosítási szótár (`PRODUCT_MAP`, `COL_MAP_BY_NAME`) alapján lemásolja a sablon szerkezetét egy új, dátummal jelölt lapként
+A ① Rendelés-generálás fül (`index.html`), böngészőben futó JavaScript (`ExcelJS` könyvtárral):
+1. Beolvassa a feltöltött Wildom exportot és a PizzaMe sablon legfrissebb lapját
+2. A `config/parositas.json`-ban tárolt termék- és üzlet-párosítás alapján lemásolja a sablon szerkezetét (stílusokkal, oszlopszélességgel együtt) egy új, dátummal jelölt lapként
 3. Kitölti a mennyiségeket a helyes cellákba
-4. Hozzáadja az új (korábban nem létező) telephely-oszlopokat (`NEW_COLUMNS`), ha még nincsenek meg
-5. Kihagyja az `EXCLUDED_WILDOM_COLS` listában szereplő telephelyeket
-6. Ha ismeretlen/új Wildom-oszlopot talál, amit egyik szótár sem ismer, ezt figyelmeztetésként jelzi (nem hagyja csendben veszni az adatot)
+4. Hozzáadja az új (korábban nem létező) telephely-oszlopokat, ha még nincsenek meg
+5. Kihagyja a kihagyandó listában szereplő telephelyeket
+6. Ha ismeretlen/új Wildom-oszlopot talál, amit a config egyik listája sem ismer, ezt figyelmeztetésként jelzi (nem hagyja csendben veszni az adatot)
+7. A kész fájlt letölthető linkként ajánlja fel (nincs szerver, nincs mentés máshova)
 
-Teszt eredmény: 19 termék, 238 kitöltött mennyiség-cella, minden termék összesített mennyisége pontosan egyezik a Wildom "Összesen" oszlopával (levonva a szándékosan kihagyott telephelyeket).
+Ez a logika korábban egy külön Python script (`wildom_to_cola.py`, `openpyxl` könyvtárral) volt — **JavaScriptre lett portolva**, hogy ugyanazon az élő oldalon fusson, mint a Modul 2. A port pontosságát szintetikus teszt-adatpárral ellenőriztük: a JS-verzió **cellaértékre pontosan (0 eltérés)** ugyanazt adja, mint a Python-verzió (19 termék, 343 kitöltött cella a teszt-adaton), és a stílusmásolás (font, kitöltés, keret, oszlopszélesség, új oszlop létrehozása) is helyesen működik valódi formázott mintafájlon tesztelve.
 
-### 2.5 Kulcskövetelmény a továbbfejlesztéshez: karbantartható alapadatok
+**Ismert korlát:** a stílusmásoláshoz használt `ExcelJS` könyvtár nem feltétlenül reprodukál 100%-ban minden Excel-formázási finomságot (pl. feltételes formázás, egyes ritka szám-formátumok) úgy, mint az `openpyxl` — a font/kitöltés/keret/oszlopszélesség viszont tesztelten helyesen öröklődik át.
 
-A jelenlegi implementációban a három szótár (`PRODUCT_MAP`, `COL_MAP_BY_NAME`, `NEW_COLUMNS`/`EXCLUDED_WILDOM_COLS`) a Python kódban van hardkódolva. **Ezt ki kell emelni egy külön, könnyen szerkeszthető konfigurációba** (pl. egy JSON/YAML fájl, vagy egy erre dedikált Excel/Google Sheet tábla — ez utóbbi azért is előnyös, mert a felhasználó Excel-ben, kódolás nélkül tudja frissíteni), hogy:
-- ha a Coca-Cola megváltoztat egy cikkszámot vagy árat, ne kelljen a programkódhoz nyúlni
+### 2.5 Kulcskövetelmény: karbantartható alapadatok ✅ (megvalósítva)
+
+A termék- és üzletpárosítás **nem** a kódba van égetve, hanem a `config/parositas.json` fájlban van, hogy:
+- ha a Coca-Cola megváltoztat egy cikkszámot vagy árat, ne kelljen a programkódhoz nyúlni — elég a JSON-t szerkeszteni
 - ha nyit/zár egy telephely, vagy megváltozik a neve, ugyanez legyen igaz
-- a két modul (rendelés-generálás és a holnap részletezendő visszaigazolás/számla modul) **közös** adatforrásból dolgozzon — ne legyen két külön helyen karbantartott termék/ár/üzlet lista.
+- **mindkét fül-csoport** (Rendelés-generálás és Visszaigazolás/Számla) **közös** adatforrásból dolgozzon — ne legyen két külön helyen karbantartott termék/ár/üzlet lista
+
+A `config/parositas.json` szerkezete: `termek_parositas` (Wildom termék → cikkszám + Cola SKU-név + megjelenített név + egységár), `uzlet_parositas` (Wildom telephelynév → sablon oszlopindex + PM-azonosító + boltkód + jelenlegi felirat), `uj_oszlopok` (még hozzáadandó telephelyek), `kihagyott_wildom_oszlopok` (üzleti döntéssel kizárt telephelyek), `uzlet_egyeb_cola_helyek` (Cola-rendeléshez kötődő, de a Wildom 39-es listáján kívüli helyek). Részletek: `config/README.md`.
 
 ---
 
-## 3. Modul 2: Visszaigazolás / Számla-ellenőrzés / History / OCR (vázlat — pontosítás holnap)
+## 3. Visszaigazolás / Számla-ellenőrzés / History
 
-A felhasználó már használ egy működő, böngészőben futó HTML eszközt (`COLA_MASTER_v2.html`), aminek felépítése (fülek szerint):
-- **① Visszaigazolás** — a leadott rendelés Excel és a Cola által visszaigazolt Excel összevetése, eltérések jelzése
-- **② Számla Ellenőrzés** — a beérkező számla (PDF) összevetése a visszaigazolással
-- **③ History** — a korábbi egyeztetések naplója
-- **④ OCR Ellenőrzés** — feltehetően a PDF számlák OCR-alapú adatkinyerése/ellenőrzése
+A ②③④ fülek (`index.html`), ugyanazon az oldalon, mint a Rendelés-generálás:
+- **② Visszaigazolás** — a PM megrendelő excel (üzlet × cikkszám mátrix) és a Cola visszaigazolás excel (Sold-to Party / Material / Order Size / Confirmed Qty) összevetése, eltérések jelzése boltonként, várható nettó összeg számítása
+- **③ Számla Ellenőrzés** — a beérkező gyűjtőszámla PDF szöveg-alapú feldolgozása (`pdf.js`), összevetés a ② fülön kiszámolt várható nettóval
+- **④ History** — a korábbi egyeztetések naplója (böngésző `localStorage`)
 
-Ez a modul jelenleg önállóan, kliensoldali JavaScript-ként fut (böngészőben, `xlsx.js` könyvtárral), fájl drag-and-drop-pal. A pontos logika (hogyan párosít terméket/üzletet, hogyan tárolja a historyt, hogyan működik az OCR) a holnap átadott, frissebb verzió alapján kerül ide részletezésre.
+A korábban tervezett önálló "OCR Ellenőrzés" fül **szándékosan kimaradt** — a ③ fül szöveg-alapú PDF-feldolgozása kiváltja.
 
-**Integrációs cél:** ez a modul ugyanazt a termék/üzlet/ár alapadat-forrást használja, mint a Modul 1 (ld. 2.5), így egyetlen helyen kell karbantartani a Cola-féle SKU-kat, árakat és a telephelylistát mindkét modul számára.
+Ez a funkció eredetileg egy önálló HTML eszköz volt (`COLA_MASTER_v2.html`, amit a felhasználó korábban külön fájlként használt), amit összefésültünk a Rendelés-generálással egyetlen oldalba.
+
+**Integráció a közös configgal — elkészült:** a termékárak/nevek (korábban a fájlba égetett `TERMEK_MAP`) most a `config/parositas.json`-ból töltődnek be (`fetch('config/parositas.json')`), nem hardkódoltak.
+
+**Üzletazonosítás — részben nyitott:** a ② fül SAP "boltkód" alapon párosít üzleteket (a PM megrendelő excel és a Cola-visszaigazolás közös oszlopa), ami más azonosító-tér, mint a ① fül Wildom név/"PM-szám" rendszere. A felhasználó átadott egy boltkód-listát, ami alapján 30/33 meglévő Cola-üzlethez sikerült rögzíteni a `boltkod` mezőt a configban. **3 üzlethez még hiányzik** (Erzsébet krt. 51., Óbuda, Eleven Center) — ld. 6. szakasz.
 
 ---
 
-## 4. Nyitott kérdések (holnapra)
+## 4. Architektúra és hosztolás
 
-- A COLA_MASTER_v2.html új verziójának részletei (pontos mezők, jelenlegi adattárolási mód — böngésző localStorage? fájlba mentés?)
-- Hol lakjon a közös alapadat-forrás (JSON a repóban? Google Sheet, amit mindkét modul beolvas? Excel fájl?)
-- Végleges hosztolás/futtatási mód mindkét modulra (helyi gép, GitHub Actions, kis webes hosting stb.)
-- GitHub repó struktúra: egy repóban a két modul almappákban, közös `config/` mappával az alapadatoknak
+- **Egyetlen fájl, `index.html`**, a repó gyökerében — ez GitHub Pages-kompatibilis (statikus, nincs build lépés).
+- **`config/parositas.json`** — közös alapadat, ugyanonnan (`fetch('config/parositas.json')`) tölti be mindkét fül-csoport.
+- Külső könyvtárak CDN-ről: `xlsx.js` (SheetJS, a ②③ fülek excel/pdf-beolvasásához), `pdf.js` (③ fül PDF-szövegkinyeréshez), `ExcelJS` (① fül stílus-hű Excel-íráshoz).
+- Nincs szerver, nincs adatbázis — minden feldolgozás a böngészőben történik, a History a böngésző `localStorage`-ában él (eszközönként/böngészőnként külön).
+
+---
+
+## 5. GitHub Pages beüzemelése — 2 manuális lépés a felhasználótól
+
+Ezeket a Claude Code jelenlegi jogosultságai (GitHub MCP eszközök) **nem tudják elvégezni** — a repó tulajdonosának kell megtennie a GitHub felületén:
+
+1. **A repó publikussá tétele** — *Settings → General → Danger Zone → Change repository visibility → Public.* (A felhasználó ezt jóváhagyta: az ingyenes GitHub Pages csak publikus repóhoz jár; ez azt jelenti, hogy a `config/parositas.json`-ban lévő cikkszámok, árak és üzletlista bárki számára láthatóvá válik, aki ismeri a repó/oldal URL-jét.)
+2. **GitHub Pages bekapcsolása** — *Settings → Pages → Source: "Deploy from a branch" → válaszd ki azt a branch-et, amiről publikálni szeretnéd (pl. `main`, a `/ (root)` mappával).* Az `index.html` és a `config/` mappa a repó gyökerében van, tehát nincs szükség extra build-lépésre vagy Actions workflow-ra.
+
+Ezután az oldal élesben elérhető lesz a `https://<felhasználónév>.github.io/coca-cola_rendeles/` URL-en (pár perc alatt frissül, ha változás kerül a publikált branch-re).
+
+---
+
+## 6. Nyitott kérdések
+
+- **Boltkód ↔ PM-szám megfeleltetés 3 üzlethez hiányzik**: Erzsébet krt. 51., Óbuda, Eleven Center — tisztázandó, hogy aktívak-e még, és ha igen, mi a boltkódjuk.
+- **GitHub Pages beüzemelése** — a felhasználónak el kell végeznie a 5. szakaszban leírt 2 manuális lépést (repó publikussá tétele + Pages bekapcsolása).
+- **Stílus-hűség valós sablonon** — a JS-portot szintetikus és kézzel formázott mintafájlon teszteltük; érdemes az első éles futásnál ellenőrizni, hogy a generált fájl a valódi PizzaMe_megrendelő sablonon is jól néz ki (font/szín/keret), mert az `ExcelJS` könyvtár nem garantáltan 100%-ban azonos az `openpyxl`-lel minden formázási esetben.

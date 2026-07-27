@@ -1,0 +1,564 @@
+{
+  "_megjegyzes": "Karbantartható alapadatok a Wildom -> PizzaMe/Cola rendeles-generalashoz ES a visszaigazolas/szamla-ellenorzeshez (kozos adatforras mindket modulnak). Ha a Coca-Cola cikkszamot/arat valtoztat, vagy uzlet nyilik/zar/atnevezodik, ezt a fajlt kell szerkeszteni, nem a kodot. Az ar_ft mezo Ft/csomagolasi egyseg (zsugor vagy karton), a Modul 2 hasznalja a nettó osszeg szamitasahoz. A wildom_nev=null tetelek nincsenek a Wildom rendelesi listan, csak a Cola visszaigazolason/szamlan jelennek meg.",
+  "termek_parositas": [
+    {
+      "wildom_nev": "Coca-Cola",
+      "csomagolas": "24db / Karton",
+      "cikkszam": 1188084,
+      "cola_nev": "330 CAN X24 COCA COLA SLEEK HU",
+      "megjelenitett_nev": "Coca-Cola 0,33l can",
+      "megjegyzes": "Feltételezés: jelöletlen méret = 0,33l dobozos (Karton csomagolás)",
+      "ar_ft": 5110.2
+    },
+    {
+      "wildom_nev": "Coca-Cola Zero",
+      "csomagolas": "24db / Karton",
+      "cikkszam": 609280,
+      "cola_nev": "330 CAN X24 COKE ZERO SLEEK HU",
+      "megjelenitett_nev": "Coca-Cola Zero 0,33l can",
+      "megjegyzes": "Feltételezés: jelöletlen méret = 0,33l dobozos",
+      "ar_ft": 5098.32
+    },
+    {
+      "wildom_nev": "Naturaqua Savas 0,5l",
+      "csomagolas": "12db / Zsugor",
+      "cikkszam": 1148406,
+      "cola_nev": "500 PET X12 NATURAQUA CARB TWIST HU",
+      "megjelenitett_nev": "Naturaqua Savas 0,5l",
+      "megjegyzes": "Savas = szénsavas (CARB)",
+      "ar_ft": 1482.52
+    },
+    {
+      "wildom_nev": "Naturaqua Mentes 0,5l",
+      "csomagolas": "24db / Karton",
+      "cikkszam": 295006,
+      "cola_nev": "500 PET X24 NATURAQUA STILL TWIST HU",
+      "megjelenitett_nev": "Naturaqua Mentes 0,5l (x24)",
+      "megjegyzes": "Mentes = szénsavmentes (STILL)",
+      "ar_ft": 2965.03
+    },
+    {
+      "wildom_nev": "Fuzetea Barack 0,5l",
+      "csomagolas": "12db / Zsugor",
+      "cikkszam": 1888013,
+      "cola_nev": "500 PET X12 FUZE TEA BT PEACH ROSE NEW HU",
+      "megjelenitett_nev": "Fuzetea Barack 0,5l",
+      "megjegyzes": null,
+      "ar_ft": 3053.75
+    },
+    {
+      "wildom_nev": "Fuzetea Citrom 0,5l",
+      "csomagolas": "12db / Zsugor",
+      "cikkszam": 1676459,
+      "cola_nev": "500 PET X12 FUZETEA BT LEM LGR NEW HU",
+      "megjelenitett_nev": "Fuzetea Citrom 0,5l",
+      "megjegyzes": null,
+      "ar_ft": 3053.75
+    },
+    {
+      "wildom_nev": "Cappy Narancs",
+      "csomagolas": "12db / Zsugor",
+      "cikkszam": 1523602,
+      "cola_nev": "330 PET X12 CAPPY OR PULP JC 100 NEW HU",
+      "megjelenitett_nev": "Cappy Narancs 0,33l",
+      "megjegyzes": "OR = Orange/Narancs",
+      "ar_ft": 4451.04
+    },
+    {
+      "wildom_nev": "Cappy Alma",
+      "csomagolas": "12db / Zsugor",
+      "cikkszam": 983327,
+      "cola_nev": "330 PET X12 CAPPY APPLE NEW BAHRHU",
+      "megjelenitett_nev": "Cappy Alma 0,33l",
+      "megjegyzes": null,
+      "ar_ft": 4079.5
+    },
+    {
+      "wildom_nev": "Kinley Gyömbér 0,5 L",
+      "csomagolas": "12db / Zsugor",
+      "cikkszam": 686007,
+      "cola_nev": "Kinley Gyömbér 0,5l",
+      "megjelenitett_nev": "Kinley Gyömbér 0,5l",
+      "megjegyzes": "Közvetlen névegyezés",
+      "ar_ft": 3188.26
+    },
+    {
+      "wildom_nev": "Coca-Cola 1L",
+      "csomagolas": "12db / Zsugor",
+      "cikkszam": 2456204,
+      "cola_nev": "1.0 PET X12 COCA COLA HU",
+      "megjelenitett_nev": "Coca-Cola 1,0l",
+      "megjegyzes": null,
+      "ar_ft": 3779.79
+    },
+    {
+      "wildom_nev": "Coca-Cola Zero 1L",
+      "csomagolas": "12db / Zsugor",
+      "cikkszam": 401274,
+      "cola_nev": "1.0 PET X12 COKE ZERO HU",
+      "megjelenitett_nev": "Coca-Cola Zero 1,0l",
+      "megjegyzes": null,
+      "ar_ft": 3761.79
+    },
+    {
+      "wildom_nev": "Coca-Cola 0,5L",
+      "csomagolas": "24db / Karton",
+      "cikkszam": 256553,
+      "cola_nev": "500 PET X24 COCA COLA",
+      "megjelenitett_nev": "Coca-Cola 0,5l (x24)",
+      "megjegyzes": null,
+      "ar_ft": 6394.52
+    },
+    {
+      "wildom_nev": "Coca-Cola Zero 0,5L ",
+      "csomagolas": "12db / Zsugor",
+      "cikkszam": 1307304,
+      "cola_nev": "500 PET X12 COLA ZERO",
+      "megjelenitett_nev": "Coca-Cola Zero 0,5l",
+      "megjegyzes": null,
+      "ar_ft": 3188.26
+    },
+    {
+      "wildom_nev": "Coca-Cola Koffeinmentes Zero 0,33l",
+      "csomagolas": "24db / Zsugor",
+      "cikkszam": 1180102,
+      "cola_nev": "330 CAN X24 COKE ZERO CAFF FREE HU",
+      "megjelenitett_nev": "Coca-Cola Zero Caff.Free 0,33l can",
+      "megjegyzes": null,
+      "ar_ft": 5098.32
+    },
+    {
+      "wildom_nev": "Jack&Coke",
+      "csomagolas": "12db / Zsugor",
+      "cikkszam": 2462660,
+      "cola_nev": "330 PET X12 Jack & Coke",
+      "megjelenitett_nev": "Jack & Coke 0,33l",
+      "megjegyzes": "Közvetlen névegyezés",
+      "ar_ft": 9678.13
+    },
+    {
+      "wildom_nev": "Naturaqua Mentes 1,5l",
+      "csomagolas": "6db / Karton",
+      "cikkszam": 295217,
+      "cola_nev": "1.5 PET X6 NAP STILL TWIST HU",
+      "megjelenitett_nev": "Naturaqua Mentes 1,5l",
+      "megjegyzes": "sablon Kiszerelés oszlopban 'MENTES' jelölve",
+      "ar_ft": 774.31
+    },
+    {
+      "wildom_nev": "Naturaqua Savas 1,5l",
+      "csomagolas": "6db / Zsugor",
+      "cikkszam": 295118,
+      "cola_nev": "1.5 PET X6 NAP CARB TWIST HU",
+      "megjelenitett_nev": "Naturaqua Savas 1,5l",
+      "megjegyzes": "sablon Kiszerelés oszlopban 'SAVAS' jelölve",
+      "ar_ft": 774.31
+    },
+    {
+      "wildom_nev": "Cappy Ice Fruit Multivitamin 0,5L",
+      "csomagolas": "12db / Zsugor",
+      "cikkszam": 279045,
+      "cola_nev": "500 PET X12 Cappy Ice Fruit Multivitamin 0,5l",
+      "megjelenitett_nev": "Cappy Multivitamin 0,5l",
+      "megjegyzes": "Közvetlen névegyezés. FONTOS: ez a cikkszám Cola-oldalon korábban változott már (pl. 279045 <-> 279044) - ellenőrizd friss sablonnál.",
+      "ar_ft": 3320.87
+    },
+    {
+      "wildom_nev": "Kinley Pink 0,5l",
+      "csomagolas": "12db / Zsugor",
+      "cikkszam": 2474103,
+      "cola_nev": "Kinley Pink Aromatic Berry 0,5l",
+      "megjelenitett_nev": "Kinley Pink Berry 0,5l",
+      "megjegyzes": "Közvetlen névegyezés",
+      "ar_ft": 3188.26
+    },
+    {
+      "wildom_nev": null,
+      "csomagolas": null,
+      "cikkszam": 2428702,
+      "cola_nev": "Fuzetea Eper 0,5l",
+      "megjelenitett_nev": "Fuzetea Eper 0,5l",
+      "ar_ft": 3062.75,
+      "megjegyzes": "Nincs a Wildom rendelési listán (Modul 1), csak a Cola visszaigazolás/számla tartalmazza. Ha a Wildomban is megjelenik, vedd fel ide a wildom_nev-et is."
+    },
+    {
+      "wildom_nev": null,
+      "csomagolas": null,
+      "cikkszam": 989010,
+      "cola_nev": "Cappy Barack 0,33l",
+      "megjelenitett_nev": "Cappy Barack 0,33l",
+      "ar_ft": 4079.5,
+      "megjegyzes": "Nincs a Wildom rendelési listán (Modul 1), csak a Cola visszaigazolás/számla tartalmazza. Ha a Wildomban is megjelenik, vedd fel ide a wildom_nev-et is."
+    },
+    {
+      "wildom_nev": null,
+      "csomagolas": null,
+      "cikkszam": 1847431,
+      "cola_nev": "Sprite 0,5l",
+      "megjelenitett_nev": "Sprite 0,5l",
+      "ar_ft": 3188.26,
+      "megjegyzes": "Nincs a Wildom rendelési listán (Modul 1), csak a Cola visszaigazolás/számla tartalmazza. Ha a Wildomban is megjelenik, vedd fel ide a wildom_nev-et is."
+    },
+    {
+      "wildom_nev": null,
+      "csomagolas": null,
+      "cikkszam": 2507204,
+      "cola_nev": "Fanta Narancs 0,5l",
+      "megjelenitett_nev": "Fanta Narancs 0,5l",
+      "ar_ft": 3188.26,
+      "megjegyzes": "Nincs a Wildom rendelési listán (Modul 1), csak a Cola visszaigazolás/számla tartalmazza. Ha a Wildomban is megjelenik, vedd fel ide a wildom_nev-et is."
+    },
+    {
+      "wildom_nev": null,
+      "csomagolas": null,
+      "cikkszam": 32501595,
+      "cola_nev": "Logisztikai díj",
+      "megjelenitett_nev": "Logisztikai díj",
+      "ar_ft": 800.0,
+      "megjegyzes": "Nem termék, hanem logisztikai díjtétel a Cola-számlán; nincs Wildom megfelelője, csomagolása."
+    }
+  ],
+  "uzlet_parositas": [
+    {
+      "sablon_oszlop_index": 3,
+      "wildom_nev": "Király",
+      "pm_azonosito": "PM1",
+      "sablon_felirat": "Pizza Me 1- Király utca",
+      "boltkod": "1605129692",
+      "megjegyzes": null
+    },
+    {
+      "sablon_oszlop_index": 4,
+      "wildom_nev": "Erzsébet krt. 51(2)",
+      "pm_azonosito": "PM2",
+      "sablon_felirat": "Pizza Me 2- Erzsébet krt. 51.",
+      "boltkod": null,
+      "megjegyzes": null
+    },
+    {
+      "sablon_oszlop_index": 5,
+      "wildom_nev": "Fashion",
+      "pm_azonosito": "PM3",
+      "sablon_felirat": "Pizza Me 3- Fashion Street",
+      "boltkod": "1605123304",
+      "megjegyzes": null
+    },
+    {
+      "sablon_oszlop_index": 6,
+      "wildom_nev": "Bazilika",
+      "pm_azonosito": "PM4",
+      "sablon_felirat": "Pizza Me 4- Sas utca",
+      "boltkod": "1605123303",
+      "megjegyzes": "PM4 korábbi neve 'Sas utca' volt, jelenleg Bazilika néven fut a Wildomban"
+    },
+    {
+      "sablon_oszlop_index": 7,
+      "wildom_nev": "Széll Kálmán Tér",
+      "pm_azonosito": "PM5",
+      "sablon_felirat": "Pizza Me 5- Széll Kálmán tér",
+      "boltkod": "1605129695",
+      "megjegyzes": null
+    },
+    {
+      "sablon_oszlop_index": 8,
+      "wildom_nev": "Corvin",
+      "pm_azonosito": "PM6",
+      "sablon_felirat": "Pizza Me 6- Corvin",
+      "boltkod": "1605122699",
+      "megjegyzes": null
+    },
+    {
+      "sablon_oszlop_index": 9,
+      "wildom_nev": "Károly krt.",
+      "pm_azonosito": "PM7",
+      "sablon_felirat": "Pizza Me 7- Károly krt.25",
+      "boltkod": "1605125898",
+      "megjegyzes": null
+    },
+    {
+      "sablon_oszlop_index": 10,
+      "wildom_nev": "Dob",
+      "pm_azonosito": "PM8",
+      "sablon_felirat": "Pizza Me  8- Dob utca",
+      "boltkod": "1605122711",
+      "megjegyzes": null
+    },
+    {
+      "sablon_oszlop_index": 11,
+      "wildom_nev": "Blaha",
+      "pm_azonosito": "PM9",
+      "sablon_felirat": "Pizza Me 9- Blaha Lujza tér.",
+      "boltkod": "1605125312",
+      "megjegyzes": null
+    },
+    {
+      "sablon_oszlop_index": 12,
+      "wildom_nev": "Oktogon",
+      "pm_azonosito": "PM10",
+      "sablon_felirat": "Pizza Me 10- Oktogon",
+      "boltkod": "1605125320",
+      "megjegyzes": null
+    },
+    {
+      "sablon_oszlop_index": 13,
+      "wildom_nev": "Wesselényi",
+      "pm_azonosito": "PM11",
+      "sablon_felirat": "Pizza Me 11- Wesselényi utca",
+      "boltkod": "1605129727",
+      "megjegyzes": "Nem tévesztendő össze a 'Lángosom Wesselényi' oszloppal (más cég)"
+    },
+    {
+      "sablon_oszlop_index": 15,
+      "wildom_nev": "Astoria",
+      "pm_azonosito": "PM12",
+      "sablon_felirat": "Pizza Me 12- Astoria",
+      "boltkod": "1605122702",
+      "megjegyzes": null
+    },
+    {
+      "sablon_oszlop_index": 16,
+      "wildom_nev": "Erzsébet krt. 14. (13)",
+      "pm_azonosito": "PM13",
+      "sablon_felirat": "Pizza Me 13- Erzsébet krt 14.",
+      "boltkod": "1605129728",
+      "megjegyzes": null
+    },
+    {
+      "sablon_oszlop_index": 17,
+      "wildom_nev": "Gomba",
+      "pm_azonosito": "PM15G",
+      "sablon_felirat": "Pizza Me GOMBA",
+      "boltkod": "1605141826",
+      "megjegyzes": null
+    },
+    {
+      "sablon_oszlop_index": 19,
+      "wildom_nev": "Keleti",
+      "pm_azonosito": "PM16",
+      "sablon_felirat": "Pizza Me 16- Keleti",
+      "boltkod": "1605125313",
+      "megjegyzes": null
+    },
+    {
+      "sablon_oszlop_index": 20,
+      "wildom_nev": "Fővám Tér",
+      "pm_azonosito": "PM17",
+      "sablon_felirat": "Pizza Me 17- Váci utca",
+      "boltkod": "1605122703",
+      "megjegyzes": "PM17 korábbi neve 'Váci utca' volt, jelenleg Fővám tér néven fut"
+    },
+    {
+      "sablon_oszlop_index": 21,
+      "wildom_nev": "Ferenciek tere",
+      "pm_azonosito": "PM18",
+      "sablon_felirat": "Pizza Me 18- Ferenciek tere",
+      "boltkod": "1605129721",
+      "megjegyzes": null
+    },
+    {
+      "sablon_oszlop_index": 22,
+      "wildom_nev": "Jászai Mari Tér",
+      "pm_azonosito": "PM19",
+      "sablon_felirat": "Pizza Me 19- Jászai",
+      "boltkod": "1605125314",
+      "megjegyzes": null
+    },
+    {
+      "sablon_oszlop_index": 23,
+      "wildom_nev": "Etele Plaza",
+      "pm_azonosito": "PM20",
+      "sablon_felirat": "Pizza Me 20- Etele Plaza",
+      "boltkod": "1605129691",
+      "megjegyzes": null
+    },
+    {
+      "sablon_oszlop_index": 24,
+      "wildom_nev": "Óbuda",
+      "pm_azonosito": "PM21",
+      "sablon_felirat": "Pizza Me 21- Óbuda",
+      "boltkod": null,
+      "megjegyzes": null
+    },
+    {
+      "sablon_oszlop_index": 25,
+      "wildom_nev": "Kispest",
+      "pm_azonosito": "PM22",
+      "sablon_felirat": "Pizza Me 22-Kispest",
+      "boltkod": "1605127504",
+      "megjegyzes": null
+    },
+    {
+      "sablon_oszlop_index": 26,
+      "wildom_nev": "Bosnyák tér",
+      "pm_azonosito": "PM23",
+      "sablon_felirat": "Pizza Me 23 Zugló",
+      "boltkod": "1605115121",
+      "megjegyzes": "PM23 korábbi neve 'Zugló' volt, jelenleg Bosnyák tér néven fut (a tér a Zuglóban van)"
+    },
+    {
+      "sablon_oszlop_index": 27,
+      "wildom_nev": "Árkád",
+      "pm_azonosito": "PM24",
+      "sablon_felirat": "Pizza Me 24 Árkád",
+      "boltkod": "1605124146",
+      "megjegyzes": null
+    },
+    {
+      "sablon_oszlop_index": 28,
+      "wildom_nev": "Kazinczy",
+      "pm_azonosito": "PM25",
+      "sablon_felirat": "Pizza Me 25 Kazinczy",
+      "boltkod": "1605124163",
+      "megjegyzes": null
+    },
+    {
+      "sablon_oszlop_index": 29,
+      "wildom_nev": "Eleven Center",
+      "pm_azonosito": "PM26",
+      "sablon_felirat": "Pizza Me 26 Eleven",
+      "boltkod": null,
+      "megjegyzes": null
+    },
+    {
+      "sablon_oszlop_index": 30,
+      "wildom_nev": "Törökvész",
+      "pm_azonosito": "PM27",
+      "sablon_felirat": "Pizza Me 27",
+      "boltkod": "1605133936",
+      "megjegyzes": "Felhasználó megerősítette: PM27 = Törökvész"
+    },
+    {
+      "sablon_oszlop_index": 31,
+      "wildom_nev": "GoBuda",
+      "pm_azonosito": "PM28",
+      "sablon_felirat": "Pizza Me 28",
+      "boltkod": "1605135524",
+      "megjegyzes": "Sorban követi Törökvészt (PM27), nincs külön megerősítve"
+    },
+    {
+      "sablon_oszlop_index": 34,
+      "wildom_nev": "D1 Buda",
+      "pm_azonosito": null,
+      "sablon_felirat": "Pizza Me -D1",
+      "boltkod": "1605123696",
+      "megjegyzes": null
+    },
+    {
+      "sablon_oszlop_index": 35,
+      "wildom_nev": "D2 Baross",
+      "pm_azonosito": null,
+      "sablon_felirat": "Pizza Me -D2",
+      "boltkod": "1605139855",
+      "megjegyzes": null
+    },
+    {
+      "sablon_oszlop_index": 36,
+      "wildom_nev": "Siófok",
+      "pm_azonosito": "F1",
+      "sablon_felirat": "Pizza Me Siófok",
+      "boltkod": "1605115829",
+      "megjegyzes": null
+    },
+    {
+      "sablon_oszlop_index": 37,
+      "wildom_nev": "Szeged",
+      "pm_azonosito": "F2",
+      "sablon_felirat": "Pizza Me Szeged",
+      "boltkod": "1605122704",
+      "megjegyzes": null
+    },
+    {
+      "sablon_oszlop_index": 39,
+      "wildom_nev": "Pécs",
+      "pm_azonosito": "F4",
+      "sablon_felirat": "Pizza Me Pécs",
+      "boltkod": "1605115502",
+      "megjegyzes": null
+    },
+    {
+      "sablon_oszlop_index": 40,
+      "wildom_nev": "Miskolc",
+      "pm_azonosito": "F5",
+      "sablon_felirat": "Pizza Me Miskolc",
+      "boltkod": "1605131176",
+      "megjegyzes": null
+    }
+  ],
+  "uj_oszlopok": [
+    {
+      "sablon_felirat": "Pizza Me Újpest",
+      "wildom_nev": "Újpest",
+      "pm_azonosito": "V",
+      "megjegyzes": "Felhasználó megerősítette: aktív telephely, kell. Új oszlopként hozzáadva."
+    },
+    {
+      "sablon_felirat": "Pizza Me K1 Westend",
+      "wildom_nev": "K1 Westend",
+      "pm_azonosito": null,
+      "megjegyzes": "Felhasználó megerősítette: aktív telephely, kell. Új oszlopként hozzáadva."
+    }
+  ],
+  "kihagyott_wildom_oszlopok": [
+    {
+      "wildom_nev": "Truck 1 Kamion",
+      "megjegyzes": "Üzleti döntés alapján kihagyva, nem kell a Cola-fájlba."
+    },
+    {
+      "wildom_nev": "Budapest Park",
+      "megjegyzes": "Üzleti döntés alapján kihagyva, nem kell a Cola-fájlba."
+    },
+    {
+      "wildom_nev": "PM Plázs",
+      "megjegyzes": "Üzleti döntés alapján kihagyva, nem kell a Cola-fájlba."
+    },
+    {
+      "wildom_nev": "Closed Móricz",
+      "megjegyzes": "Bezárt telephely (más exportban 'Bezárt Móricz' néven is szerepelhet), mindig 0, nincs rá sablon oszlop."
+    },
+    {
+      "wildom_nev": "Bezárt Móricz",
+      "megjegyzes": "Ugyanaz a bezárt telephely, mint a 'Closed Móricz' - a Wildom export néha ezt a feliratot használja."
+    }
+  ],
+  "_boltkod_megjegyzes": "A boltkod mezo a Cola/SAP 'Sold-to Party' azonositoja (Modul 2 -visszaigazolas-szamla/Cola_ellenorzes.html - ezt hasznalja bolt-parositasra). A felhasznalo altal 2026-07-27-en atadott PM megrendelo excel fejlec-sorabol szarmazik. 3 meglevo Cola-uzlethez (Erzsebet krt. 51., Obuda, Eleven Center) nem volt boltkod ebben a listaban - ellenorizni kell. A kapott lista tovabbi 7 oszlopot is tartalmazott, amik NEM PizzaMe/Cola-uzletek (mas ceg / meg nem tisztazott PizzaMe telephely) - ld. uzlet_parositas_nem_cola_oszlopok.",
+  "uzlet_parositas_nem_cola_oszlopok": [
+    {
+      "boltkod": "1605115446",
+      "sablon_felirat": "Lángosom Wesselényi",
+      "megjegyzes": "Más cég (Lángosom), nem PizzaMe/Cola - a README is figyelmeztet rá, hogy nem tévesztendő össze a 'Pizza Me 11- Wesselényi utca' oszloppal."
+    },
+    {
+      "boltkod": "1605137995",
+      "sablon_felirat": "Lángosom SÜTŐ",
+      "megjegyzes": "Más cég (Lángosom), nem PizzaMe/Cola."
+    },
+    {
+      "boltkod": "1605133927",
+      "sablon_felirat": "HTM Pozsonyi",
+      "megjegyzes": "Más cég/márka (HTM), nem PizzaMe/Cola."
+    },
+    {
+      "boltkod": "1605134957",
+      "sablon_felirat": "HTM Oktogon",
+      "megjegyzes": "Más cég/márka (HTM), nem PizzaMe/Cola - nem tévesztendő össze a 'Pizza Me 10- Oktogon' oszloppal."
+    },
+    {
+      "boltkod": "1605135517",
+      "sablon_felirat": "HTM Margit",
+      "megjegyzes": "Más cég/márka (HTM), nem PizzaMe/Cola."
+    }
+  ],
+  "uzlet_egyeb_cola_helyek": [
+    {
+      "boltkod": "1605125978",
+      "sablon_felirat": "Pizza Me Váci út 31. - Házhozszállítás",
+      "megjegyzes": "Valódi, kis házhozszállítás-üzlet - a felhasználó szerint néha külön rendelnek neki Cola-terméket."
+    },
+    {
+      "boltkod": "1605122689",
+      "sablon_felirat": "Pizza Me Váci út 31.",
+      "megjegyzes": "A központi raktár (nem vásárlói telephely)."
+    }
+  ],
+  "_uzlet_egyeb_megjegyzes": "Valodi Cola-rendeleshez kotodo helyek, de NEM reszei a Wildom 'Beszallitoi megrendelesek -> Coca Cola' profil 39 rogzitett telephely-csoportjanak, ezert nincs wildom_nev/sablon_oszlop_index-uk (Modul 1 nem kezeli oket automatikusan). Boltkodjuk van, igy a Modul 2 (Cola_ellenorzes.html) tudja parositani a PM megrendelo excel es a Cola visszaigazolas/szamla kozott. Ha rendszeresen, a heti Wildom-exporton keresztul is rendelnenek, fel kell venni oket a rendes uzlet_parositas / uj_oszlopok listaba is (a Wildom-beli nevukkel)."
+}

@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cola Visszaigazolás Ellenőrző — PizzaMe</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@300;400;600&display=swap');
+:root {
+  --bg:#0f0f0f; --surface:#1a1a1a; --surface2:#222; --border:#2a2a2a;
+  --accent:#e8c547; --red:#e84747; --green:#47e88a; --blue:#47a8e8;
+  --text:#e0e0e0; --muted:#666;
+  --mono:'IBM Plex Mono',monospace; --sans:'IBM Plex Sans',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14px;min-height:100vh}
+.header{border-bottom:1px solid var(--border);padding:14px 28px;display:flex;align-items:center;gap:24px}
+.header-logo{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--accent);letter-spacing:.1em;text-transform:uppercase}
+.header h1{font-size:15px;font-weight:600}
+.tabs{display:flex;border-bottom:1px solid var(--border);background:var(--surface);padding:0 28px}
+.tab{padding:12px 20px;font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;transition:all .15s;user-select:none}
+.tab:hover{color:var(--text)}
+.tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+.panel{display:none;padding:28px}
+.panel.active{display:block}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:20px;margin-bottom:20px}
+.card-title{font-family:var(--mono);font-size:10px;font-weight:600;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-bottom:14px}
+.upload-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px}
+.upload-area{border:2px dashed var(--border);border-radius:8px;padding:28px 20px;text-align:center;cursor:pointer;transition:all .2s}
+.upload-area:hover,.upload-area.drag{border-color:var(--accent);background:rgba(232,197,71,.04)}
+.upload-area.done{border-color:var(--green);border-style:solid;background:rgba(71,232,138,.04)}
+.upload-icon{font-size:32px;margin-bottom:10px;opacity:.5}
+.upload-title{font-size:13px;font-weight:600;margin-bottom:6px}
+.upload-sub{font-size:11px;color:var(--muted);font-family:var(--mono)}
+.upload-area.done .upload-icon{opacity:1}
+.btn{padding:10px 20px;background:var(--accent);color:#000;border:none;border-radius:4px;font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;cursor:pointer;transition:opacity .2s}
+.btn:hover{opacity:.85}
+.btn:disabled{opacity:.35;cursor:not-allowed}
+.btn.sec{background:transparent;border:1px solid var(--border);color:var(--muted)}
+.btn.sec:hover{color:var(--text);border-color:var(--muted)}
+.btn.danger{background:var(--red);color:#fff}
+.btn-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.badge{display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:3px;font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:.05em;text-transform:uppercase}
+.badge.ok{background:rgba(71,232,138,.15);color:var(--green);border:1px solid rgba(71,232,138,.3)}
+.badge.warn{background:rgba(232,71,71,.15);color:var(--red);border:1px solid rgba(232,71,71,.3)}
+.badge.info{background:rgba(232,197,71,.15);color:var(--accent);border:1px solid rgba(232,197,71,.3)}
+.stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:20px}
+.stat{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:14px}
+.stat-label{font-family:var(--mono);font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px}
+.stat-val{font-family:var(--mono);font-size:18px;font-weight:600}
+.stat-val.green{color:var(--green)}
+.stat-val.red{color:var(--red)}
+.stat-val.yellow{color:var(--accent)}
+.tbl-wrap{overflow-x:auto;border-radius:6px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;min-width:620px}
+thead th{font-family:var(--mono);font-size:10px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;text-align:left;padding:9px 12px;border-bottom:1px solid var(--border);background:var(--surface);position:sticky;top:0;z-index:1}
+thead th.r{text-align:right}
+tbody tr{border-bottom:1px solid var(--border);transition:background .12s}
+tbody tr:hover{background:var(--surface)}
+tbody td{padding:9px 12px;font-family:var(--mono);font-size:11px}
+tbody td.r{text-align:right}
+tbody td.name{font-family:var(--sans);font-size:12px}
+tbody td.sub{font-size:10px;color:var(--muted);margin-left:6px}
+.total-row{border-top:2px solid var(--accent)!important;background:rgba(232,197,71,.05)!important}
+.total-row td{font-weight:600;color:var(--accent)}
+.alert{border-radius:6px;padding:12px 16px;font-size:12px;margin-bottom:14px;font-family:var(--mono)}
+.alert.ok{background:rgba(71,232,138,.1);border:1px solid rgba(71,232,138,.3);color:var(--green)}
+.alert.warn{background:rgba(232,71,71,.1);border:1px solid rgba(232,71,71,.3);color:var(--red)}
+.alert.info{background:rgba(232,197,71,.1);border:1px solid rgba(232,197,71,.3);color:var(--accent)}
+.diff-p{color:var(--red);font-weight:600}
+.diff-n{color:var(--blue);font-weight:600}
+.diff-0{color:var(--muted)}
+.filter-bar{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;align-items:center}
+.fbtn{padding:5px 11px;border-radius:3px;border:1px solid var(--border);background:transparent;color:var(--muted);font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;cursor:pointer;transition:all .15s}
+.fbtn.active{background:var(--accent);color:#000;border-color:var(--accent)}
+.bolt-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;margin-bottom:12px;overflow:hidden}
+.bolt-header{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;cursor:pointer;transition:background .15s}
+.bolt-header:hover{background:var(--surface2)}
+.bolt-title{font-weight:600;font-size:13px}
+.bolt-meta{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:2px}
+.bolt-body{padding:0 16px 14px;display:none}
+.bolt-body.open{display:block}
+.hist-item{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:14px;margin-bottom:10px}
+.hist-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.hist-title{font-weight:600;font-size:13px}
+.hist-meta{font-family:var(--mono);font-size:10px;color:var(--muted)}
+.hist-stats{display:flex;gap:16px;font-family:var(--mono);font-size:11px;flex-wrap:wrap}
+.hist-stat{color:var(--muted)}
+.hist-stat span{color:var(--text)}
+</style>
+</head>
+<body>
+<div class="header">
+  <div>
+    <div class="header-logo">PizzaMe ▸ Cola</div>
+    <h1>Cola Visszaigazolás Ellenőrző</h1>
+  </div>
+</div>
+<div id="lib-warning" style="display:none;background:rgba(232,71,71,.15);color:#e84747;border-bottom:1px solid rgba(232,71,71,.3);padding:10px 28px;font-family:'IBM Plex Mono',monospace;font-size:12px">
+  ⚠ Az xlsx feldolgozó könyvtár (cdnjs.cloudflare.com) nem töltődött be — ellenőrizd az internetkapcsolatot, és töltsd újra az oldalt. Feltöltés nélküle nem fog működni.
+</div>
+<div class="tabs">
+  <div class="tab active" onclick="switchTab('visszaig',this)">① Visszaigazolás</div>
+  <div class="tab" onclick="switchTab('szamla',this)">② Számla Ellenőrzés</div>
+  <div class="tab" onclick="switchTab('history',this)">③ History</div>
+</div>
+
+<!-- ==============================
+     TAB 1: VISSZAIGAZOLÁS
+================================ -->
+<div class="panel active" id="tab-visszaig">
+  <div class="upload-grid">
+    <div>
+      <div class="card-title">1. Cola visszaigazolás (xlsx)</div>
+      <div class="upload-area" id="drop-cola" onclick="document.getElementById('f-cola').click()"
+        ondragover="event.preventDefault();this.classList.add('drag')"
+        ondragleave="this.classList.remove('drag')"
+        ondrop="dropFile(event,'cola')">
+        <div class="upload-icon" id="icon-cola">📥</div>
+        <div class="upload-title" id="title-cola">Cola visszaigazolás</div>
+        <div class="upload-sub" id="sub-cola">A Colától kapott xlsx (Order Size / Confirmed Qty)</div>
+      </div>
+      <input type="file" id="f-cola" accept=".xlsx,.xls" style="display:none" onchange="loadFile(event,'cola')">
+    </div>
+    <div>
+      <div class="card-title">2. PM megrendelő excel (xlsx)</div>
+      <div class="upload-area" id="drop-pm" onclick="document.getElementById('f-pm').click()"
+        ondragover="event.preventDefault();this.classList.add('drag')"
+        ondragleave="this.classList.remove('drag')"
+        ondrop="dropFile(event,'pm')">
+        <div class="upload-icon" id="icon-pm">📋</div>
+        <div class="upload-title" id="title-pm">PM megrendelő excel</div>
+        <div class="upload-sub" id="sub-pm">Amit ténylegesen rendeltünk (üzletek × cikkszám mátrix)</div>
+      </div>
+      <input type="file" id="f-pm" accept=".xlsx,.xls" style="display:none" onchange="loadFile(event,'pm')">
+    </div>
+  </div>
+  <div class="btn-row" style="margin-bottom:24px">
+    <button class="btn" id="btn-feldolgoz" onclick="feldolgoz()" disabled>⚡ Feldolgozás</button>
+    <button class="btn sec" onclick="resetVissza()">↺ Reset</button>
+    <span id="visszaig-status" style="font-family:var(--mono);font-size:11px;color:var(--muted)"></span>
+  </div>
+  <div id="visszaig-result"></div>
+</div>
+
+<!-- ==============================
+     TAB 2: SZÁMLA ELLENŐRZÉS
+================================ -->
+<div class="panel" id="tab-szamla">
+  <div style="max-width:520px">
+    <div class="card-title">Cola gyűjtőszámla PDF feltöltése</div>
+    <div class="upload-area" id="drop-pdf" onclick="document.getElementById('f-pdf').click()"
+      ondragover="event.preventDefault();this.classList.add('drag')"
+      ondragleave="this.classList.remove('drag')"
+      ondrop="dropPdf(event)">
+      <div class="upload-icon" id="icon-pdf">📄</div>
+      <div class="upload-title" id="title-pdf">Cola PDF számla</div>
+      <div class="upload-sub">Húzd ide vagy kattints · a "31 bolt összesítője" gyűjtőszámla</div>
+    </div>
+    <input type="file" id="f-pdf" accept=".pdf" style="display:none" onchange="loadPdf(event)">
+  </div>
+  <div id="szamla-loading" style="display:none;margin-top:16px">
+    <div style="font-family:var(--mono);font-size:12px;color:var(--muted)">⏳ PDF feldolgozása... <span id="szamla-step"></span></div>
+  </div>
+  <div id="szamla-result" style="margin-top:24px"></div>
+</div>
+
+<!-- ==============================
+     TAB 3: HISTORY
+================================ -->
+<div class="panel" id="tab-history">
+  <div class="btn-row" style="margin-bottom:20px">
+    <div style="font-family:var(--mono);font-size:11px;color:var(--muted)">
+      Minden feldolgozott visszaigazolás automatikusan mentésre kerül (utolsó 20 futás).
+    </div>
+    <button class="btn sec danger" onclick="clearHistory()" style="margin-left:auto">🗑 Töröl mindent</button>
+  </div>
+  <div id="history-list"></div>
+</div>
+
+<script>
+// ===================== STATE =====================
+let colaWb = null, pmWb = null;
+let lastResult = null;
+
+if (typeof XLSX === 'undefined') {
+  document.getElementById('lib-warning').style.display = 'block';
+}
+if (typeof pdfjsLib !== 'undefined') {
+  pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+}
+
+// ===================== TABS =====================
+function switchTab(id, el) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  el.classList.add('active');
+  if (id === 'history') renderHistory();
+}
+
+// ===================== FILE LOADING =====================
+function dropFile(e, type) {
+  e.preventDefault();
+  document.getElementById('drop-' + type).classList.remove('drag');
+  const f = e.dataTransfer.files[0];
+  if (f) processXlsx(f, type);
+}
+function loadFile(e, type) {
+  if (e.target.files[0]) processXlsx(e.target.files[0], type);
+}
+function processXlsx(file, type) {
+  if (typeof XLSX === 'undefined') {
+    alert('Hiba: az xlsx feldolgozó könyvtár nem töltődött be (nincs internetkapcsolat, vagy a cdnjs.cloudflare.com le van tiltva). Ellenőrizd a hálózati kapcsolatot, és töltsd újra az oldalt.');
+    return;
+  }
+  const reader = new FileReader();
+  reader.onerror = () => {
+    alert('Hiba: nem sikerült beolvasni a fájlt (' + file.name + '). Próbáld újra.');
+  };
+  reader.onload = ev => {
+    try {
+      const wb = XLSX.read(ev.target.result, { type: 'binary' });
+      if (!wb.SheetNames || !wb.SheetNames.length) throw new Error('A fájlban nem található munkalap.');
+      if (type === 'cola') { colaWb = wb; markDone('cola', file.name); }
+      else { pmWb = wb; markDone('pm', file.name); }
+      checkReady();
+    } catch (err) {
+      alert('Hiba a fájl beolvasásakor (' + file.name + '): ' + err.message + '\n\nEllenőrizd, hogy valódi .xlsx fájlt töltöttél-e fel.');
+    }
+  };
+  reader.readAsBinaryString(file);
+}
+function markDone(type, name) {
+  document.getElementById('drop-' + type).classList.add('done');
+  document.getElementById('icon-' + type).textContent = '✅';
+  document.getElementById('title-' + type).textContent = name;
+  document.getElementById('sub-' + type).textContent = 'Betöltve';
+}
+function checkReady() {
+  document.getElementById('btn-feldolgoz').disabled = !(colaWb && pmWb);
+}
+function resetVissza() {
+  colaWb = null; pmWb = null;
+  document.getElementById('drop-cola').classList.remove('done');
+  document.getElementById('icon-cola').textContent = '📥';
+  document.getElementById('title-cola').textContent = 'Cola visszaigazolás';
+  document.getElementById('sub-cola').textContent = 'A Colától kapott xlsx (Order Size / Confirmed Qty)';
+  document.getElementById('drop-pm').classList.remove('done');
+  document.getElementById('icon-pm').textContent = '📋';
+  document.getElementById('title-pm').textContent = 'PM megrendelő excel';
+  document.getElementById('sub-pm').textContent = 'Amit ténylegesen rendeltünk (üzletek × cikkszám mátrix)';
+  document.getElementById('f-cola').value = '';
+  document.getElementById('f-pm').value = '';
+  document.getElementById('visszaig-result').innerHTML = '';
+  document.getElementById('visszaig-status').textContent = '';
+  checkReady();
+}
+
+// ===================== TERMÉK ÁRAK (cikkszám → név, egységár Ft/zsugor) =====================
+const TERMEK_MAP = {
+  '295118': { nev:'Naturaqua Savas 1,5l', zsugorAr:774.31 },
+  '295217': { nev:'Naturaqua Mentes 1,5l', zsugorAr:774.31 },
+  '401274': { nev:'Coca-Cola Zero 1,0l', zsugorAr:3761.79 },
+  '2456204': { nev:'Coca-Cola 1,0l', zsugorAr:3779.79 },
+  '256553': { nev:'Coca-Cola 0,5l (x24)', zsugorAr:6394.52 },
+  '279045': { nev:'Cappy Multivitamin 0,5l', zsugorAr:3320.87 },
+  '295006': { nev:'Naturaqua Mentes 0,5l (x24)', zsugorAr:2965.03 },
+  '686007': { nev:'Kinley Gyömbér 0,5l', zsugorAr:3188.26 },
+  '1148406': { nev:'Naturaqua Savas 0,5l', zsugorAr:1482.52 },
+  '1307304': { nev:'Coca-Cola Zero 0,5l', zsugorAr:3188.26 },
+  '1676459': { nev:'Fuzetea Citrom 0,5l', zsugorAr:3053.75 },
+  '1888013': { nev:'Fuzetea Barack 0,5l', zsugorAr:3053.75 },
+  '2428702': { nev:'Fuzetea Eper 0,5l', zsugorAr:3062.75 },
+  '2474103': { nev:'Kinley Pink Berry 0,5l', zsugorAr:3188.26 },
+  '1523602': { nev:'Cappy Narancs 0,33l', zsugorAr:4451.04 },
+  '983327': { nev:'Cappy Alma 0,33l', zsugorAr:4079.50 },
+  '989010': { nev:'Cappy Barack 0,33l', zsugorAr:4079.50 },
+  '1847431': { nev:'Sprite 0,5l', zsugorAr:3188.26 },
+  '2507204': { nev:'Fanta Narancs 0,5l', zsugorAr:3188.26 },
+  '609280': { nev:'Coca-Cola Zero 0,33l can', zsugorAr:5098.32 },
+  '1180102': { nev:'Coca-Cola Zero Caff.Free 0,33l can', zsugorAr:5098.32 },
+  '1188084': { nev:'Coca-Cola 0,33l can', zsugorAr:5110.20 },
+  '2462660': { nev:'Jack & Coke 0,33l', zsugorAr:9678.13 },
+  '32501595': { nev:'Logisztikai díj', zsugorAr:800.00 },
+};
+// NOTE: ha új cikkszám bukkan fel (lásd "ismeretlen ár" figyelmeztetés a futás után),
+// vedd fel ide a cikkszámot és a zsugor/karton egységárat, hogy a végösszeg pontos legyen.
+
+// ===================== HELPERS =====================
+function fmt(n) { return Math.round(n).toLocaleString('hu-HU'); }
+function num(v) { const n = parseFloat(v); return isNaN(n) ? 0 : n; }
+function normId(v) {
+  if (v === null || v === undefined) return '';
+  let s = String(v).trim();
+  if (s.endsWith('.0')) s = s.slice(0, -2);
+  return s;
+}
+function findHeaderIdx(headers, needle) {
+  return headers.findIndex(h => h.includes(needle));
+}
+
+// ===================== PM MEGRENDELŐ PARSE (mátrix: sorok=termékek, oszlopok=üzletek) =====================
+function parsePM(wb) {
+  const sheet = wb.Sheets[wb.SheetNames[0]];
+  const rows = XLSX.utils.sheet_to_json(sheet, { header: 1, defval: '' });
+  // Fejléc sor: B oszlopban (index 1) "Cikkszám" szerepel
+  let headerRow = -1;
+  for (let i = 0; i < Math.min(rows.length, 15); i++) {
+    const c1 = String(rows[i][1] || '').toLowerCase();
+    if (c1.includes('cikkszám') || c1.includes('cikkszam')) { headerRow = i; break; }
+  }
+  if (headerRow < 0) throw new Error('Nem található "Cikkszám" fejléc a PM megrendelő excelben.');
+  // Boltkód sor: a fejléc fölötti sorok közül az, amelyikben sok 10 jegyű szám van (D oszloptól)
+  let boltRow = -1;
+  for (let i = 0; i < headerRow; i++) {
+    let cnt = 0;
+    for (let c = 3; c < rows[i].length; c++) {
+      const v = rows[i][c];
+      if (typeof v === 'number' && v > 1000000000) cnt++;
+    }
+    if (cnt > 3) { boltRow = i; break; }
+  }
+  const header = rows[headerRow];
+  const boltCols = []; // { col, boltkod, nev }
+  for (let c = 3; c < header.length; c++) {
+    const nev = String(header[c] || '').trim();
+    if (!nev) continue;
+    const boltkod = boltRow >= 0 ? normId(rows[boltRow][c]) : '';
+    boltCols.push({ col: c, boltkod, nev });
+  }
+  const orders = {};   // boltkulcs -> { cikk: qty }
+  const nevByBolt = {};
+  boltCols.forEach(b => { if (b.boltkod) nevByBolt[b.boltkod] = b.nev; });
+  for (let i = headerRow + 1; i < rows.length; i++) {
+    const row = rows[i];
+    if (!row || row.every(c => c === '')) continue;
+    const cikk = normId(row[1]);
+    if (!cikk) continue;
+    boltCols.forEach(b => {
+      const qty = num(row[b.col]);
+      if (qty > 0) {
+        const key = b.boltkod || b.nev;
+        if (!orders[key]) orders[key] = {};
+        orders[key][cikk] = (orders[key][cikk] || 0) + qty;
+        if (!nevByBolt[key]) nevByBolt[key] = b.nev;
+      }
+    });
+  }
+  return { orders, nevByBolt };
+}
+
+// ===================== COLA VISSZAIGAZOLÁS PARSE (soronkénti lista) =====================
+function parseCola(wb) {
+  const sheet = wb.Sheets[wb.SheetNames[0]];
+  const rows = XLSX.utils.sheet_to_json(sheet, { header: 1, defval: '' });
+  let headerRow = -1;
+  for (let i = 0; i < Math.min(rows.length, 10); i++) {
+    const r = rows[i].map(c => String(c).toLowerCase());
+    if (r.some(c => c.includes('material')) && r.some(c => c.includes('sold'))) { headerRow = i; break; }
+  }
+  if (headerRow < 0) headerRow = 0;
+  const headers = rows[headerRow].map(c => String(c).toLowerCase().trim());
+  const cSoldParty = findHeaderIdx(headers, 'sold-to party');
+  const cSoldName = findHeaderIdx(headers, 'name of sold');
+  let cMaterial = headers.findIndex(h => h === 'material');
+  if (cMaterial < 0) cMaterial = findHeaderIdx(headers, 'material');
+  const cOrderSize = findHeaderIdx(headers, 'order size');
+  const cConfirmed = findHeaderIdx(headers, 'confirm');
+  const cMatDesc = headers.findIndex(h => h.includes('material') && h.includes('desc'));
+  if (cSoldParty < 0 || cMaterial < 0) {
+    throw new Error('Nem találom a "Sold-to Party" / "Material" oszlopokat a Cola visszaigazolásban.');
+  }
+  const orders = {};   // boltkód -> { cikk: {orderSize, confirmed, matDesc} }
+  const nevByBolt = {};
+  for (let i = headerRow + 1; i < rows.length; i++) {
+    const row = rows[i];
+    if (!row || row.every(c => c === '')) continue;
+    const boltkod = normId(row[cSoldParty]);
+    const cikk = normId(row[cMaterial]);
+    if (!boltkod || !cikk) continue;
+    const nev = cSoldName >= 0 ? String(row[cSoldName] || '').trim() : '';
+    const orderSize = cOrderSize >= 0 ? num(row[cOrderSize]) : null;
+    const confirmed = cConfirmed >= 0 ? num(row[cConfirmed]) : 0;
+    const matDesc = cMatDesc >= 0 ? String(row[cMatDesc] || '').trim() : '';
+    if (!orders[boltkod]) orders[boltkod] = {};
+    orders[boltkod][cikk] = { orderSize, confirmed, matDesc };
+    if (nev) nevByBolt[boltkod] = nev;
+  }
+  return { orders, nevByBolt };
+}
+
+// ===================== FŐ FELDOLGOZÁS =====================
+function feldolgoz() {
+  const btn = document.getElementById('btn-feldolgoz');
+  btn.disabled = true;
+  btn.textContent = '⏳ Feldolgozás...';
+  try {
+    const pm = parsePM(pmWb);
+    const cola = parseCola(colaWb);
+
+    const allBolt = new Set([...Object.keys(pm.orders), ...Object.keys(cola.orders)]);
+    const boltNev = {};
+    allBolt.forEach(bk => { boltNev[bk] = pm.nevByBolt[bk] || cola.nevByBolt[bk] || bk; });
+
+    const boltList = [...allBolt].sort((a, b) => (boltNev[a] || '').localeCompare(boltNev[b] || '', 'hu'));
+
+    let grandTotal = 0, grandRendeltFt = 0;
+    let elteresCount = 0, csakColaCount = 0, ismeretlenArSet = new Set();
+    const boltResults = [];
+
+    boltList.forEach(bk => {
+      const pmItems = pm.orders[bk] || {};
+      const colaItems = cola.orders[bk] || {};
+      const cikkSet = new Set([...Object.keys(pmItems), ...Object.keys(colaItems)]);
+      const items = [];
+      let boltFt = 0, boltRendeltFt = 0, boltElt = 0;
+
+      [...cikkSet].sort().forEach(cikk => {
+        const t = TERMEK_MAP[cikk];
+        const colaEntry = colaItems[cikk];
+        const nev = t ? t.nev : (colaEntry && colaEntry.matDesc ? colaEntry.matDesc : cikk);
+        const ar = t ? t.zsugorAr : null;
+        const nincsPM = !(cikk in pmItems);
+        const nincsCola = !colaEntry;
+        const pmQty = pmItems[cikk] || 0;
+        const colaOrder = colaEntry && colaEntry.orderSize !== null ? colaEntry.orderSize : null;
+        const confirmed = colaEntry ? colaEntry.confirmed : 0;
+        // alap, amihez a visszaigazolást hasonlítjuk: elsősorban a PM rendelés, ha nincs PM adat, a Cola által rögzített rendelés
+        const bazis = !nincsPM ? pmQty : (colaOrder !== null ? colaOrder : 0);
+        const diff = confirmed - bazis;
+        const adatElteres = (!nincsPM && colaOrder !== null && pmQty !== colaOrder);
+        if (diff !== 0) { boltElt++; elteresCount++; }
+        if (nincsPM && !nincsCola) csakColaCount++;
+        if (!t) ismeretlenArSet.add(cikk);
+        const ft = ar !== null ? confirmed * ar : 0;
+        const rendeltFt = ar !== null ? bazis * ar : 0;
+        boltFt += ft;
+        boltRendeltFt += rendeltFt;
+        items.push({ cikk, nev, ar, pmQty, colaOrder, confirmed, diff, adatElteres, nincsPM, nincsCola });
+      });
+
+      grandTotal += boltFt;
+      grandRendeltFt += boltRendeltFt;
+      boltResults.push({ boltkod: bk, nev: boltNev[bk], items, boltFt, boltElt });
+    });
+
+    renderVissza({ boltResults, grandTotal, grandRendeltFt, elteresCount, csakColaCount, ismeretlenArSet, boltCount: boltList.length });
+
+    saveHistory({
+      datum: new Date().toLocaleDateString('hu-HU'),
+      boltok: boltList.length,
+      eltertes: elteresCount,
+      total: grandTotal,
+      colaFajl: document.getElementById('title-cola').textContent,
+      pmFajl: document.getElementById('title-pm').textContent,
+    });
+
+    document.getElementById('visszaig-status').textContent = '✓ Kész';
+    lastResult = { boltResults, grandTotal };
+  } catch (err) {
+    document.getElementById('visszaig-result').innerHTML = `<div class="alert warn">Hiba: ${err.message}<br><br>Ellenőrizd hogy a megfelelő fájlokat töltötted-e fel (Cola visszaigazolás ⇄ PM megrendelő ne legyen felcserélve).</div>`;
+  }
+  btn.disabled = false;
+  btn.textContent = '⚡ Feldolgozás';
+}
+
+// ===================== RENDER =====================
+function renderVissza(r) {
+  let html = '';
+  html += `<div class="stats-row">
+    <div class="stat"><div class="stat-label">Üzletek</div><div class="stat-val yellow">${r.boltCount}</div></div>
+    <div class="stat"><div class="stat-label">Eltérő tétel</div><div class="stat-val ${r.elteresCount > 0 ? 'red' : 'green'}">${r.elteresCount}</div></div>
+    <div class="stat"><div class="stat-label">Csak Colában szerepel</div><div class="stat-val ${r.csakColaCount > 0 ? 'red' : 'green'}">${r.csakColaCount}</div></div>
+    <div class="stat"><div class="stat-label">Várható nettó (visszaigazolt alapján)</div><div class="stat-val" style="font-size:14px">${fmt(r.grandTotal)} Ft</div></div>
+  </div>`;
+
+  if (r.ismeretlenArSet.size > 0) {
+    html += `<div class="alert info">ℹ ${r.ismeretlenArSet.size} cikkszámhoz nincs rögzített egységár, ezért ${r.ismeretlenArSet.size === 1 ? 'az' : 'ezek'} 0 Ft-tal szerepel${r.ismeretlenArSet.size === 1 ? '' : 'nek'} a végösszegben: ${[...r.ismeretlenArSet].join(', ')}. Vedd fel a TERMEK_MAP-be az egységárukat a pontos végösszeghez.</div>`;
+  }
+  if (r.elteresCount > 0) {
+    html += `<div class="alert warn">⚠ ${r.elteresCount} tétel esetén a visszaigazolt mennyiség eltér a rendelttől — nézd át a bolt-kártyákat lent (pirossal / kékkel jelölve).</div>`;
+  } else {
+    html += `<div class="alert ok">✓ Minden tétel egyezik: amit rendeltünk, azt a Cola teljes egészében visszaigazolta.</div>`;
+  }
+
+  html += `<div class="filter-bar">
+    <button class="fbtn active" onclick="boltFilter('all',this)">Mind (${r.boltResults.length})</button>
+    <button class="fbtn" onclick="boltFilter('elt',this)">Csak eltéréssel</button>
+  </div>`;
+
+  r.boltResults.forEach(b => {
+    const cardId = 'bolt-' + b.boltkod.replace(/\W/g, '_');
+    const ok = b.boltElt === 0;
+    html += `<div class="bolt-card" data-elt="${ok ? '0' : '1'}">
+      <div class="bolt-header" onclick="toggleBolt('${cardId}')">
+        <div>
+          <div class="bolt-title">${b.nev}</div>
+          <div class="bolt-meta">${b.boltkod} · ${b.items.length} tétel · ${fmt(b.boltFt)} Ft</div>
+        </div>
+        ${ok ? '<span class="badge ok">✓ OK</span>' : `<span class="badge warn">✕ ${b.boltElt} eltérés</span>`}
+      </div>
+      <div class="bolt-body ${ok ? '' : 'open'}" id="${cardId}">
+        <div class="tbl-wrap"><table>
+          <thead><tr>
+            <th>Termék</th>
+            <th class="r">Rendelt</th>
+            <th class="r">Cola rendelés</th>
+            <th class="r">Visszaigazolt</th>
+            <th class="r">Eltérés</th>
+            <th class="r">Ft (visszaigazolt)</th>
+          </tr></thead><tbody>`;
+    b.items.forEach(it => {
+      const diffClass = it.diff === 0 ? 'diff-0' : (it.diff < 0 ? 'diff-p' : 'diff-n');
+      const diffTxt = it.diff === 0 ? '✓ egyezik' : (it.diff < 0 ? `${it.diff} db KEVESEBB` : `+${it.diff} db TÖBB`);
+      const ft = it.ar !== null ? it.confirmed * it.ar : null;
+      html += `<tr>
+        <td class="name">${it.nev}<span class="sub">${it.cikk}</span>${it.nincsPM ? ' <span class="badge warn" style="margin-left:4px">nincs PM rendelés</span>' : ''}${it.adatElteres ? ' <span class="badge info" style="margin-left:4px">PM≠Cola rendelés</span>' : ''}</td>
+        <td class="r">${it.nincsPM ? '—' : it.pmQty}</td>
+        <td class="r">${it.colaOrder === null ? '—' : it.colaOrder}</td>
+        <td class="r"><strong>${it.confirmed}</strong></td>
+        <td class="r ${diffClass}">${diffTxt}</td>
+        <td class="r">${ft === null ? '❓' : fmt(ft) + ' Ft'}</td>
+      </tr>`;
+    });
+    html += `<tr class="total-row">
+      <td class="name">Bolt összesen</td><td class="r">—</td><td class="r">—</td><td class="r">—</td><td class="r">—</td>
+      <td class="r">${fmt(b.boltFt)} Ft</td>
+    </tr>`;
+    html += `</tbody></table></div></div></div>`;
+  });
+
+  html += `<div class="card" style="margin-top:10px">
+    <div class="card-title">Végösszeg (a Cola-számlával való egyeztetéshez)</div>
+    <div style="font-family:var(--mono);font-size:24px;font-weight:600;color:var(--accent)">${fmt(r.grandTotal)} Ft</div>
+    <div style="font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:6px">Ez a visszaigazolt (Confirmed Qty) mennyiségek × egységár alapján számolt várható nettó. Ezt vesd össze a nagy Cola PDF-számla végösszegével.</div>
+  </div>`;
+
+  document.getElementById('visszaig-result').innerHTML = html;
+}
+
+function toggleBolt(id) {
+  const el = document.getElementById(id);
+  if (el) el.classList.toggle('open');
+}
+function boltFilter(type, btn) {
+  document.querySelectorAll('.fbtn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.bolt-card').forEach(card => {
+    if (type === 'all') card.style.display = '';
+    else card.style.display = card.dataset.elt === '1' ? '' : 'none';
+  });
+}
+
+// ===================== HISTORY =====================
+function saveHistory(entry) {
+  const hist = JSON.parse(localStorage.getItem('cola-history') || '[]');
+  hist.unshift({ ...entry, id: Date.now() });
+  localStorage.setItem('cola-history', JSON.stringify(hist.slice(0, 20)));
+}
+function renderHistory() {
+  const hist = JSON.parse(localStorage.getItem('cola-history') || '[]');
+  const el = document.getElementById('history-list');
+  if (!hist.length) {
+    el.innerHTML = '<div class="alert info">Még nincs mentett feldolgozás. A visszaigazolás feldolgozása után automatikusan mentésre kerül.</div>';
+    return;
+  }
+  el.innerHTML = hist.map(h => `
+    <div class="hist-item">
+      <div class="hist-header">
+        <div class="hist-title">${h.datum} — ${h.colaFajl || 'Cola visszaigazolás'}</div>
+        <span class="badge ${h.eltertes > 0 ? 'warn' : 'ok'}">${h.eltertes > 0 ? h.eltertes + ' eltérés' : 'OK'}</span>
+      </div>
+      <div class="hist-stats">
+        <div class="hist-stat">Üzletek: <span>${h.boltok}</span></div>
+        <div class="hist-stat">PM fájl: <span>${h.pmFajl || '—'}</span></div>
+        <div class="hist-stat">Várható nettó: <span>${fmt(h.total)} Ft</span></div>
+      </div>
+    </div>
+  `).join('');
+}
+function clearHistory() {
+  if (confirm('Törlöd az összes mentett adatot?')) {
+    localStorage.removeItem('cola-history');
+    renderHistory();
+  }
+}
+
+// ===================== SZÁMLA PDF (② tab) =====================
+function parseHuNum(s) {
+  if (s === null || s === undefined) return null;
+  const n = parseFloat(String(s).replace(/\./g, '').replace(',', '.'));
+  return isNaN(n) ? null : n;
+}
+async function extractPdfText(file) {
+  const buf = await file.arrayBuffer();
+  const pdf = await pdfjsLib.getDocument({ data: buf }).promise;
+  let full = '';
+  for (let i = 1; i <= pdf.numPages; i++) {
+    document.getElementById('szamla-step').textContent = `oldal ${i}/${pdf.numPages}`;
+    const page = await pdf.getPage(i);
+    const content = await page.getTextContent();
+    const parts = content.items.map(it => it.str + (it.hasEOL ? '\n' : ' '));
+    full += parts.join('') + '\n';
+  }
+  return full;
+}
+function extractTotalsFromBlock(block) {
+  const get = (label) => {
+    const re = new RegExp(label.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\s*([\\d.,]+)\\s*HUF');
+    const m = block.match(re);
+    return m ? parseHuNum(m[1]) : null;
+  };
+  return {
+    netto: get('Nettó összesen'),
+    afa: get('ÁFA'),
+    brutto: get('Bruttó összesen'),
+    visszavalt: get('Kötelező visszaváltási díj'),
+    osszesen: get('Számla összesen'),
+  };
+}
+function parseInvoicePdfText(text) {
+  const positions = [];
+  const re = /Boltkód:\s*(\d+)/g;
+  let m;
+  while ((m = re.exec(text))) positions.push({ idx: m.index, boltkod: m[1] });
+  const head = positions.length ? text.slice(0, positions[0].idx) : text;
+  const grand = extractTotalsFromBlock(head);
+  // Egy bolthoz több egymást követő oldal (Boltkód: ismétlődés) is tartozhat — ezeket egy blokká vonjuk össze.
+  const groups = [];
+  positions.forEach(bp => {
+    const last = groups[groups.length - 1];
+    if (last && last.boltkod === bp.boltkod) return; // ugyanaz a bolt folytatódik, a start-ot nem módosítjuk
+    groups.push({ boltkod: bp.boltkod, start: bp.idx });
+  });
+  groups.forEach((g, i) => { g.end = i + 1 < groups.length ? groups[i + 1].start : text.length; });
+  const stores = {};
+  groups.forEach(g => {
+    if (stores[g.boltkod]) return; // ha a bolt nem szomszédos blokkokban ismétlődne, az elsőt tartjuk meg
+    const block = text.slice(g.start, g.end);
+    const nameMatch = block.match(/((?:E )?PIZZA ME[^\n]*|HTM[^\n]*)/);
+    stores[g.boltkod] = { nev: nameMatch ? nameMatch[1].trim() : g.boltkod, ...extractTotalsFromBlock(block) };
+  });
+  return { grand, stores };
+}
+function dropPdf(e) {
+  e.preventDefault();
+  document.getElementById('drop-pdf').classList.remove('drag');
+  const f = e.dataTransfer.files[0];
+  if (f && f.type === 'application/pdf') processPdf(f);
+}
+function loadPdf(e) {
+  if (e.target.files[0]) processPdf(e.target.files[0]);
+}
+async function processPdf(file) {
+  if (typeof pdfjsLib === 'undefined') {
+    alert('Hiba: a PDF-feldolgozó könyvtár nem töltődött be (nincs internetkapcsolat, vagy a cdnjs.cloudflare.com le van tiltva).');
+    return;
+  }
+  document.getElementById('drop-pdf').classList.add('done');
+  document.getElementById('icon-pdf').textContent = '✅';
+  document.getElementById('title-pdf').textContent = file.name;
+  document.getElementById('szamla-loading').style.display = 'block';
+  document.getElementById('szamla-result').innerHTML = '';
+  try {
+    const text = await extractPdfText(file);
+    const invoice = parseInvoicePdfText(text);
+    if (!invoice.grand.netto) {
+      throw new Error('Nem sikerült kiolvasni az összesítő adatokat. Ellenőrizd, hogy ez a Cola "gyűjtőszámla" PDF-je-e (van benne szövegréteg, nem szkennelt kép).');
+    }
+    renderSzamla(invoice);
+  } catch (err) {
+    document.getElementById('szamla-result').innerHTML = `<div class="alert warn">Hiba: ${err.message}</div>`;
+  }
+  document.getElementById('szamla-loading').style.display = 'none';
+}
+function renderSzamla(inv) {
+  const g = inv.grand;
+  const boltkodok = Object.keys(inv.stores).sort((a, b) => (inv.stores[a].nev || '').localeCompare(inv.stores[b].nev || '', 'hu'));
+  let html = `<div class="stats-row">
+    <div class="stat"><div class="stat-label">Boltok a számlán</div><div class="stat-val yellow">${boltkodok.length}</div></div>
+    <div class="stat"><div class="stat-label">Számla nettó</div><div class="stat-val" style="font-size:14px">${fmt(g.netto)} Ft</div></div>
+    <div class="stat"><div class="stat-label">Visszaváltási díj</div><div class="stat-val">${fmt(g.visszavalt)} Ft</div></div>
+    <div class="stat"><div class="stat-label">Számla végösszeg (fizetendő)</div><div class="stat-val" style="font-size:14px">${fmt(g.osszesen)} Ft</div></div>
+  </div>`;
+
+  // Összehasonlítás a ① fülön kiszámolt visszaigazolás-alapú nettóval
+  html += `<div class="card">
+    <div class="card-title">Összehasonlítás a visszaigazolásból számolt nettóval</div>`;
+  if (lastResult && lastResult.grandTotal) {
+    const diff = g.netto - lastResult.grandTotal;
+    const ok = Math.abs(diff) < 50;
+    html += `<div style="display:flex;gap:24px;flex-wrap:wrap;margin-bottom:10px;font-family:var(--mono);font-size:13px">
+      <div>Visszaigazolásból (① fül): <strong>${fmt(lastResult.grandTotal)} Ft</strong></div>
+      <div>Számla nettó: <strong>${fmt(g.netto)} Ft</strong></div>
+    </div>`;
+    html += ok
+      ? `<div class="alert ok">✓ EGYEZIK — eltérés: ${fmt(diff)} Ft</div>`
+      : `<div class="alert warn">✕ ELTÉRÉS: <strong>${diff > 0 ? '+' : ''}${fmt(diff)} Ft</strong> — a számla ${diff > 0 ? 'TÖBBET' : 'KEVESEBBET'} tartalmaz, mint amit a visszaigazolásból vártunk.</div>`;
+  } else {
+    html += `<div class="alert info">ℹ Először dolgozd fel a ① Visszaigazolás fülön a Cola-visszaigazolást és a PM megrendelőt, hogy itt automatikusan összevethessük a két végösszeget. Addig is itt a számla önmagában látható.</div>`;
+  }
+  html += `</div>`;
+
+  html += `<div class="tbl-wrap"><table>
+    <thead><tr>
+      <th>Bolt</th>
+      <th class="r">Számla nettó (Ft)</th>
+      <th class="r">Visszaváltás (Ft)</th>
+      <th class="r">Számla végösszeg (Ft)</th>
+      <th class="r">Visszaigazolásból (Ft)</th>
+      <th class="r">Eltérés</th>
+    </tr></thead><tbody>`;
+  let tNetto = 0, tVissza = 0, tOssz = 0;
+  const boltByKod = {};
+  if (lastResult) lastResult.boltResults.forEach(b => { boltByKod[b.boltkod] = b; });
+  boltkodok.forEach(bk => {
+    const s = inv.stores[bk];
+    tNetto += s.netto || 0; tVissza += s.visszavalt || 0; tOssz += s.osszesen || 0;
+    const match = boltByKod[bk];
+    const vFt = match ? match.boltFt : null;
+    const diff = vFt !== null && s.netto !== null ? s.netto - vFt : null;
+    const diffTxt = diff === null ? '—' : (Math.abs(diff) < 50 ? '✓ egyezik' : (diff > 0 ? `+${fmt(diff)} Ft` : `${fmt(diff)} Ft`));
+    const diffClass = diff === null ? 'diff-0' : (Math.abs(diff) < 50 ? 'diff-0' : 'diff-p');
+    html += `<tr>
+      <td class="name">${s.nev}<span class="sub">${bk}</span></td>
+      <td class="r">${fmt(s.netto)}</td>
+      <td class="r">${fmt(s.visszavalt)}</td>
+      <td class="r"><strong>${fmt(s.osszesen)}</strong></td>
+      <td class="r">${vFt !== null ? fmt(vFt) : '—'}</td>
+      <td class="r ${diffClass}">${diffTxt}</td>
+    </tr>`;
+  });
+  html += `<tr class="total-row">
+    <td class="name">ÖSSZESEN (${boltkodok.length} bolt)</td>
+    <td class="r">${fmt(tNetto)}</td>
+    <td class="r">${fmt(tVissza)}</td>
+    <td class="r">${fmt(tOssz)}</td>
+    <td class="r">${lastResult ? fmt(lastResult.grandTotal) : '—'}</td>
+    <td></td>
+  </tr></tbody></table></div>`;
+
+  document.getElementById('szamla-result').innerHTML = html;
+}
+</script>
+</body>
+</html>

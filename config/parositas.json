@@ -509,11 +509,6 @@
       "megjegyzes": "Más cég (Lángosom), nem PizzaMe/Cola."
     },
     {
-      "boltkod": "1605125978",
-      "sablon_felirat": "Pizza Me Váci út 31. - Házhozszállítás",
-      "megjegyzes": "PizzaMe-s felirat, de nincs a jelenlegi Cola-párosításban - tisztázandó, hogy önálló Cola-rendelő telephely-e, vagy a 'Pizza Me 17- Váci utca' variánsa."
-    },
-    {
       "boltkod": "1605133927",
       "sablon_felirat": "HTM Pozsonyi",
       "megjegyzes": "Más cég/márka (HTM), nem PizzaMe/Cola."
@@ -527,11 +522,19 @@
       "boltkod": "1605135517",
       "sablon_felirat": "HTM Margit",
       "megjegyzes": "Más cég/márka (HTM), nem PizzaMe/Cola."
+    }
+  ],
+  "uzlet_egyeb_cola_helyek": [
+    {
+      "boltkod": "1605125978",
+      "sablon_felirat": "Pizza Me Váci út 31. - Házhozszállítás",
+      "megjegyzes": "Valódi, kis házhozszállítás-üzlet - a felhasználó szerint néha külön rendelnek neki Cola-terméket."
     },
     {
       "boltkod": "1605122689",
       "sablon_felirat": "Pizza Me Váci út 31.",
-      "megjegyzes": "PizzaMe-s felirat, de nincs a jelenlegi Cola-párosításban - tisztázandó, hogy önálló Cola-rendelő telephely-e, vagy a 'Pizza Me 17- Váci utca' variánsa."
+      "megjegyzes": "A központi raktár (nem vásárlói telephely)."
     }
-  ]
+  ],
+  "_uzlet_egyeb_megjegyzes": "Valodi Cola-rendeleshez kotodo helyek, de NEM reszei a Wildom 'Beszallitoi megrendelesek -> Coca Cola' profil 39 rogzitett telephely-csoportjanak, ezert nincs wildom_nev/sablon_oszlop_index-uk (Modul 1 nem kezeli oket automatikusan). Boltkodjuk van, igy a Modul 2 (Cola_ellenorzes.html) tudja parositani a PM megrendelo excel es a Cola visszaigazolas/szamla kozott. Ha rendszeresen, a heti Wildom-exporton keresztul is rendelnenek, fel kell venni oket a rendes uzlet_parositas / uj_oszlopok listaba is (a Wildom-beli nevukkel)."
 }

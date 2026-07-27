@@ -62,11 +62,21 @@ visszaigazolás "Sold-to Party" oszlopából). Ez most már be van kötve:
 minden `uzlet_parositas` bejegyzésnek van `boltkod` mezője.
 
 **`uzlet_parositas_nem_cola_oszlopok`** — a boltkód-listával együtt kapott,
-de a Cola-párosításhoz **nem tartozó** oszlopok (más cég: "Lángosom",
-"HTM", vagy tisztázatlan PizzaMe-telephely: "Váci út 31." variánsok).
-Ezeket **nem** vettük fel a `uzlet_parositas`/`uj_oszlopok` közé, csak
-dokumentáljuk itt — ha valamelyik mégis Cola-rendelést kapna, ide nézve
-könnyen felvehető a megfelelő listába.
+de más céghez/márkához tartozó oszlopok ("Lángosom", "HTM"), amik nem
+PizzaMe/Cola-üzletek. Ezeket **nem** vettük fel semmilyen Cola-listába,
+csak dokumentáljuk itt.
+
+**`uzlet_egyeb_cola_helyek`** — két valódi, Cola-rendeléshez kötődő hely,
+ami viszont **nem** része a Wildom "Coca Cola" profil 39 rögzített
+telephely-csoportjának, ezért nincs `wildom_nev`/`sablon_oszlop_index`-ük
+(a Modul 1 automatikus rendelés-generálása nem kezeli őket):
+- `Pizza Me Váci út 31. - Házhozszállítás` — kis házhozszállítás-üzlet, amihez a felhasználó szerint néha külön rendelnek Cola-terméket
+- `Pizza Me Váci út 31.` — a központi raktár
+
+Mindkettőnek van `boltkod`-ja, így a Modul 2 (`Cola_ellenorzes.html`) tudja
+párosítani a PM megrendelő excel és a Cola visszaigazolás/számla között.
+Ha ezek rendszeresen a heti Wildom-exporton keresztül is rendelnének, fel
+kell venni őket a rendes `uzlet_parositas`/`uj_oszlopok` listába is.
 
 ## `Wildom_Cola_parositas.xlsx`
 

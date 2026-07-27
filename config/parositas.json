@@ -6,6 +6,7 @@
       "csomagolas": "24db / Karton",
       "cikkszam": 1188084,
       "cola_nev": "330 CAN X24 COCA COLA SLEEK HU",
+      "megjelenitett_nev": "Coca-Cola 0,33l can",
       "megjegyzes": "Feltételezés: jelöletlen méret = 0,33l dobozos (Karton csomagolás)",
       "ar_ft": 5110.2
     },
@@ -14,6 +15,7 @@
       "csomagolas": "24db / Karton",
       "cikkszam": 609280,
       "cola_nev": "330 CAN X24 COKE ZERO SLEEK HU",
+      "megjelenitett_nev": "Coca-Cola Zero 0,33l can",
       "megjegyzes": "Feltételezés: jelöletlen méret = 0,33l dobozos",
       "ar_ft": 5098.32
     },
@@ -22,6 +24,7 @@
       "csomagolas": "12db / Zsugor",
       "cikkszam": 1148406,
       "cola_nev": "500 PET X12 NATURAQUA CARB TWIST HU",
+      "megjelenitett_nev": "Naturaqua Savas 0,5l",
       "megjegyzes": "Savas = szénsavas (CARB)",
       "ar_ft": 1482.52
     },
@@ -30,6 +33,7 @@
       "csomagolas": "24db / Karton",
       "cikkszam": 295006,
       "cola_nev": "500 PET X24 NATURAQUA STILL TWIST HU",
+      "megjelenitett_nev": "Naturaqua Mentes 0,5l (x24)",
       "megjegyzes": "Mentes = szénsavmentes (STILL)",
       "ar_ft": 2965.03
     },
@@ -38,6 +42,7 @@
       "csomagolas": "12db / Zsugor",
       "cikkszam": 1888013,
       "cola_nev": "500 PET X12 FUZE TEA BT PEACH ROSE NEW HU",
+      "megjelenitett_nev": "Fuzetea Barack 0,5l",
       "megjegyzes": null,
       "ar_ft": 3053.75
     },
@@ -46,6 +51,7 @@
       "csomagolas": "12db / Zsugor",
       "cikkszam": 1676459,
       "cola_nev": "500 PET X12 FUZETEA BT LEM LGR NEW HU",
+      "megjelenitett_nev": "Fuzetea Citrom 0,5l",
       "megjegyzes": null,
       "ar_ft": 3053.75
     },
@@ -54,6 +60,7 @@
       "csomagolas": "12db / Zsugor",
       "cikkszam": 1523602,
       "cola_nev": "330 PET X12 CAPPY OR PULP JC 100 NEW HU",
+      "megjelenitett_nev": "Cappy Narancs 0,33l",
       "megjegyzes": "OR = Orange/Narancs",
       "ar_ft": 4451.04
     },
@@ -62,6 +69,7 @@
       "csomagolas": "12db / Zsugor",
       "cikkszam": 983327,
       "cola_nev": "330 PET X12 CAPPY APPLE NEW BAHRHU",
+      "megjelenitett_nev": "Cappy Alma 0,33l",
       "megjegyzes": null,
       "ar_ft": 4079.5
     },
@@ -70,6 +78,7 @@
       "csomagolas": "12db / Zsugor",
       "cikkszam": 686007,
       "cola_nev": "Kinley Gyömbér 0,5l",
+      "megjelenitett_nev": "Kinley Gyömbér 0,5l",
       "megjegyzes": "Közvetlen névegyezés",
       "ar_ft": 3188.26
     },
@@ -78,6 +87,7 @@
       "csomagolas": "12db / Zsugor",
       "cikkszam": 2456204,
       "cola_nev": "1.0 PET X12 COCA COLA HU",
+      "megjelenitett_nev": "Coca-Cola 1,0l",
       "megjegyzes": null,
       "ar_ft": 3779.79
     },
@@ -86,6 +96,7 @@
       "csomagolas": "12db / Zsugor",
       "cikkszam": 401274,
       "cola_nev": "1.0 PET X12 COKE ZERO HU",
+      "megjelenitett_nev": "Coca-Cola Zero 1,0l",
       "megjegyzes": null,
       "ar_ft": 3761.79
     },
@@ -94,6 +105,7 @@
       "csomagolas": "24db / Karton",
       "cikkszam": 256553,
       "cola_nev": "500 PET X24 COCA COLA",
+      "megjelenitett_nev": "Coca-Cola 0,5l (x24)",
       "megjegyzes": null,
       "ar_ft": 6394.52
     },
@@ -102,6 +114,7 @@
       "csomagolas": "12db / Zsugor",
       "cikkszam": 1307304,
       "cola_nev": "500 PET X12 COLA ZERO",
+      "megjelenitett_nev": "Coca-Cola Zero 0,5l",
       "megjegyzes": null,
       "ar_ft": 3188.26
     },
@@ -110,6 +123,7 @@
       "csomagolas": "24db / Zsugor",
       "cikkszam": 1180102,
       "cola_nev": "330 CAN X24 COKE ZERO CAFF FREE HU",
+      "megjelenitett_nev": "Coca-Cola Zero Caff.Free 0,33l can",
       "megjegyzes": null,
       "ar_ft": 5098.32
     },
@@ -118,6 +132,7 @@
       "csomagolas": "12db / Zsugor",
       "cikkszam": 2462660,
       "cola_nev": "330 PET X12 Jack & Coke",
+      "megjelenitett_nev": "Jack & Coke 0,33l",
       "megjegyzes": "Közvetlen névegyezés",
       "ar_ft": 9678.13
     },
@@ -126,6 +141,7 @@
       "csomagolas": "6db / Karton",
       "cikkszam": 295217,
       "cola_nev": "1.5 PET X6 NAP STILL TWIST HU",
+      "megjelenitett_nev": "Naturaqua Mentes 1,5l",
       "megjegyzes": "sablon Kiszerelés oszlopban 'MENTES' jelölve",
       "ar_ft": 774.31
     },
@@ -134,6 +150,7 @@
       "csomagolas": "6db / Zsugor",
       "cikkszam": 295118,
       "cola_nev": "1.5 PET X6 NAP CARB TWIST HU",
+      "megjelenitett_nev": "Naturaqua Savas 1,5l",
       "megjegyzes": "sablon Kiszerelés oszlopban 'SAVAS' jelölve",
       "ar_ft": 774.31
     },
@@ -142,6 +159,7 @@
       "csomagolas": "12db / Zsugor",
       "cikkszam": 279045,
       "cola_nev": "500 PET X12 Cappy Ice Fruit Multivitamin 0,5l",
+      "megjelenitett_nev": "Cappy Multivitamin 0,5l",
       "megjegyzes": "Közvetlen névegyezés. FONTOS: ez a cikkszám Cola-oldalon korábban változott már (pl. 279045 <-> 279044) - ellenőrizd friss sablonnál.",
       "ar_ft": 3320.87
     },
@@ -150,6 +168,7 @@
       "csomagolas": "12db / Zsugor",
       "cikkszam": 2474103,
       "cola_nev": "Kinley Pink Aromatic Berry 0,5l",
+      "megjelenitett_nev": "Kinley Pink Berry 0,5l",
       "megjegyzes": "Közvetlen névegyezés",
       "ar_ft": 3188.26
     },
@@ -158,6 +177,7 @@
       "csomagolas": null,
       "cikkszam": 2428702,
       "cola_nev": "Fuzetea Eper 0,5l",
+      "megjelenitett_nev": "Fuzetea Eper 0,5l",
       "ar_ft": 3062.75,
       "megjegyzes": "Nincs a Wildom rendelési listán (Modul 1), csak a Cola visszaigazolás/számla tartalmazza. Ha a Wildomban is megjelenik, vedd fel ide a wildom_nev-et is."
     },
@@ -166,6 +186,7 @@
       "csomagolas": null,
       "cikkszam": 989010,
       "cola_nev": "Cappy Barack 0,33l",
+      "megjelenitett_nev": "Cappy Barack 0,33l",
       "ar_ft": 4079.5,
       "megjegyzes": "Nincs a Wildom rendelési listán (Modul 1), csak a Cola visszaigazolás/számla tartalmazza. Ha a Wildomban is megjelenik, vedd fel ide a wildom_nev-et is."
     },
@@ -174,6 +195,7 @@
       "csomagolas": null,
       "cikkszam": 1847431,
       "cola_nev": "Sprite 0,5l",
+      "megjelenitett_nev": "Sprite 0,5l",
       "ar_ft": 3188.26,
       "megjegyzes": "Nincs a Wildom rendelési listán (Modul 1), csak a Cola visszaigazolás/számla tartalmazza. Ha a Wildomban is megjelenik, vedd fel ide a wildom_nev-et is."
     },
@@ -182,6 +204,7 @@
       "csomagolas": null,
       "cikkszam": 2507204,
       "cola_nev": "Fanta Narancs 0,5l",
+      "megjelenitett_nev": "Fanta Narancs 0,5l",
       "ar_ft": 3188.26,
       "megjegyzes": "Nincs a Wildom rendelési listán (Modul 1), csak a Cola visszaigazolás/számla tartalmazza. Ha a Wildomban is megjelenik, vedd fel ide a wildom_nev-et is."
     },
@@ -190,6 +213,7 @@
       "csomagolas": null,
       "cikkszam": 32501595,
       "cola_nev": "Logisztikai díj",
+      "megjelenitett_nev": "Logisztikai díj",
       "ar_ft": 800.0,
       "megjegyzes": "Nem termék, hanem logisztikai díjtétel a Cola-számlán; nincs Wildom megfelelője, csomagolása."
     }

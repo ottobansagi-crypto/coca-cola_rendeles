@@ -3,9 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cola Visszaigazolás Ellenőrző — PizzaMe</title>
+<title>Cola Rendelés &amp; Ellenőrzés — PizzaMe</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/exceljs@4.4.0/dist/exceljs.min.js"></script>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@300;400;600&display=swap');
 :root {
@@ -89,28 +90,77 @@ tbody td.sub{font-size:10px;color:var(--muted);margin-left:6px}
 .hist-stats{display:flex;gap:16px;font-family:var(--mono);font-size:11px;flex-wrap:wrap}
 .hist-stat{color:var(--muted)}
 .hist-stat span{color:var(--text)}
+.text-input{background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:9px 12px;border-radius:4px;font-family:var(--mono);font-size:12px}
+.field-label{font-family:var(--mono);font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;display:block}
 </style>
 </head>
 <body>
 <div class="header">
   <div>
     <div class="header-logo">PizzaMe ▸ Cola</div>
-    <h1>Cola Visszaigazolás Ellenőrző</h1>
+    <h1>Cola Rendelés &amp; Ellenőrzés</h1>
   </div>
 </div>
 <div id="lib-warning" style="display:none;background:rgba(232,71,71,.15);color:#e84747;border-bottom:1px solid rgba(232,71,71,.3);padding:10px 28px;font-family:'IBM Plex Mono',monospace;font-size:12px">
   ⚠ Az xlsx feldolgozó könyvtár (cdnjs.cloudflare.com) nem töltődött be — ellenőrizd az internetkapcsolatot, és töltsd újra az oldalt. Feltöltés nélküle nem fog működni.
 </div>
+<div id="lib-warning-exceljs" style="display:none;background:rgba(232,71,71,.15);color:#e84747;border-bottom:1px solid rgba(232,71,71,.3);padding:10px 28px;font-family:'IBM Plex Mono',monospace;font-size:12px">
+  ⚠ Az ExcelJS könyvtár (cdn.jsdelivr.net) nem töltődött be — a ① Rendelés-generálás fül nélküle nem fog működni.
+</div>
+<div id="lib-warning-config" style="display:none;background:rgba(232,71,71,.15);color:#e84747;border-bottom:1px solid rgba(232,71,71,.3);padding:10px 28px;font-family:'IBM Plex Mono',monospace;font-size:12px"></div>
 <div class="tabs">
-  <div class="tab active" onclick="switchTab('visszaig',this)">① Visszaigazolás</div>
-  <div class="tab" onclick="switchTab('szamla',this)">② Számla Ellenőrzés</div>
-  <div class="tab" onclick="switchTab('history',this)">③ History</div>
+  <div class="tab active" onclick="switchTab('rendeles',this)">① Rendelés-generálás</div>
+  <div class="tab" onclick="switchTab('visszaig',this)">② Visszaigazolás</div>
+  <div class="tab" onclick="switchTab('szamla',this)">③ Számla Ellenőrzés</div>
+  <div class="tab" onclick="switchTab('history',this)">④ History</div>
 </div>
 
 <!-- ==============================
-     TAB 1: VISSZAIGAZOLÁS
+     TAB 1: RENDELÉS-GENERÁLÁS (Wildom export -> PizzaMe/Cola sablon)
 ================================ -->
-<div class="panel active" id="tab-visszaig">
+<div class="panel active" id="tab-rendeles">
+  <div class="upload-grid">
+    <div>
+      <div class="card-title">1. Wildom export (xlsx)</div>
+      <div class="upload-area" id="drop-wildom" onclick="document.getElementById('f-wildom').click()"
+        ondragover="event.preventDefault();this.classList.add('drag')"
+        ondragleave="this.classList.remove('drag')"
+        ondrop="dropRendelesFile(event,'wildom')">
+        <div class="upload-icon" id="icon-wildom">📥</div>
+        <div class="upload-title" id="title-wildom">Wildom export</div>
+        <div class="upload-sub" id="sub-wildom">"Beszállítói megrendelések" → Coca Cola profil → Excel 2007+ export</div>
+      </div>
+      <input type="file" id="f-wildom" accept=".xlsx,.xls" style="display:none" onchange="loadRendelesFile(event,'wildom')">
+    </div>
+    <div>
+      <div class="card-title">2. PizzaMe sablon (xlsx)</div>
+      <div class="upload-area" id="drop-sablon" onclick="document.getElementById('f-sablon').click()"
+        ondragover="event.preventDefault();this.classList.add('drag')"
+        ondragleave="this.classList.remove('drag')"
+        ondrop="dropRendelesFile(event,'sablon')">
+        <div class="upload-icon" id="icon-sablon">📋</div>
+        <div class="upload-title" id="title-sablon">PizzaMe_megrendelő sablon</div>
+        <div class="upload-sub" id="sub-sablon">A legutóbbi állapot, amiből új lapot másolunk</div>
+      </div>
+      <input type="file" id="f-sablon" accept=".xlsx,.xls" style="display:none" onchange="loadRendelesFile(event,'sablon')">
+    </div>
+  </div>
+  <div style="margin-bottom:20px;max-width:260px">
+    <label class="field-label" for="uj-lap-nev">Új lap neve</label>
+    <input type="text" id="uj-lap-nev" class="text-input" style="width:100%">
+  </div>
+  <div class="btn-row" style="margin-bottom:24px">
+    <button class="btn" id="btn-generalas" onclick="generalas()" disabled>⚡ Generálás</button>
+    <button class="btn sec" onclick="resetRendeles()">↺ Reset</button>
+    <span id="rendeles-status" style="font-family:var(--mono);font-size:11px;color:var(--muted)"></span>
+  </div>
+  <div id="rendeles-result"></div>
+</div>
+
+<!-- ==============================
+     TAB 2: VISSZAIGAZOLÁS
+================================ -->
+<div class="panel" id="tab-visszaig">
   <div class="upload-grid">
     <div>
       <div class="card-title">1. Cola visszaigazolás (xlsx)</div>
@@ -146,7 +196,7 @@ tbody td.sub{font-size:10px;color:var(--muted);margin-left:6px}
 </div>
 
 <!-- ==============================
-     TAB 2: SZÁMLA ELLENŐRZÉS
+     TAB 3: SZÁMLA ELLENŐRZÉS
 ================================ -->
 <div class="panel" id="tab-szamla">
   <div style="max-width:520px">
@@ -168,7 +218,7 @@ tbody td.sub{font-size:10px;color:var(--muted);margin-left:6px}
 </div>
 
 <!-- ==============================
-     TAB 3: HISTORY
+     TAB 4: HISTORY
 ================================ -->
 <div class="panel" id="tab-history">
   <div class="btn-row" style="margin-bottom:20px">
@@ -181,12 +231,45 @@ tbody td.sub{font-size:10px;color:var(--muted);margin-left:6px}
 </div>
 
 <script>
+// ===================== KONFIG BETÖLTÉSE (közös adatforrás mindkét modulnak) =====================
+let CONFIG = null;
+let TERMEK_MAP = {};
+
+function buildTermekMapFromConfig(config) {
+  const map = {};
+  (config.termek_parositas || []).forEach(p => {
+    map[String(p.cikkszam)] = { nev: p.megjelenitett_nev || p.cola_nev, zsugorAr: p.ar_ft };
+  });
+  return map;
+}
+
+async function loadConfig() {
+  const warn = document.getElementById('lib-warning-config');
+  try {
+    const res = await fetch('config/parositas.json');
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    CONFIG = await res.json();
+    TERMEK_MAP = buildTermekMapFromConfig(CONFIG);
+    warn.style.display = 'none';
+  } catch (err) {
+    CONFIG = null;
+    warn.textContent = '⚠ Nem sikerült betölteni a config/parositas.json-t (' + err.message + ') — a termékárak és a ① Rendelés-generálás fül nem fog működni. Ha ezt a fájlt file://-ként nyitottad meg közvetlenül a gépeden, ez emiatt várható (böngésző CORS-korlátozás) — nyisd meg a GitHub Pages-es élő linkről, vagy egy helyi szerverről.';
+    warn.style.display = 'block';
+  }
+  checkReadyRendeles();
+}
+loadConfig();
+
 // ===================== STATE =====================
 let colaWb = null, pmWb = null;
 let lastResult = null;
+let wildomFile = null, sablonFile = null;
 
 if (typeof XLSX === 'undefined') {
   document.getElementById('lib-warning').style.display = 'block';
+}
+if (typeof ExcelJS === 'undefined') {
+  document.getElementById('lib-warning-exceljs').style.display = 'block';
 }
 if (typeof pdfjsLib !== 'undefined') {
   pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
@@ -201,7 +284,211 @@ function switchTab(id, el) {
   if (id === 'history') renderHistory();
 }
 
-// ===================== FILE LOADING =====================
+// ===================== ① RENDELÉS-GENERÁLÁS =====================
+function dropRendelesFile(e, type) {
+  e.preventDefault();
+  document.getElementById('drop-' + type).classList.remove('drag');
+  const f = e.dataTransfer.files[0];
+  if (f) setRendelesFile(f, type);
+}
+function loadRendelesFile(e, type) {
+  if (e.target.files[0]) setRendelesFile(e.target.files[0], type);
+}
+function setRendelesFile(file, type) {
+  if (type === 'wildom') wildomFile = file; else sablonFile = file;
+  document.getElementById('drop-' + type).classList.add('done');
+  document.getElementById('icon-' + type).textContent = '✅';
+  document.getElementById('title-' + type).textContent = file.name;
+  document.getElementById('sub-' + type).textContent = 'Betöltve';
+  checkReadyRendeles();
+}
+function checkReadyRendeles() {
+  document.getElementById('btn-generalas').disabled = !(wildomFile && sablonFile && CONFIG && typeof ExcelJS !== 'undefined');
+  if (!document.getElementById('uj-lap-nev').value) {
+    const d = new Date();
+    const yyyy = d.getFullYear();
+    const mm = String(d.getMonth() + 1).padStart(2, '0');
+    const dd = String(d.getDate()).padStart(2, '0');
+    document.getElementById('uj-lap-nev').value = `${yyyy}${mm}${dd}`;
+  }
+}
+function resetRendeles() {
+  wildomFile = null; sablonFile = null;
+  ['wildom', 'sablon'].forEach(type => {
+    document.getElementById('drop-' + type).classList.remove('done');
+    document.getElementById('f-' + type).value = '';
+  });
+  document.getElementById('icon-wildom').textContent = '📥';
+  document.getElementById('title-wildom').textContent = 'Wildom export';
+  document.getElementById('sub-wildom').textContent = '"Beszállítói megrendelések" → Coca Cola profil → Excel 2007+ export';
+  document.getElementById('icon-sablon').textContent = '📋';
+  document.getElementById('title-sablon').textContent = 'PizzaMe_megrendelő sablon';
+  document.getElementById('sub-sablon').textContent = 'A legutóbbi állapot, amiből új lapot másolunk';
+  document.getElementById('rendeles-result').innerHTML = '';
+  document.getElementById('rendeles-status').textContent = '';
+  checkReadyRendeles();
+}
+
+function findLatestSheet(wb) {
+  const numeric = wb.worksheets.filter(ws => /^\d{6,8}$/.test(ws.name));
+  if (!numeric.length) return wb.worksheets[0];
+  return numeric.sort((a, b) => parseInt(a.name, 10) - parseInt(b.name, 10)).slice(-1)[0];
+}
+function cloneStyle(v) {
+  return v === undefined ? undefined : JSON.parse(JSON.stringify(v));
+}
+
+// JS port of rendeles-generalas/wildom_to_cola.py - lásd a repóban a régi Python verziót/history-t
+// a pontos referencia-logikáért. A termék-/üzlet-párosítást a config/parositas.json adja.
+async function generateColaOrder({ wildomArrayBuffer, sablonArrayBuffer, config, newSheetName }) {
+  const productMap = {};
+  for (const p of config.termek_parositas) if (p.wildom_nev) productMap[p.wildom_nev] = p.cikkszam;
+  const colMapByName = {};
+  for (const u of config.uzlet_parositas) colMapByName[u.sablon_oszlop_index] = u.wildom_nev;
+  const newColumns = {};
+  for (const c of config.uj_oszlopok) newColumns[c.sablon_felirat] = c.wildom_nev;
+  const excludedWildomCols = new Set(config.kihagyott_wildom_oszlopok.map(e => e.wildom_nev));
+
+  const wbW = new ExcelJS.Workbook();
+  await wbW.xlsx.load(wildomArrayBuffer);
+  const wsW = wbW.worksheets[0];
+
+  const wHeaders = [];
+  wsW.getRow(1).eachCell({ includeEmpty: true }, (cell, colNumber) => { wHeaders[colNumber - 1] = cell.value; });
+  const wIdx = {};
+  wHeaders.forEach((name, i) => { if (name != null && name !== '') wIdx[name] = i; });
+
+  const wData = {};
+  wsW.eachRow((row, rowNumber) => {
+    if (rowNumber === 1) return;
+    const rowVals = [];
+    row.eachCell({ includeEmpty: true }, (cell, colNumber) => { rowVals[colNumber - 1] = cell.value; });
+    const name = rowVals[0];
+    if (name) wData[name] = rowVals;
+  });
+
+  const wbP = new ExcelJS.Workbook();
+  await wbP.xlsx.load(sablonArrayBuffer);
+  const srcSheet = findLatestSheet(wbP);
+
+  const existing = wbP.getWorksheet(newSheetName);
+  if (existing) wbP.removeWorksheet(existing.id);
+
+  const ws = wbP.addWorksheet(newSheetName);
+  ws.columns = srcSheet.columns.map(col => ({ width: col ? col.width : undefined }));
+  srcSheet.eachRow({ includeEmpty: true }, (row, rowNumber) => {
+    const newRow = ws.getRow(rowNumber);
+    row.eachCell({ includeEmpty: true }, (cell, colNumber) => {
+      const newCell = newRow.getCell(colNumber);
+      newCell.value = cell.value;
+      newCell.style = cloneStyle(cell.style);
+    });
+    newRow.height = row.height;
+    newRow.commit();
+  });
+  (srcSheet.model.merges || []).forEach(range => { try { ws.mergeCells(range); } catch (e) { /* ignore */ } });
+
+  let maxCol = ws.columnCount;
+  const sampleHeaderCell = ws.getCell(5, 4);
+  const sampleQtyCell = ws.getCell(6, 4);
+
+  const headerRowArr = [];
+  for (let c = 1; c <= maxCol; c++) headerRowArr[c - 1] = ws.getCell(5, c).value;
+
+  const colMap = {};
+  for (const [sablonIdxStr, wildomName] of Object.entries(colMapByName)) {
+    const sablonIdx = parseInt(sablonIdxStr, 10);
+    if (wildomName in wIdx) colMap[sablonIdx + 1] = wIdx[wildomName];
+  }
+
+  for (const [headerText, wildomName] of Object.entries(newColumns)) {
+    if (!(wildomName in wIdx)) continue;
+    let col;
+    const existingIdx = headerRowArr.indexOf(headerText);
+    if (existingIdx >= 0) {
+      col = existingIdx + 1;
+    } else {
+      maxCol += 1;
+      col = maxCol;
+      const hc = ws.getCell(5, col);
+      hc.value = headerText;
+      hc.font = cloneStyle(sampleHeaderCell.font);
+      hc.fill = cloneStyle(sampleHeaderCell.fill);
+      hc.alignment = cloneStyle(sampleHeaderCell.alignment);
+      hc.border = cloneStyle(sampleHeaderCell.border);
+      ws.getColumn(col).width = ws.getColumn(4).width;
+    }
+    colMap[col] = wIdx[wildomName];
+  }
+
+  const unmapped = wHeaders.slice(2, -1).filter(h => h &&
+    !Object.values(colMapByName).includes(h) &&
+    !Object.values(newColumns).includes(h) &&
+    !excludedWildomCols.has(h));
+
+  let filled = 0;
+  const lastRow = ws.rowCount;
+  for (let r = 6; r <= lastRow; r++) {
+    const cikk = ws.getCell(r, 2).value;
+    if (cikk == null) continue;
+    const entry = Object.entries(productMap).find(([, code]) => code === cikk);
+    const wildomProduct = entry ? entry[0] : null;
+    if (!wildomProduct || !(wildomProduct in wData)) continue;
+    const wrow = wData[wildomProduct];
+    for (const [colStr, widx] of Object.entries(colMap)) {
+      const col = parseInt(colStr, 10);
+      const val = wrow[widx];
+      const cell = ws.getCell(r, col);
+      if (val) { cell.value = val; filled++; }
+      cell.font = cloneStyle(sampleQtyCell.font);
+      cell.alignment = cloneStyle(sampleQtyCell.alignment);
+      cell.border = cloneStyle(sampleQtyCell.border);
+    }
+  }
+
+  return { workbook: wbP, filled, unmapped };
+}
+
+async function generalas() {
+  const btn = document.getElementById('btn-generalas');
+  btn.disabled = true;
+  btn.textContent = '⏳ Generálás...';
+  document.getElementById('rendeles-result').innerHTML = '';
+  document.getElementById('rendeles-status').textContent = '';
+  try {
+    const newSheetName = document.getElementById('uj-lap-nev').value.trim() || 'uj_lap';
+    const [wildomArrayBuffer, sablonArrayBuffer] = await Promise.all([
+      wildomFile.arrayBuffer(),
+      sablonFile.arrayBuffer(),
+    ]);
+    const { workbook, filled, unmapped } = await generateColaOrder({
+      wildomArrayBuffer, sablonArrayBuffer, config: CONFIG, newSheetName,
+    });
+    const buf = await workbook.xlsx.writeBuffer();
+    const blob = new Blob([buf], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+    const url = URL.createObjectURL(blob);
+    const outName = sablonFile.name.replace(/\.xlsx?$/i, '') + `_Cola_${newSheetName}.xlsx`;
+
+    let html = `<div class="stats-row">
+      <div class="stat"><div class="stat-label">Új lap</div><div class="stat-val yellow">${newSheetName}</div></div>
+      <div class="stat"><div class="stat-label">Kitöltött mennyiség-cella</div><div class="stat-val green">${filled}</div></div>
+    </div>`;
+    if (unmapped.length) {
+      html += `<div class="alert warn">⚠ Ismeretlen, még nem párosított Wildom-oszlop(ok), ezeket NEM töltöttük ki: ${unmapped.join(', ')}. Vedd fel a config/parositas.json-ba (uj_oszlopok vagy uzlet_parositas).</div>`;
+    } else {
+      html += `<div class="alert ok">✓ Minden Wildom-oszlop párosítva (a szándékosan kihagyottak kivételével).</div>`;
+    }
+    html += `<a class="btn" href="${url}" download="${outName}" style="display:inline-block;text-decoration:none">⬇ Letöltés: ${outName}</a>`;
+    document.getElementById('rendeles-result').innerHTML = html;
+    document.getElementById('rendeles-status').textContent = '✓ Kész';
+  } catch (err) {
+    document.getElementById('rendeles-result').innerHTML = `<div class="alert warn">Hiba: ${err.message}</div>`;
+  }
+  btn.disabled = false;
+  btn.textContent = '⚡ Generálás';
+}
+
+// ===================== FILE LOADING (② VISSZAIGAZOLÁS / ③ SZÁMLA) =====================
 function dropFile(e, type) {
   e.preventDefault();
   document.getElementById('drop-' + type).classList.remove('drag');
@@ -258,36 +545,6 @@ function resetVissza() {
   document.getElementById('visszaig-status').textContent = '';
   checkReady();
 }
-
-// ===================== TERMÉK ÁRAK (cikkszám → név, egységár Ft/zsugor) =====================
-const TERMEK_MAP = {
-  '295118': { nev:'Naturaqua Savas 1,5l', zsugorAr:774.31 },
-  '295217': { nev:'Naturaqua Mentes 1,5l', zsugorAr:774.31 },
-  '401274': { nev:'Coca-Cola Zero 1,0l', zsugorAr:3761.79 },
-  '2456204': { nev:'Coca-Cola 1,0l', zsugorAr:3779.79 },
-  '256553': { nev:'Coca-Cola 0,5l (x24)', zsugorAr:6394.52 },
-  '279045': { nev:'Cappy Multivitamin 0,5l', zsugorAr:3320.87 },
-  '295006': { nev:'Naturaqua Mentes 0,5l (x24)', zsugorAr:2965.03 },
-  '686007': { nev:'Kinley Gyömbér 0,5l', zsugorAr:3188.26 },
-  '1148406': { nev:'Naturaqua Savas 0,5l', zsugorAr:1482.52 },
-  '1307304': { nev:'Coca-Cola Zero 0,5l', zsugorAr:3188.26 },
-  '1676459': { nev:'Fuzetea Citrom 0,5l', zsugorAr:3053.75 },
-  '1888013': { nev:'Fuzetea Barack 0,5l', zsugorAr:3053.75 },
-  '2428702': { nev:'Fuzetea Eper 0,5l', zsugorAr:3062.75 },
-  '2474103': { nev:'Kinley Pink Berry 0,5l', zsugorAr:3188.26 },
-  '1523602': { nev:'Cappy Narancs 0,33l', zsugorAr:4451.04 },
-  '983327': { nev:'Cappy Alma 0,33l', zsugorAr:4079.50 },
-  '989010': { nev:'Cappy Barack 0,33l', zsugorAr:4079.50 },
-  '1847431': { nev:'Sprite 0,5l', zsugorAr:3188.26 },
-  '2507204': { nev:'Fanta Narancs 0,5l', zsugorAr:3188.26 },
-  '609280': { nev:'Coca-Cola Zero 0,33l can', zsugorAr:5098.32 },
-  '1180102': { nev:'Coca-Cola Zero Caff.Free 0,33l can', zsugorAr:5098.32 },
-  '1188084': { nev:'Coca-Cola 0,33l can', zsugorAr:5110.20 },
-  '2462660': { nev:'Jack & Coke 0,33l', zsugorAr:9678.13 },
-  '32501595': { nev:'Logisztikai díj', zsugorAr:800.00 },
-};
-// NOTE: ha új cikkszám bukkan fel (lásd "ismeretlen ár" figyelmeztetés a futás után),
-// vedd fel ide a cikkszámot és a zsugor/karton egységárat, hogy a végösszeg pontos legyen.
 
 // ===================== HELPERS =====================
 function fmt(n) { return Math.round(n).toLocaleString('hu-HU'); }
@@ -478,7 +735,7 @@ function renderVissza(r) {
   </div>`;
 
   if (r.ismeretlenArSet.size > 0) {
-    html += `<div class="alert info">ℹ ${r.ismeretlenArSet.size} cikkszámhoz nincs rögzített egységár, ezért ${r.ismeretlenArSet.size === 1 ? 'az' : 'ezek'} 0 Ft-tal szerepel${r.ismeretlenArSet.size === 1 ? '' : 'nek'} a végösszegben: ${[...r.ismeretlenArSet].join(', ')}. Vedd fel a TERMEK_MAP-be az egységárukat a pontos végösszeghez.</div>`;
+    html += `<div class="alert info">ℹ ${r.ismeretlenArSet.size} cikkszámhoz nincs rögzített egységár, ezért ${r.ismeretlenArSet.size === 1 ? 'az' : 'ezek'} 0 Ft-tal szerepel${r.ismeretlenArSet.size === 1 ? '' : 'nek'} a végösszegben: ${[...r.ismeretlenArSet].join(', ')}. Vedd fel a config/parositas.json termek_parositas listájába az egységárukat a pontos végösszeghez.</div>`;
   }
   if (r.elteresCount > 0) {
     html += `<div class="alert warn">⚠ ${r.elteresCount} tétel esetén a visszaigazolt mennyiség eltér a rendelttől — nézd át a bolt-kártyákat lent (pirossal / kékkel jelölve).</div>`;
@@ -588,7 +845,7 @@ function clearHistory() {
   }
 }
 
-// ===================== SZÁMLA PDF (② tab) =====================
+// ===================== SZÁMLA PDF (③ tab) =====================
 function parseHuNum(s) {
   if (s === null || s === undefined) return null;
   const n = parseFloat(String(s).replace(/\./g, '').replace(',', '.'));
@@ -686,21 +943,21 @@ function renderSzamla(inv) {
     <div class="stat"><div class="stat-label">Számla végösszeg (fizetendő)</div><div class="stat-val" style="font-size:14px">${fmt(g.osszesen)} Ft</div></div>
   </div>`;
 
-  // Összehasonlítás a ① fülön kiszámolt visszaigazolás-alapú nettóval
+  // Összehasonlítás a ② fülön kiszámolt visszaigazolás-alapú nettóval
   html += `<div class="card">
     <div class="card-title">Összehasonlítás a visszaigazolásból számolt nettóval</div>`;
   if (lastResult && lastResult.grandTotal) {
     const diff = g.netto - lastResult.grandTotal;
     const ok = Math.abs(diff) < 50;
     html += `<div style="display:flex;gap:24px;flex-wrap:wrap;margin-bottom:10px;font-family:var(--mono);font-size:13px">
-      <div>Visszaigazolásból (① fül): <strong>${fmt(lastResult.grandTotal)} Ft</strong></div>
+      <div>Visszaigazolásból (② fül): <strong>${fmt(lastResult.grandTotal)} Ft</strong></div>
       <div>Számla nettó: <strong>${fmt(g.netto)} Ft</strong></div>
     </div>`;
     html += ok
       ? `<div class="alert ok">✓ EGYEZIK — eltérés: ${fmt(diff)} Ft</div>`
       : `<div class="alert warn">✕ ELTÉRÉS: <strong>${diff > 0 ? '+' : ''}${fmt(diff)} Ft</strong> — a számla ${diff > 0 ? 'TÖBBET' : 'KEVESEBBET'} tartalmaz, mint amit a visszaigazolásból vártunk.</div>`;
   } else {
-    html += `<div class="alert info">ℹ Először dolgozd fel a ① Visszaigazolás fülön a Cola-visszaigazolást és a PM megrendelőt, hogy itt automatikusan összevethessük a két végösszeget. Addig is itt a számla önmagában látható.</div>`;
+    html += `<div class="alert info">ℹ Először dolgozd fel a ② Visszaigazolás fülön a Cola-visszaigazolást és a PM megrendelőt, hogy itt automatikusan összevethessük a két végösszeget. Addig is itt a számla önmagában látható.</div>`;
   }
   html += `</div>`;
 

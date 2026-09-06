@@ -229,11 +229,11 @@
     },
     {
       "sablon_oszlop_index": 4,
-      "wildom_nev": "Erzsébet krt. 51(2)",
-      "pm_azonosito": "PM2",
+      "wildom_nev": "PM13N",
+      "pm_azonosito": "PM13N",
       "sablon_felirat": "Pizza Me 2- Erzsébet krt. 51.",
-      "boltkod": null,
-      "megjegyzes": null
+      "boltkod": "1605162975",
+      "megjegyzes": "PM2 korabbi neve 'Erzsebet krt. 51(2)' volt, a Wildomban ma 'PM13N' nevvel/azonositoval fut ugyanaz a telephely (2026-07-27-en a felhasznalo altal megerositve, boltkoddal egyutt)."
     },
     {
       "sablon_oszlop_index": 5,

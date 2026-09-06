@@ -32,7 +32,7 @@ Mezők:
   - `boltkod` — a Coca-Cola/SAP "Sold-to Party" azonosítója; **ezt használja a ② Visszaigazolás fül** az üzletek párosításához a PM megrendelő excel és a Cola visszaigazolás/számla között. `null`, ha egyelőre nincs hozzá boltkód (ld. lent).
   - `megjegyzes` — pl. korábbi átnevezés ténye
 
-  3 üzlethez (`Pizza Me 2- Erzsébet krt. 51.`, `Pizza Me 21- Óbuda`, `Pizza Me 26 Eleven`) a 2026-07-27-én kapott boltkód-listában nem szerepelt boltkód — ezeknél `boltkod: null` maradt, tisztázni kell a felhasználóval.
+  2 üzlethez (`Pizza Me 21- Óbuda`, `Pizza Me 26 Eleven`) a 2026-07-27-én kapott boltkód-listában nem szerepelt boltkód — ezeknél `boltkod: null` maradt, tisztázni kell a felhasználóval. (`Pizza Me 2- Erzsébet krt. 51.` boltkódja azóta megérkezett, ld. `megjegyzes`.)
 
 - **`uj_oszlopok`** — olyan telephelyek, amiknek még nincs oszlopa a sablonban;
   a ① Rendelés-generálás fül automatikusan létrehozza az oszlopot, ha hiányzik. Ha egy ilyen

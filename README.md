@@ -1,6 +1,6 @@
 # Coca-Cola Rendelés-kezelő Program – Specifikáció
 
-Státusz: **Egyesített, élő, böngészőben futó oldal (`index.html`) készült, ami mindkét modult (Rendelés-generálás + Visszaigazolás/Számla/History) egy helyen kezeli. GitHub Pages-en publikálva fut majd — ehhez két manuális, egyszeri GitHub-beállítást a felhasználónak kell elvégeznie (ld. 5. szakasz). A boltkód ↔ PM-szám megfeleltetés 3 üzletnél még hiányos.**
+Státusz: **Egyesített, élő, böngészőben futó oldal (`index.html`) elkészült és GitHub Pages-en fut, PizzaMe brand-kinézettel. A boltkód ↔ PM-szám megfeleltetés 2 üzletnél még hiányos.**
 
 ## 1. Háttér és cél
 
@@ -47,7 +47,7 @@ Van egy már létező, hivatalos referencia-tábla is a felhasználó Drive-ján
 
 **b) Üzlet/telephely párosítás** (Wildom telephelynév/PM-szám → PizzaMe sablon oszlop)
 A Wildom rendszerben minden telephelynek van egy "PM száma" (pl. Bazilika = PM4, Törökvész = PM27), ami a Wildom admin "Beszállítói megrendelések" oldalának üzletválasztójában látszik zárójelben a név mellett. A PizzaMe sablon oszlopfejlécei részben ezt a PM-számot és egy (néha elavult) utcanevet tartalmazzák — pl. a sablonban "Pizza Me 4- Sas utca" ma ténylegesen a "Bazilika" nevű telephelyet jelenti (a telephely átnevezve, a PM-szám ugyanaz maradt).
-Feltárt átnevezések eddig: PM4 (Sas utca → Bazilika), PM17 (Váci utca → Fővám tér), PM23 (Zugló → Bosnyák tér), PM27/PM28 (korábban üres/foglalt sablon-oszlopok → Törökvész / GoBuda).
+Feltárt átnevezések eddig: PM4 (Sas utca → Bazilika), PM17 (Váci utca → Fővám tér), PM23 (Zugló → Bosnyák tér), PM27/PM28 (korábban üres/foglalt sablon-oszlopok → Törökvész / GoBuda), PM2 (Erzsébet krt. 51. → a Wildom exportban ma "PM13N" néven/azonosítóval fut, 2026-07-27-én felfedezve).
 Feltárt, valóban új telephelyek (nincs rájuk sablon-oszlop, hozzá kellett adni): **Újpest, K1 Westend** — ezek szerepelnek a rendelésben, kell nekik oszlop.
 Üzleti döntés alapján kihagyva (nem kell a Cola-fájlba): Truck 1 Kamion, Budapest Park, PM Plázs, valamint a "Bezárt Móricz"/"Closed Móricz" (zárva lévő telephely, mindig 0).
 
@@ -90,7 +90,7 @@ Ez a funkció eredetileg egy önálló HTML eszköz volt (`COLA_MASTER_v2.html`,
 
 **Integráció a közös configgal — elkészült:** a termékárak/nevek (korábban a fájlba égetett `TERMEK_MAP`) most a `config/parositas.json`-ból töltődnek be (`fetch('config/parositas.json')`), nem hardkódoltak.
 
-**Üzletazonosítás — részben nyitott:** a ② fül SAP "boltkód" alapon párosít üzleteket (a PM megrendelő excel és a Cola-visszaigazolás közös oszlopa), ami más azonosító-tér, mint a ① fül Wildom név/"PM-szám" rendszere. A felhasználó átadott egy boltkód-listát, ami alapján 30/33 meglévő Cola-üzlethez sikerült rögzíteni a `boltkod` mezőt a configban. **3 üzlethez még hiányzik** (Erzsébet krt. 51., Óbuda, Eleven Center) — ld. 6. szakasz.
+**Üzletazonosítás — részben nyitott:** a ② fül SAP "boltkód" alapon párosít üzleteket (a PM megrendelő excel és a Cola-visszaigazolás közös oszlopa), ami más azonosító-tér, mint a ① fül Wildom név/"PM-szám" rendszere. A felhasználó átadott egy boltkód-listát, ami alapján 31/33 meglévő Cola-üzlethez sikerült rögzíteni a `boltkod` mezőt a configban. **2 üzlethez még hiányzik** (Óbuda, Eleven Center) — ld. 6. szakasz.
 
 ---
 
@@ -116,6 +116,6 @@ Ezután az oldal élesben elérhető lesz a `https://<felhasználónév>.github.
 
 ## 6. Nyitott kérdések
 
-- **Boltkód ↔ PM-szám megfeleltetés 3 üzlethez hiányzik**: Erzsébet krt. 51., Óbuda, Eleven Center — tisztázandó, hogy aktívak-e még, és ha igen, mi a boltkódjuk.
+- **Boltkód ↔ PM-szám megfeleltetés 2 üzlethez hiányzik**: Óbuda, Eleven Center — tisztázandó, hogy aktívak-e még, és ha igen, mi a boltkódjuk.
 - **GitHub Pages beüzemelése** — a felhasználónak el kell végeznie a 5. szakaszban leírt 2 manuális lépést (repó publikussá tétele + Pages bekapcsolása).
 - **Stílus-hűség valós sablonon** — a JS-portot szintetikus és kézzel formázott mintafájlon teszteltük; érdemes az első éles futásnál ellenőrizni, hogy a generált fájl a valódi PizzaMe_megrendelő sablonon is jól néz ki (font/szín/keret), mert az `ExcelJS` könyvtár nem garantáltan 100%-ban azonos az `openpyxl`-lel minden formázási esetben.

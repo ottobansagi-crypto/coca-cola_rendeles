@@ -59,8 +59,9 @@ Ezt fontos fejben tartani, mert ez a leggyakoribb hibaforrás:
 - Az **① Rendelés-generálás** a Wildom **telephelynevet** és a "PM-számot"
   (pl. `PM4`) használja, és a sablon **oszlopindexét** (`sablon_oszlop_index`).
 - A **② Visszaigazolás / ③ Számla** a Coca-Cola/SAP **boltkódot** ("Sold-to
-  Party", 10 jegyű szám) használja — ez a `boltkod` mező a configban, és 3
-  üzletnél jelenleg `null` (ld. README 6. szakasz).
+  Party", 10 jegyű szám) használja — ez a `boltkod` mező a configban. Néhány
+  üzletnél még `null`; hogy éppen melyeknél, azt a configból nézd ki, ne innen
+  (ld. README 6. szakasz).
 
 Termékoldalon a közös kulcs mindenhol a **`cikkszam`**.
 

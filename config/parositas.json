@@ -157,10 +157,10 @@
     {
       "wildom_nev": "Cappy Ice Fruit Multivitamin 0,5L",
       "csomagolas": "12db / Zsugor",
-      "cikkszam": 279045,
+      "cikkszam": 279047,
       "cola_nev": "500 PET X12 Cappy Ice Fruit Multivitamin 0,5l",
       "megjelenitett_nev": "Cappy Multivitamin 0,5l",
-      "megjegyzes": "Közvetlen névegyezés. FONTOS: ez a cikkszám Cola-oldalon korábban változott már (pl. 279045 <-> 279044) - ellenőrizd friss sablonnál.",
+      "megjegyzes": "Közvetlen névegyezés. 2026-11-09-től az új cikkszám 279047 (Otto adta meg); korábban 279045 volt, egy régebbi sablonban 279044 is előfordult. Ha a sablonban/visszaigazolásban más szám szerepel, itt kell frissíteni.",
       "ar_ft": 3320.87
     },
     {

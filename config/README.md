@@ -19,7 +19,7 @@ Mezők:
   - `cikkszam` — a Coca-Cola cikkszáma; **ha ez változik, itt kell frissíteni**
   - `cola_nev` — a hivatalos Cola SKU-név (a sablon "Anyag megnevezése" oszlopában szerepel, dokumentációs célra)
   - `megjelenitett_nev` — rövid, felhasználóbarát terméknév; **ezt jeleníti meg a ② Visszaigazolás fül** a táblázatokban (más, mint a `cola_nev` hivatalos SKU-szöveg)
-  - `ar_ft` — nettó egységár Ft/csomagolási egység (zsugor vagy karton); **ezt használja a ② Visszaigazolás fül** a várható végösszeg kiszámításához — ha a Coca-Cola árat változtat, itt kell frissíteni
+  - `ar_ft` — nettó egységár Ft/csomagolási egység (zsugor vagy karton); **ezt használja a ② Visszaigazolás fül** a várható végösszeg kiszámításához — ha a Coca-Cola árat változtat, itt kell frissíteni. `null`, ha az ár még nincs megadva: ilyenkor a fül „nincs rögzített egységár” figyelmeztetést ad, és a tételt 0 Ft-tal számolja
   - `megjegyzes` — szabad szöveges megjegyzés
 
   5 tétel (`Fuzetea Eper 0,5l`, `Cappy Barack 0,33l`, `Sprite 0,5l`, `Fanta Narancs 0,5l`, valamint a `Logisztikai díj`) csak a Cola visszaigazoláson/számlán jelenik meg, a Wildom rendelési listában nincs benne — ezeknél `wildom_nev: null`. Ha egyszer megjelennek a Wildom exportban is, itt kell pótolni a `wildom_nev`-et és a `csomagolas`-t.

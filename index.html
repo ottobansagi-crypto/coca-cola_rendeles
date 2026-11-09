@@ -246,7 +246,7 @@ let TERMEK_MAP = {};
 function buildTermekMapFromConfig(config) {
   const map = {};
   (config.termek_parositas || []).forEach(p => {
-    map[String(p.cikkszam)] = { nev: p.megjelenitett_nev || p.cola_nev, zsugorAr: p.ar_ft };
+    map[String(p.cikkszam)] = { nev: p.megjelenitett_nev || p.cola_nev, zsugorAr: typeof p.ar_ft === 'number' ? p.ar_ft : null };
   });
   return map;
 }
@@ -699,7 +699,7 @@ function feldolgoz() {
         const adatElteres = (!nincsPM && colaOrder !== null && pmQty !== colaOrder);
         if (diff !== 0) { boltElt++; elteresCount++; }
         if (nincsPM && !nincsCola) csakColaCount++;
-        if (!t) ismeretlenArSet.add(cikk);
+        if (ar === null) ismeretlenArSet.add(cikk);
         const ft = ar !== null ? confirmed * ar : 0;
         const rendeltFt = ar !== null ? bazis * ar : 0;
         boltFt += ft;

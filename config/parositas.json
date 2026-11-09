@@ -216,6 +216,42 @@
       "megjelenitett_nev": "Logisztikai díj",
       "ar_ft": 800.0,
       "megjegyzes": "Nem termék, hanem logisztikai díjtétel a Cola-számlán; nincs Wildom megfelelője, csomagolása."
+    },
+    {
+      "wildom_nev": null,
+      "csomagolas": null,
+      "cikkszam": 523506,
+      "cola_nev": "Kinley gyömbér 0,25 l dobozos (x24)",
+      "megjelenitett_nev": "Kinley Gyömbér 0,25l doboz",
+      "ar_ft": null,
+      "megjegyzes": "A PizzaMe_megrendelő sablon 20260728-as lapján szerepel. Egységár még hiányzik (Otto pótolja) — addig a ② Visszaigazolás fül 'nincs rögzített egységár' figyelmeztetést ad rá."
+    },
+    {
+      "wildom_nev": null,
+      "csomagolas": null,
+      "cikkszam": 2262507,
+      "cola_nev": "500 PET X12 FUZE ZERO CITROM",
+      "megjelenitett_nev": "Fuze Tea Zero Citrom 0,5l",
+      "ar_ft": null,
+      "megjegyzes": "A PizzaMe_megrendelő sablon 20260728-as lapján szerepel. Egységár még hiányzik (Otto pótolja) — addig a ② Visszaigazolás fül 'nincs rögzített egységár' figyelmeztetést ad rá."
+    },
+    {
+      "wildom_nev": null,
+      "csomagolas": null,
+      "cikkszam": 1986716,
+      "cola_nev": "500 PET X12 FUZE ZERO ŐSZIBARACK-RÓZSA",
+      "megjelenitett_nev": "Fuze Tea Zero Őszibarack-Rózsa 0,5l",
+      "ar_ft": null,
+      "megjegyzes": "A PizzaMe_megrendelő sablon 20260728-as lapján szerepel. Egységár még hiányzik (Otto pótolja) — addig a ② Visszaigazolás fül 'nincs rögzített egységár' figyelmeztetést ad rá."
+    },
+    {
+      "wildom_nev": null,
+      "csomagolas": null,
+      "cikkszam": 1024014,
+      "cola_nev": "300 PET X12 CAPPY EPER",
+      "megjelenitett_nev": "Cappy Eper",
+      "ar_ft": null,
+      "megjegyzes": "A PizzaMe_megrendelő sablon 20260728-as lapján szerepel. Egységár még hiányzik (Otto pótolja) — addig a ② Visszaigazolás fül 'nincs rögzített egységár' figyelmeztetést ad rá."
     }
   ],
   "uzlet_parositas": [
